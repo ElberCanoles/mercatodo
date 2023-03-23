@@ -25,6 +25,16 @@
                         @auth
                             <a href="{{ url('/dashboard') }}"
                                 class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+
+                            <a href="javascript:" class="btn btn-bg-light btn-color-gray-600 btn-active-color-gray w-100"
+                                data-bs-toggle="tooltip" data-bs-trigger="hover"
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                <span class="btn-label">Cerrar sesión</span>
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
                         @else
                             <a href="{{ route('login') }}"
                                 class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Acceder</a>
