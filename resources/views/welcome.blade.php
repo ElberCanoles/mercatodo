@@ -1,36 +1,35 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="antialiased">
-        <div class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-            @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-
-            <div id="app">
-                
-                
-            </div>
-            
+@section('content')
+    <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5">
+            <h1 class="display-5 fw-bold">Merca Todo</h1>
+            <p class="col-md-8 fs-4">Bienvenido a la tienda online donde encontraras de todo y para todos, en Merca Todo
+                somos
+                expertos en ir de compras, asi que te acompañamos para que encuentres eso que tanto necesitas al mejor
+                precio y de forma segura, ¡Vamos a ello!</p>
+            <button class="btn btn-primary btn-lg" type="button">Navegar por la tienda</button>
         </div>
-    </body>
-</html>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="col-md-6">
+            <div class="h-100 p-5 text-white bg-dark rounded-3">
+                <h2>Tu Tienda Contigo</h2>
+                <p>Desde tu panel de usuario, podras gestionar tu perfil, revisar tus ordenes de compra y mucho más, en
+                    Merca Todo creamos todo un mundo de posibilidades para ti ¡te esperamos!</p>
+                <a href="{{ route('login') }}" class="btn btn-outline-light" type="button">Acceder</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-light border rounded-3">
+                <h2>Vive la Experiencia</h2>
+                <p>Si aun no te has registrado, por favor crea tu cuenta, solo debes diligenciar el formulario, con los
+                    datos solicitados, y listo crearemos un usario para ti
+                    con el cual podras disfrutar de la experiencia Merca Todo.
+                </p>
+                <a href="{{ route('register') }}" class="btn btn-outline-secondary" type="button">Crear una cuenta</a>
+            </div>
+        </div>
+    </div>
+@endsection
