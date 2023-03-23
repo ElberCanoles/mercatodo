@@ -34,6 +34,7 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
             ->select('id', 'name', 'email')
             ->when($search, function ($subQuery, $search) {
                 return $subQuery->where('name', 'like', '%'.$search.'%')
+                             ->orWhere('last_name', 'like', '%'.$search.'%')
                              ->orWhere('email', 'like', '%'.$search.'%');
             });
 
@@ -47,6 +48,7 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
 
             return $this->model::create([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
+                'last_name' => $this->normalizeStringUsingUcwords($data['last_name']),
                 'email' => $this->normalizeStringUsingStrtolower($data['email']),
                 'password' => Hash::make($data['password']),
             ]);
@@ -64,6 +66,7 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
 
             $user->fill([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
+                'last_name' => $this->normalizeStringUsingUcwords($data['last_name']),
                 'email' => $this->normalizeStringUsingStrtolower($data['email']),
             ]);
 

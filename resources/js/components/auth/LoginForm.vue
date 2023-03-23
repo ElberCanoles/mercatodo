@@ -8,11 +8,14 @@ const form = ref({
     email: '',
     password: '',
     remember: false,
+    processing: false,
 })
 
 const errors = ref({})
 
 const submit = () => {
+
+    form.value.processing = true
 
     axios
         .post('/login', form.value)
@@ -32,6 +35,8 @@ const submit = () => {
 
             }
 
+        }).finally(() => {
+            form.value.processing = false
         });
 
 }
@@ -68,7 +73,7 @@ const submit = () => {
             </label>
         </div>
 
-        <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+        <PrimaryButton class="ml-4" :disabled="form.processing">
             Acceder
         </PrimaryButton>
 
