@@ -33,6 +33,8 @@ const submit = () => {
 <template>
     <form @submit.prevent="submit" class="form-medium">
 
+        <h1 class="h3 mb-3 fw-normal text-center">Verificar Email</h1>
+
         <p class="text-success fw-bold mb-4" v-if="status">
             Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que proporcionó durante el
             registro.

@@ -19,9 +19,14 @@ trait ApiResponse
         return response()->json($data, $code);
     }
 
-    protected function errorResponse($message, $code): JsonResponse
+    protected function errorResponse(string $message, int $code): JsonResponse
     {
         return response()->json(['error' => $message, 'code' => $code], $code);
+    }
+
+    protected function errorResponseWithBag(array $collection, int $code): JsonResponse
+    {
+        return response()->json(['errors' => $collection, 'code' => $code], $code);
     }
 
     protected function showAll(Collection $collection, $code = Response::HTTP_OK): JsonResponse
@@ -46,7 +51,7 @@ trait ApiResponse
 
     protected function showMessage($message, $code = Response::HTTP_OK): JsonResponse
     {
-        return $this->successResponse(['data' => $message], $code);
+        return $this->successResponse(['message' => $message], $code);
     }
 
     protected function filterData(Collection $collection): Collection
