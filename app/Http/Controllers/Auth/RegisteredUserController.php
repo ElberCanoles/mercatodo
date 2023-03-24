@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Enums\User\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
-use App\Providers\RouteServiceProvider;
 use App\Repositories\User\UserRepositoryInterface;
+use App\Services\Auth\EntryPoint;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
 
             Auth::login($user);
 
-            return redirect(RouteServiceProvider::HOME);
+            return redirect(EntryPoint::resolveRedirectRoute());
         } else {
             return redirect()->back()->withErrors(['status' => trans('server.unavailable_service')]);
         }

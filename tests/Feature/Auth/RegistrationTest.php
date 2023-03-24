@@ -2,8 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Providers\RouteServiceProvider;
+use App\Enums\User\RoleType;
+use App\Services\Auth\EntryPoint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -19,14 +21,19 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register(): void
     {
+
+        Role::create(['name' => RoleType::Administrator]);
+        Role::create(['name' => RoleType::Buyer]);
+
         $response = $this->post('/register', [
             'name' => 'Test User',
+            'last_name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $response->assertRedirect(EntryPoint::resolveRedirectRoute());
     }
 }

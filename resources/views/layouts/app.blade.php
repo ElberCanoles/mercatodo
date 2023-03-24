@@ -16,37 +16,57 @@
 
     <main>
         <div class="container py-4">
-            <header class="pb-3 mb-4 border-bottom">
-                <a href="{{ route('home') }}" class="d-flex align-items-center text-dark text-decoration-none">
-                    <span class="fs-4">Mercatodo</span>
-                </a>
-                @if (Route::has('login'))
-                    <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
-                        @auth
-                            <a href="{{ url('/dashboard') }}"
-                                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
 
-                            <a href="javascript:" class="btn btn-bg-light btn-color-gray-600 btn-active-color-gray w-100"
-                                data-bs-toggle="tooltip" data-bs-trigger="hover"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                <span class="btn-label">Cerrar sesión</span>
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        @else
-                            <a href="{{ route('login') }}"
-                                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Acceder</a>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" aria-label="Ninth navbar example">
+                <div class="container-xl">
+                    <a class="navbar-brand" href="{{ route('home') }}">Merca Todo</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbarCollapsable" aria-controls="mainNavbarCollapsable" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}"
-                                    class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Registrate</a>
+                    <div class="collapse navbar-collapse" id="mainNavbarCollapsable">
+
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            @if (Route::has('login'))
+
+                                @auth
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ request()->segment(2) == 'dashboard' ? 'active' : '' }}"
+                                            href="{{ App\Services\Auth\EntryPoint::resolveRedirectRoute() }}">Dashboard</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="javascript:"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                            <span class="btn-label">Cerrar sesión</span>
+                                        </a>
+                                    </li>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                @else
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ request()->is('login') ? 'active' : '' }}"
+                                            href="{{ route('login') }}">Acceder</a>
+                                    </li>
+
+                                    @if (Route::has('register'))
+                                        <li class="nav-item">
+                                            <a class="nav-link {{ request()->is('register') ? 'active' : '' }}"
+                                                href="{{ route('register') }}">Registrate</a>
+                                        </li>
+                                    @endif
+                                @endauth
+
                             @endif
-                        @endauth
+                        </ul>
+
                     </div>
-                @endif
-            </header>
+                </div>
+            </nav>
 
             <div id="app">
                 @yield('content')
@@ -54,7 +74,7 @@
 
 
             <footer class="pt-3 mt-4 text-muted border-top">
-                &copy; {{ date('Y') }}
+                &copy; Bootcamp Evertec {{ date('Y') }}
             </footer>
         </div>
     </main>
