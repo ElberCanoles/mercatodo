@@ -2,6 +2,7 @@ import './bootstrap';
 import { createApp } from 'vue/dist/vue.esm-bundler';
 import LoginForm from '@/components/auth/LoginForm.vue';
 import RegisterForm from '@/components/auth/RegisterForm.vue'
+import VerifyEmailForm from '@/components/auth/VerifyEmailForm.vue'
 
 window.app = createApp({
     setup() {
@@ -12,5 +13,6 @@ window.app = createApp({
     components: {
         LoginForm,
         RegisterForm,
+        VerifyEmailForm,
     },
 }).mount('#app');
