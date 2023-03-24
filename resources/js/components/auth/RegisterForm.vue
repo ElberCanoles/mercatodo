@@ -50,7 +50,7 @@ const submit = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="form-register">
+    <form @submit.prevent="submit" class="form-medium">
 
         <h1 class="h3 mb-3 fw-normal text-center">Crear una cuenta</h1>
 

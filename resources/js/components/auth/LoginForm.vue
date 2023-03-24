@@ -23,6 +23,11 @@ const submit = () => {
             window.location.replace(response.request.responseURL);
         })
         .catch((exception) => {
+
+            if (exception.response.status == 403) {
+                window.location.replace(exception.response.request.responseURL)
+            }
+            
             errors.value = {}
             try {
                 const dataErrors = exception.response.data.errors
@@ -44,7 +49,7 @@ const submit = () => {
 </script>
 
 <template>
-    <form @submit.prevent="submit" class="form-signin">
+    <form @submit.prevent="submit" class="form-narrow">
 
         <h1 class="h3 mb-3 fw-normal">Iniciar Sesión</h1>
 

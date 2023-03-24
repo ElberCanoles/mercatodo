@@ -1,12 +1,12 @@
 @import 'bootstrap.min.css';
 
-/* Login styles */
+/* narrow styles */
 
-.body-login {
+.body-narrow {
     height: 100%;
 }
 
-.body-login {
+.body-narrow {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -14,42 +14,42 @@
     background-color: #f5f5f5;
 }
 
-.form-signin {
+.form-narrow {
     width: 100%;
     max-width: 330px;
     padding: 15px;
     margin: auto;
 }
 
-.form-signin .checkbox {
+.form-narrow .checkbox {
     font-weight: 400;
 }
 
-.form-signin .form-floating:focus-within {
+.form-narrow .form-floating:focus-within {
     z-index: 2;
 }
 
-.form-signin input[type="email"] {
+.form-narrow input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="password"] {
+.form-narrow input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-/* Login styles */
+/* narrow styles */
 
-/* Register Styles */
+/* medium Styles */
 
-.body-register {
+.body-medium {
     height: 100%;
 }
 
-.body-register {
+.body-medium {
     display: flex;
     align-items: center;
     padding-top: 40px;
@@ -57,31 +57,31 @@
     background-color: #f5f5f5;
 }
 
-.form-register {
+.form-medium {
     width: 100%;
     max-width: 500px;
     padding: 15px;
     margin: auto;
 }
 
-.form-register .checkbox {
+.form-medium .checkbox {
     font-weight: 400;
 }
 
-.form-register .form-floating:focus-within {
+.form-medium .form-floating:focus-within {
     z-index: 2;
 }
 
-.form-register input[type="email"] {
+.form-medium input[type="email"] {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.form-register input[type="password"] {
+.form-medium input[type="password"] {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
 
-/* Register Styles */
+/* medium Styles */
