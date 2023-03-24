@@ -1,0 +1,7 @@
+@extends('layouts.app')
+
+@section('content')
+    <div class="body-narrow text-center">
+        <login-form></login-form>
+    </div>
+@endsection
