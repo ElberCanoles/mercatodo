@@ -25,20 +25,35 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     public function all(array $queryParams = []): LengthAwarePaginator
     {
 
-        $search = $queryParams['search'] ?? null;
-
         $query = $this->model::query()
             ->whereHas('roles', function ($subQuery) {
                 $subQuery->where('name', RoleType::Buyer);
             })
-            ->select('id', 'name', 'email')
-            ->when($search, function ($subQuery, $search) {
-                return $subQuery->where('name', 'like', '%'.$search.'%')
-                             ->orWhere('last_name', 'like', '%'.$search.'%')
-                             ->orWhere('email', 'like', '%'.$search.'%');
-            });
+            ->select('id', 'name', 'last_name', 'email', 'status', 'email_verified_at', 'created_at');
 
-        return $query->paginate(SystemParams::LengthPerPage);
+        if ($this->isDefined($queryParams['name'] ?? null)) {
+            $query = $query->where('name', 'like', '%' . $queryParams['name'] . '%');
+        }
+
+        if ($this->isDefined($queryParams['last_name'] ?? null)) {
+            $query = $query->where('last_name', 'like', '%' . $queryParams['last_name'] . '%');
+        }
+
+        if ($this->isDefined($queryParams['email'] ?? null)) {
+            $query = $query->where('email', 'like', '%' . $queryParams['email'] . '%');
+        }
+
+
+        return $query->orderBy('created_at', 'DESC')
+            ->paginate(SystemParams::LengthPerPage)->through(fn ($user) => [
+                'name' => $user->name,
+                'last_name' => $user->last_name,
+                'email' => $user->email,
+                'verified' => $user->email_verified_at != null ? 'Verificado' : 'No Verificado',
+                'status' => $user->status,
+                'created_at' => $user->created_at->format('d-m-Y'),
+                'edit_url' => route('admin.users.edit', ['user' => $user->id]),
+            ]);
     }
 
 
