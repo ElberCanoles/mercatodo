@@ -14,7 +14,7 @@ Route::group(['middleware' => ['auth', 'verified', 'role:administrator']], funct
 
             Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'profile'])->name('profile');
 
-            Route::resource('users', App\Http\Controllers\Admin\UserController::class)->only(['index', 'edit', 'update']);
+            Route::resource('users', \App\Http\Controllers\Admin\User\UserController::class)->only(['index', 'edit', 'update']);
         });
     });
 });

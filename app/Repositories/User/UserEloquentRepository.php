@@ -6,6 +6,8 @@ namespace App\Repositories\User;
 
 use App\Enums\General\SystemParams;
 use App\Enums\User\RoleType;
+use App\Enums\User\UserStatus;
+use App\Enums\User\UserVerify;
 use App\Models\User;
 use App\Repositories\Repository;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -45,11 +47,11 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
 
 
         return $query->orderBy('created_at', 'DESC')
-            ->paginate(SystemParams::LengthPerPage)->through(fn ($user) => [
+            ->paginate(SystemParams::LengthPerPage)->through(fn($user) => [
                 'name' => $user->name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
-                'verified' => $user->email_verified_at != null ? 'Verificado' : 'No Verificado',
+                'verified' => $user->email_verified_at != null ? UserVerify::Verified : UserVerify::NonVerified,
                 'status' => $user->status,
                 'created_at' => $user->created_at->format('d-m-Y'),
                 'edit_url' => route('admin.users.edit', ['user' => $user->id]),
@@ -83,6 +85,7 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'last_name' => $this->normalizeStringUsingUcwords($data['last_name']),
                 'email' => $this->normalizeStringUsingStrtolower($data['email']),
+                'status' => $data['status'] ?? $user->status,
             ]);
 
             if ($user->isDirty('email')) {
@@ -112,5 +115,10 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     public function find(int $id): ?User
     {
         return $this->model->find($id);
+    }
+
+    public function allStatuses(): array
+    {
+        return UserStatus::asArray();
     }
 }
