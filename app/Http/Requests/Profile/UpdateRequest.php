@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Profile;
 
-use App\Enums\User\UserStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

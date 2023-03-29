@@ -23,7 +23,8 @@ class UpdatePasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'password' => ['required', 'confirmed', 'current_password:web', Password::defaults()],
+            'current_password' => ['required', 'current_password:web'],
+            'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
 
@@ -35,9 +36,11 @@ class UpdatePasswordRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'current_password.required' => 'La contraseña actual es requerida',
+            'current_password.current_password' => 'La contraseña actual no es correcta',
+
             'password.required' => 'La contraseña es requerida',
             'password.min' => 'La contraseña debe contener minimo 8 caracteres',
-            'password.current_password' => 'La contraseña actual no es correcta',
             'password.confirmed' => 'Las contraseñas no coinciden',
         ];
     }

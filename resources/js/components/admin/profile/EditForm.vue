@@ -3,6 +3,7 @@
 import {ref, onMounted} from 'vue';
 import PrimaryButton from '@/components/common/PrimaryButton.vue'
 import InputError from '@/components/common/InputError.vue'
+import UpdatePassword from "@/components/admin/profile/UpdatePassword.vue";
 
 const props = defineProps({
     user: Object,
@@ -147,7 +148,7 @@ onMounted(() => {
 
                 </div>
                 <div class="tab-pane fade" id="security-data" role="tabpanel" aria-labelledby="security-data-tab">
-
+                    <UpdatePassword></UpdatePassword>
                 </div>
             </div>
 
