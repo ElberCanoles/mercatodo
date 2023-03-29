@@ -36,16 +36,18 @@ class ProfileController extends Controller
         if ($this->repository->update($request->validated(), $request->user()->id)) {
             return $this->showMessage(message: trans('server.record_updated'));
         } else {
-            return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]], code: Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]],
+                code: Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
-        if ($this->repository->updatePassword($request->only('password'), $request->user()->id)) {
+        if ($this->repository->updatePassword($request->safe()->only(['password']), $request->user()->id)) {
             return $this->showMessage(message: trans('passwords.updated'));
         } else {
-            return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]], code: Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]],
+                code: Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
