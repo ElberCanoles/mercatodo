@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Enums\User\UserStatus;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -60,6 +61,21 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
+            ]);
+        }
+
+        if(auth()->user()->status === UserStatus::Inactive){
+
+            RateLimiter::hit($this->throttleKey());
+
+            Auth::guard('web')->logout();
+
+            request()->session()->invalidate();
+
+            request()->session()->regenerateToken();
+
+            throw ValidationException::withMessages([
+                'email' => trans('auth.account_inactive'),
             ]);
         }
 
