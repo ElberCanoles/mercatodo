@@ -54,7 +54,7 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
-        if ($this->repository->update($request->all(), $id)) {
+        if ($this->repository->update($request->validated(), $id)) {
             return $this->showMessage(message: trans('server.record_updated'));
         } else {
             return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]], code: Response::HTTP_INTERNAL_SERVER_ERROR);
