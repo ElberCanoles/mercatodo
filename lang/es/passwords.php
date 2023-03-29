@@ -3,6 +3,7 @@
 return [
 
     'reset' => 'Tu contraseña ha sido restablecida.',
+    'updated' => 'Tu contraseña ha sido actualizada.',
     'sent' => 'Hemos enviado a su email un enlace de restablecimiento de contraseña.',
     'throttled' => 'Espere antes de volver a intentarlo.',
     'token' => 'Este token de restablecimiento de contraseña no es válido.',

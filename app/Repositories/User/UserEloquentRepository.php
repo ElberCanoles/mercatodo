@@ -121,4 +121,16 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     {
         return UserStatus::asArray();
     }
+
+    public function updatePassword(array $data, int $id): bool
+    {
+        $user = $this->find(id: $id);
+
+        try {
+            $user->password = Hash::make($data['password']);
+            return $user->save();
+        } catch (\Throwable $throwable) {
+            return false;
+        }
+    }
 }

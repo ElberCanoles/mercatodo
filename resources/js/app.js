@@ -7,6 +7,8 @@ import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm.vue'
 import ResetPasswordForm from '@/components/auth/ResetPasswordForm.vue'
 import AdminUsersTable from '@/components/admin/users/Table.vue'
 import AdminUsersEditForm from '@/components/admin/users/crud/EditForm.vue'
+import AdminProfileEditForm from '@/components/admin/profile/EditForm.vue'
+
 
 window.app = createApp({
     setup() {
@@ -22,5 +24,6 @@ window.app = createApp({
         ResetPasswordForm,
         AdminUsersTable,
         AdminUsersEditForm,
+        AdminProfileEditForm,
     },
 }).mount('#app');
