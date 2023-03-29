@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Traits\Responses\ApiResponse;
-use Illuminate\Contracts\View\View;
+use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;

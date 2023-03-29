@@ -9,10 +9,12 @@ Route::group(['middleware' => ['auth', 'verified', 'role:buyer']], function () {
         Route::name('buyer.')->group(function () {
 
             Route::get('/dashboard', function () {
-                return view('dashboard');
+                return view('buyer.dashboard');
             })->name('dashboard');
 
-            Route::get('/profile', [App\Http\Controllers\Buyer\ProfileController::class, 'profile'])->name('profile');
+            Route::get('/profile', [App\Http\Controllers\Buyer\ProfileController::class, 'show'])->name('profile.show');
+            Route::post('/profile', [App\Http\Controllers\Buyer\ProfileController::class, 'update'])->name('profile.update');
+            Route::post('/profile/password', [App\Http\Controllers\Buyer\ProfileController::class, 'updatePassword'])->name('profile.update.password');
         });
     });
 });

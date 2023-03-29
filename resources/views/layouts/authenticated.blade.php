@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,23 +33,20 @@
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" aria-current="page" href="{{ App\Services\Auth\EntryPoint::resolveRedirectRoute() }}">
+                        <a class="nav-link {{ request()->routeIs('*.dashboard') ? 'active' : '' }}" aria-current="page" href="{{ App\Services\Auth\EntryPoint::resolveRedirectRoute() }}">
                             <span data-feather="home"></span>
                             Dashboard
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <span data-feather="user-check"></span>
-                            Perfil
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('admin.users*') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">
-                            <span data-feather="users"></span>
-                            Usuarios
-                        </a>
-                    </li>
+
+                    @role(App\Enums\User\RoleType::Administrator)
+                        @include('layouts.partials.admin-menu-navigation')
+                    @endrole
+
+                    @role(App\Enums\User\RoleType::Buyer)
+                       @include('layouts.partials.buyer-menu-navigation')
+                    @endrole
+
                 </ul>
             </div>
         </nav>
@@ -58,7 +55,7 @@
 
             <div id="app">
 
-            @yield('content')
+                @yield('content')
 
             </div>
 
