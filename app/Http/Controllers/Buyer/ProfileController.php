@@ -6,14 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdatePasswordRequest;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Repositories\User\UserRepositoryInterface;
-use App\Traits\Responses\ApiResponse;
+use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 class ProfileController extends Controller
 {
-    use ApiResponse;
+    use MakeJsonResponse;
 
     private UserRepositoryInterface $repository;
 
