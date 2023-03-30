@@ -12,10 +12,10 @@ use App\Models\User;
 use App\Repositories\Repository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
 
-class UserEloquentRepository extends Repository implements UserRepositoryInterface
+final class UserEloquentRepository extends Repository implements UserRepositoryInterface
 {
+
     private Model $model;
 
     public function __construct(User $user)
@@ -24,6 +24,12 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     }
 
 
+    /**
+     * Get all users
+     *
+     * @param array $queryParams
+     * @return LengthAwarePaginator
+     */
     public function all(array $queryParams = []): LengthAwarePaginator
     {
 
@@ -47,7 +53,7 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
 
 
         return $query->orderBy('created_at', 'DESC')
-            ->paginate(SystemParams::LengthPerPage)->through(fn($user) => [
+            ->paginate(SystemParams::LengthPerPage)->through(fn ($user) => [
                 'name' => $user->name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
@@ -59,6 +65,12 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     }
 
 
+    /**
+     * Store a new user on database
+     *
+     * @param array $data
+     * @return User|null
+     */
     public function store(array $data): ?User
     {
         try {
@@ -67,7 +79,7 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'last_name' => $this->normalizeStringUsingUcwords($data['last_name']),
                 'email' => $this->normalizeStringUsingStrtolower($data['email']),
-                'password' => Hash::make($data['password']),
+                'password' => $this->normalizeStringUsingHash($data['password']),
             ]);
         } catch (\Throwable $throwable) {
             return null;
@@ -75,6 +87,13 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     }
 
 
+    /**
+     * Update one user on database
+     *
+     * @param array $data
+     * @param integer $id
+     * @return boolean
+     */
     public function update(array $data, int $id): bool
     {
         $user = $this->find(id: $id);
@@ -100,6 +119,12 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     }
 
 
+    /**
+     * Delete one user on database
+     *
+     * @param integer $id
+     * @return boolean
+     */
     public function delete(int $id): bool
     {
         try {
@@ -112,22 +137,42 @@ class UserEloquentRepository extends Repository implements UserRepositoryInterfa
     }
 
 
+    /**
+     * Get one user record by id
+     *
+     * @param integer $id
+     * @return User|null
+     */
     public function find(int $id): ?User
     {
         return $this->model->find($id);
     }
 
+
+    /**
+     * Get all users statuses
+     *
+     * @return array
+     */
     public function allStatuses(): array
     {
         return UserStatus::asArray();
     }
 
+
+    /**
+     * Update user password
+     *
+     * @param array $data
+     * @param integer $id
+     * @return boolean
+     */
     public function updatePassword(array $data, int $id): bool
     {
         $user = $this->find(id: $id);
 
         try {
-            $user->password = Hash::make($data['password']);
+            $user->password = $this->normalizeStringUsingHash($data['password']);
             return $user->save();
         } catch (\Throwable $throwable) {
             return false;

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Traits\Utilities;
 
+use Illuminate\Support\Facades\Hash;
+
 trait NormalizeData
 {
 
@@ -20,6 +22,11 @@ trait NormalizeData
     protected function normalizeStringUsingUcfirst(string $input): string
     {
         return ucfirst($this->normalizeStringUsingStrtolower($input));
+    }
+
+    protected  function normalizeStringUsingHash(string $input): string
+    {
+        return Hash::make($input);
     }
 
 }
