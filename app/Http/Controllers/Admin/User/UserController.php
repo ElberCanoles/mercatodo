@@ -22,8 +22,6 @@ final class UserController extends Controller
 
 
     /**
-     * New Admin/UserController instance
-     *
      * @param UserRepositoryInterface $repository
      */
     public function __construct(UserRepositoryInterface $repository)
