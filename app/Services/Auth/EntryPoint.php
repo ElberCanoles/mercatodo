@@ -10,7 +10,7 @@ class EntryPoint
 {
 
     /**
-     * Resolve entry point when user is autenticated
+     * Resolve entry point when user is authenticated
      *
      * @return string
      */

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Enums\User\RoleType;
@@ -12,7 +14,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
-class RegisteredUserController extends Controller
+final class RegisteredUserController extends Controller
 {
 
     private UserRepositoryInterface $repository;
@@ -23,8 +25,11 @@ class RegisteredUserController extends Controller
         $this->repository = $repository;
     }
 
+
     /**
      * Display the registration view.
+     *
+     * @return View
      */
     public function create(): View
     {
@@ -34,11 +39,12 @@ class RegisteredUserController extends Controller
     /**
      * Handle an incoming registration request.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @param StoreRequest $request
+     * @return RedirectResponse
      */
     public function store(StoreRequest $request): RedirectResponse
     {
-        if ($user = $this->repository->store($request->all())) {
+        if ($user = $this->repository->store($request->validated())) {
 
             $user->assignRole(RoleType::Buyer);
 
