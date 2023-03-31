@@ -13,8 +13,8 @@ Route::group(['middleware' => ['auth', 'verified', 'role:buyer']], function () {
             })->name('dashboard');
 
             Route::get('/profile', [App\Http\Controllers\Buyer\ProfileController::class, 'show'])->name('profile.show');
-            Route::post('/profile', [App\Http\Controllers\Buyer\ProfileController::class, 'update'])->name('profile.update');
-            Route::post('/profile/password', [App\Http\Controllers\Buyer\ProfileController::class, 'updatePassword'])->name('profile.update.password');
+            Route::patch('/profile', [App\Http\Controllers\Buyer\ProfileController::class, 'update'])->name('profile.update');
+            Route::patch('/profile/password', [App\Http\Controllers\Buyer\ProfileController::class, 'updatePassword'])->name('profile.update.password');
         });
     });
 });
