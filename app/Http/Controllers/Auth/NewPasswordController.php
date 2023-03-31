@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\NewPasswordRequest;
-use App\Traits\Responses\ApiResponse;
+use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,22 +17,28 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
-class NewPasswordController extends Controller
+final class NewPasswordController extends Controller
 {
 
-    use ApiResponse;
+    use MakeJsonResponse;
 
     /**
      * Display the password reset view.
+     *
+     * @param Request $request
+     * @return View
      */
     public function create(Request $request): View
     {
         return view('auth.reset-password', ['request' => $request]);
     }
 
+
     /**
      * Handle an incoming new password request.
      *
+     * @param NewPasswordRequest $request
+     * @return JsonResponse
      * @throws ValidationException
      */
     public function store(NewPasswordRequest $request): JsonResponse
@@ -50,6 +58,9 @@ class NewPasswordController extends Controller
 
         return $status == Password::PASSWORD_RESET
             ? $this->showMessage(message: __($status))
-            : $this->errorResponseWithBag(collection: ['email' => [__($status)]], code: Response::HTTP_UNPROCESSABLE_ENTITY);
+            : $this->errorResponseWithBag(
+                collection: ['email' => [__($status)]],
+                code: Response::HTTP_UNPROCESSABLE_ENTITY
+            );
     }
 }
