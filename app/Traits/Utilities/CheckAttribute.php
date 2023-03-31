@@ -7,6 +7,12 @@ namespace App\Traits\Utilities;
 trait CheckAttribute
 {
 
+    /**
+     * Check if an attribute is correctly defined
+     *
+     * @param $attribute
+     * @return boolean
+     */
     protected function isDefined($attribute): bool
     {
         if (isset($attribute) && $attribute != null && !empty(trim($attribute))) {

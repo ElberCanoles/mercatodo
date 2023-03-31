@@ -19,6 +19,7 @@ trait NormalizeData
     {
         return strtolower(trim($input));
     }
+    
 
     /**
      * Get formatted string with ucwords
@@ -31,6 +32,8 @@ trait NormalizeData
         return ucwords($this->normalizeStringUsingStrtolower($input));
     }
 
+
+
     /**
      * Get formatted string with ucfirst
      *
@@ -41,6 +44,7 @@ trait NormalizeData
     {
         return ucfirst($this->normalizeStringUsingStrtolower($input));
     }
+
 
     /**
      * Get cipher hash using bcrypt algorithm
