@@ -37,7 +37,7 @@ const submit = () => {
     form.value.processing = true
 
     axios
-        .post(`/admin/profile/password`, form.value)
+        .patch(`/admin/profile/password`, form.value)
         .then((response) => {
             errors.value = {}
             status.value.message = response.data.message

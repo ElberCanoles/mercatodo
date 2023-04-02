@@ -24,6 +24,7 @@ Merca Todo is a web application developed during the php Bootcamp, taught by [Ev
 - composer install
 - npm install
 - npm run dev
+- php artisan key:generate
 - php artisan test
 - php artisan migrate:fresh --seed
 - php artisan serve
@@ -33,6 +34,7 @@ Merca Todo is a web application developed during the php Bootcamp, taught by [Ev
 - composer install
 - npm install
 - npm run build
+- php artisan key:generate
 - php artisan migrate:fresh --seed
 
 ### Author Information:

@@ -37,7 +37,7 @@ const submit = () => {
     form.value.processing = true
 
     axios
-        .post(`/buyer/profile/password`, form.value)
+        .patch(`/buyer/profile/password`, form.value)
         .then((response) => {
             errors.value = {}
             status.value.message = response.data.message
