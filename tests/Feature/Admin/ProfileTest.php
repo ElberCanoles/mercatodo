@@ -62,8 +62,6 @@ class ProfileTest extends TestCase
             ->create()
             ->assignRole(RoleType::Administrator);
 
-        dump($user->email);
-
         $response = $this
             ->actingAs($user)
             ->patch('/admin/profile', [
@@ -77,7 +75,5 @@ class ProfileTest extends TestCase
             ->assertOk();
 
         $this->assertNotNull($user->refresh()->email_verified_at);
-
-        dump($user->email);
     }
 }
