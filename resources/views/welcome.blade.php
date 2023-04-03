@@ -3,7 +3,6 @@
 @section('content')
     <div class="p-5 mb-4 bg-light rounded-3">
         <div class="container-fluid py-5">
-            <h1 class="display-5 fw-bold">Merca Todo</h1>
             <p class="col-md-8 fs-4">Bienvenido a la tienda online donde encontraras de todo y para todos, en Merca Todo
                 somos
                 expertos en ir de compras, asi que te acompañamos para que encuentres eso que tanto necesitas al mejor

@@ -86,7 +86,35 @@
 
 /* medium Styles */
 
+
+/* general styles */
+
 .navbar {
     margin-bottom: 20px;
-  }
-  
+    background-color: #00525D;
+}
+
+.btn-primary {
+    margin-bottom: 20px;
+    background-color: #00525D;
+    border-color: #00525D;
+
+}
+
+.btn-outline-light {
+    background-color: #00525D;
+}
+
+a {
+    color: #00525D;
+}
+
+.btn-outline-secondary {
+    color: black;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #00525D;
+}
+
+/* general styles */
