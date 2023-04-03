@@ -118,7 +118,7 @@ getData(url.value)
             </tbody>
         </table>
 
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li class="page-item" :class="{ 'disabled': !link.url, 'active': link.active }"
                     v-for="(link, index) in links" :key="index">

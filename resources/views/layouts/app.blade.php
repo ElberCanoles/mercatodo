@@ -17,7 +17,7 @@
     <main>
         <div class="container py-4">
 
-            <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" aria-label="Ninth navbar example">
+            <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Ninth navbar example">
                 <div class="container-xl">
                     <a class="navbar-brand" href="{{ route('home') }}">Merca Todo</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
