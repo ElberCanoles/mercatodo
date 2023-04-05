@@ -6,6 +6,6 @@ use BenSampo\Enum\Enum;
 
 final class RoleType extends Enum
 {
-    const ADMINISTRATOR = 'administrator';
-    const BUYER = 'buyer';
+    const ADMINISTRATOR = 'role.administrator';
+    const BUYER = 'role.buyer';
 }
