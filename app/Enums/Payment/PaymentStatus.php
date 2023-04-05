@@ -7,8 +7,8 @@ use BenSampo\Enum\Enum;
 
 final class PaymentStatus extends Enum
 {
-    const PENDING = 'Pendiente';
-    const PAID = 'Pagado';
-    const REJECTED = 'Rechazado';
-    const REFUNDED = 'Reembolsado';
+    const PENDING = 'payment.pending';
+    const PAID = 'payment.paid';
+    const REJECTED = 'payment.rejected';
+    const REFUNDED = 'payment.refunded';
 }
