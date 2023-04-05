@@ -7,12 +7,12 @@ use BenSampo\Enum\Enum;
 
 final class OrderStatus extends Enum
 {
-    const PENDING = 'Pendiente';
-    const CONFIRMED = 'Confirmada';
-    const SENT = 'Enviada';
-    const DELIVERED = 'Entregada';
-    const CANCELLED = 'Cancelada';
-    const IN_RETURN = 'En Devolución';
-    const RETURNED = 'Devuelta';
+    const PENDING = 'order.pending';
+    const CONFIRMED = 'order.confirmed';
+    const SENT = 'order.sent';
+    const DELIVERED = 'order.delivered';
+    const CANCELLED = 'order.cancelled';
+    const IN_RETURN = 'order.in_return';
+    const RETURNED = 'order.returned';
 
 }
