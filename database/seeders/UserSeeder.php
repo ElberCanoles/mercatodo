@@ -17,10 +17,10 @@ class UserSeeder extends Seeder
     {
         # register default admin
         User::create([
-            'name' => 'Merca Todo',
-            'last_name' => 'Tienda Online',
-            'email' => 'admin@mercatodo.com',
-            'password' => Hash::make('password'),
+            'name' => config('admin.name'),
+            'last_name' => config('admin.last_name'),
+            'email' => config('admin.email'),
+            'password' => config('admin.password'),
             'email_verified_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
