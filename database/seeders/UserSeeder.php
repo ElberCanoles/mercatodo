@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
         ])->assignRole(RoleType::ADMINISTRATOR);
 
         # register some users buyers demo
-        User::factory()->count(500)->create()->each(function ($user) {
+        User::factory()->count(1000)->create()->each(function ($user) {
             $user->assignRole(RoleType::BUYER);
         });
     }
