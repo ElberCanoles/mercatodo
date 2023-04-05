@@ -22,8 +22,8 @@ class RegistrationTest extends TestCase
     public function test_new_users_can_register(): void
     {
 
-        Role::create(['name' => RoleType::Administrator]);
-        Role::create(['name' => RoleType::Buyer]);
+        Role::create(['name' => RoleType::ADMINISTRATOR]);
+        Role::create(['name' => RoleType::BUYER]);
 
         $response = $this->post('/register', [
             'name' => 'Test User',

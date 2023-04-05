@@ -14,11 +14,11 @@ class ProfileTest extends TestCase
 
     public function test_profile_admin_page_is_displayed(): void
     {
-        Role::create(['name' => RoleType::Administrator]);
+        Role::create(['name' => RoleType::ADMINISTRATOR]);
 
         $user = User::factory()
             ->create()
-            ->assignRole(RoleType::Administrator);
+            ->assignRole(RoleType::ADMINISTRATOR);
 
         $response = $this
             ->actingAs($user)
@@ -29,11 +29,11 @@ class ProfileTest extends TestCase
 
     public function test_profile_information_can_be_updated(): void
     {
-        Role::create(['name' => RoleType::Administrator]);
+        Role::create(['name' => RoleType::ADMINISTRATOR]);
 
         $user = User::factory()
             ->create()
-            ->assignRole(RoleType::Administrator);
+            ->assignRole(RoleType::ADMINISTRATOR);
 
         $response = $this
             ->actingAs($user)
@@ -56,11 +56,11 @@ class ProfileTest extends TestCase
 
     public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
     {
-        Role::create(['name' => RoleType::Administrator]);
+        Role::create(['name' => RoleType::ADMINISTRATOR]);
 
         $user = User::factory()
             ->create()
-            ->assignRole(RoleType::Administrator);
+            ->assignRole(RoleType::ADMINISTRATOR);
 
         $response = $this
             ->actingAs($user)

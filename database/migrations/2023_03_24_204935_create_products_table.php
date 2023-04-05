@@ -19,7 +19,7 @@ return new class extends Migration
             $table->tinyText('description')->nullable();
             $table->unsignedFloat('price');
             $table->unsignedInteger('stock');
-            $table->enum('status', ProductStatus::asArray())->default(ProductStatus::Available);
+            $table->enum('status', ProductStatus::asArray())->default(ProductStatus::AVAILABLE);
             $table->softDeletes();
             $table->timestamps();
         });

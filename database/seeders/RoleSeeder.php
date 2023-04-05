@@ -14,7 +14,7 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         #  registering system roles
-        Role::create(['name' => RoleType::Administrator]);
-        Role::create(['name' => RoleType::Buyer]);
+        Role::create(['name' => RoleType::ADMINISTRATOR]);
+        Role::create(['name' => RoleType::BUYER]);
     }
 }

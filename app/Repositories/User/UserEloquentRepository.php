@@ -35,7 +35,7 @@ final class UserEloquentRepository extends Repository implements UserRepositoryI
 
         $query = $this->model::query()
             ->whereHas('roles', function ($subQuery) {
-                $subQuery->where('name', RoleType::Buyer);
+                $subQuery->where('name', RoleType::BUYER);
             })
             ->select('id', 'name', 'last_name', 'email', 'status', 'email_verified_at', 'created_at');
 
@@ -53,11 +53,11 @@ final class UserEloquentRepository extends Repository implements UserRepositoryI
 
 
         return $query->orderBy('created_at', 'DESC')
-            ->paginate(SystemParams::LengthPerPage)->through(fn ($user) => [
+            ->paginate(SystemParams::LENGTH_PER_PAGE)->through(fn ($user) => [
                 'name' => $user->name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
-                'verified' => $user->email_verified_at != null ? UserVerify::Verified : UserVerify::NonVerified,
+                'verified' => $user->email_verified_at != null ? UserVerify::VERIFIED : UserVerify::NON_VERIFIED,
                 'status' => $user->status,
                 'created_at' => $user->created_at->format('d-m-Y'),
                 'edit_url' => route('admin.users.edit', ['user' => $user->id]),

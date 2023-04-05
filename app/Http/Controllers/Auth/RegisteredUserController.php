@@ -46,7 +46,7 @@ final class RegisteredUserController extends Controller
     {
         if ($user = $this->repository->store($request->validated())) {
 
-            $user->assignRole(RoleType::Buyer);
+            $user->assignRole(RoleType::BUYER);
 
             event(new Registered($user));
 

@@ -24,11 +24,11 @@ class UserSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-        ])->assignRole(RoleType::Administrator);
+        ])->assignRole(RoleType::ADMINISTRATOR);
 
         # register some users buyers demo
         User::factory()->count(500)->create()->each(function ($user) {
-            $user->assignRole(RoleType::Buyer);
+            $user->assignRole(RoleType::BUYER);
         });
     }
 }

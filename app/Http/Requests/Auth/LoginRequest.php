@@ -64,7 +64,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        if(auth()->user()->status === UserStatus::Inactive){
+        if(auth()->user()->status === UserStatus::INACTIVE){
 
             RateLimiter::hit($this->throttleKey());
 

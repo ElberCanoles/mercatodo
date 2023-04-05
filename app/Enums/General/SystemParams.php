@@ -7,5 +7,5 @@ use BenSampo\Enum\Enum;
 
 final class SystemParams extends Enum
 {
-    const LengthPerPage = 20;
+    const LENGTH_PER_PAGE = 20;
 }

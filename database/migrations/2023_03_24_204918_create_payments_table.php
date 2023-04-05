@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->unsignedFloat('amount');
-            $table->enum('status', PaymentStatus::asArray())->default(PaymentStatus::Pending);
+            $table->enum('status', PaymentStatus::asArray())->default(PaymentStatus::PENDING);
             $table->timestamp('payed_at')->nullable();
             $table->timestamps();
         });

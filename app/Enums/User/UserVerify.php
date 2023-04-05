@@ -6,6 +6,6 @@ use BenSampo\Enum\Enum;
 
 final class UserVerify extends Enum
 {
-    const Verified = 'Verificado';
-    const NonVerified = 'No Verificado';
+    const VERIFIED = 'Verificado';
+    const NON_VERIFIED = 'No Verificado';
 }
