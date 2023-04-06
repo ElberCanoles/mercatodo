@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth', 'verified', 'role:role.administrator']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.administrator']], function () {
 
     Route::prefix('admin')->group(function () {
 
