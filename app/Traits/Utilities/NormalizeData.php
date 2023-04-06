@@ -12,37 +12,36 @@ trait NormalizeData
     /**
      * Get formatted string with strtolower
      *
-     * @param string $input
-     * @return string
+     * @param string|null $input
+     * @return string|null
      */
-    protected function normalizeStringUsingStrtolower(string $input): string
+    protected function normalizeStringUsingStrtolower(string $input = null): ?string
     {
-        return strtolower(trim($input));
+        return $input ? strtolower(trim($input)) : null;
     }
-    
+
 
     /**
      * Get formatted string with ucwords
      *
-     * @param string $input
-     * @return string
+     * @param string|null $input
+     * @return string|null
      */
-    protected function normalizeStringUsingUcwords(string $input): string
+    protected function normalizeStringUsingUcwords(string $input = null): ?string
     {
-        return ucwords($this->normalizeStringUsingStrtolower($input));
+        return $input ? ucwords($this->normalizeStringUsingStrtolower($input)) : null;
     }
-
 
 
     /**
      * Get formatted string with ucfirst
      *
-     * @param string $input
-     * @return string
+     * @param string|null $input
+     * @return string|null
      */
-    protected function normalizeStringUsingUcfirst(string $input): string
+    protected function normalizeStringUsingUcfirst(string $input = null): ?string
     {
-        return ucfirst($this->normalizeStringUsingStrtolower($input));
+        return $input ? ucfirst($this->normalizeStringUsingStrtolower($input)) : null;
     }
 
 
@@ -52,7 +51,7 @@ trait NormalizeData
      * @param string $input
      * @return string
      */
-    protected  function normalizeStringUsingHash(string $input): string
+    protected function normalizeStringUsingHash(string $input): string
     {
         return Hash::make($input);
     }

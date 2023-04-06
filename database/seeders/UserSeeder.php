@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'name' => config('admin.name'),
             'last_name' => config('admin.last_name'),
             'email' => config('admin.email'),
-            'password' => config('admin.password'),
+            'password' => Hash::make(config('admin.password')),
             'email_verified_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

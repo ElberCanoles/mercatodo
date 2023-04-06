@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth', 'verified', 'role:buyer']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'role:role.buyer']], function () {
 
     Route::prefix('buyer')->group(function () {
 

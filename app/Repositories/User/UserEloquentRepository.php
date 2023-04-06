@@ -53,12 +53,14 @@ final class UserEloquentRepository extends Repository implements UserRepositoryI
 
 
         return $query->orderBy('created_at', 'DESC')
-            ->paginate(SystemParams::LENGTH_PER_PAGE)->through(fn ($user) => [
+            ->paginate(SystemParams::LENGTH_PER_PAGE)->through(fn($user) => [
                 'name' => $user->name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,
-                'verified' => $user->email_verified_at != null ? UserVerify::VERIFIED : UserVerify::NON_VERIFIED,
-                'status' => $user->status,
+                'verified_key' => $user->email_verified_at != null ? UserVerify::VERIFIED : UserVerify::NON_VERIFIED,
+                'verified_value' => $user->email_verified_at != null ? trans(UserVerify::VERIFIED) : trans(UserVerify::NON_VERIFIED),
+                'status_key' => $user->status,
+                'status_value' => trans($user->status),
                 'created_at' => $user->created_at->format('d-m-Y'),
                 'edit_url' => route('admin.users.edit', ['user' => $user->id]),
             ]);
@@ -103,7 +105,7 @@ final class UserEloquentRepository extends Repository implements UserRepositoryI
             $user->fill([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'last_name' => $this->normalizeStringUsingUcwords($data['last_name']),
-                'email' => $this->normalizeStringUsingStrtolower($data['email']),
+                'email' => $this->normalizeStringUsingStrtolower($data['email'] ?? null) ?? $user->email,
                 'status' => $data['status'] ?? $user->status,
             ]);
 
@@ -156,7 +158,10 @@ final class UserEloquentRepository extends Repository implements UserRepositoryI
      */
     public function allStatuses(): array
     {
-        return UserStatus::asArray();
+        return collect(UserStatus::asArray())->map(fn($status) => [
+            'key' => $status,
+            'value' => trans($status)
+        ])->toArray();
     }
 
 
