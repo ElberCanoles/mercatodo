@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Repositories\User;
 
 use App\Enums\General\SystemParams;
-use App\Enums\User\RoleType;
 use App\Enums\User\UserStatus;
 use App\Enums\User\UserVerify;
 use App\Models\User;
@@ -28,16 +27,21 @@ final class UserEloquentRepository extends Repository implements UserRepositoryI
      * Get all users
      *
      * @param array $queryParams
+     * @param mixed ...$arguments
      * @return LengthAwarePaginator
      */
-    public function all(array $queryParams = []): LengthAwarePaginator
+    public function all(array $queryParams = [], ...$arguments): LengthAwarePaginator
     {
 
         $query = $this->model::query()
-            ->whereHas('roles', function ($subQuery) {
-                $subQuery->where('name', RoleType::BUYER);
-            })
             ->select('id', 'name', 'last_name', 'email', 'status', 'email_verified_at', 'created_at');
+
+        if ($this->isDefined($arguments['role'] ?? null)) {
+
+            $query = $query->whereHas('roles', function ($subQuery) use ($arguments) {
+                $subQuery->where('name', $arguments['role']);
+            });
+        }
 
         if ($this->isDefined($queryParams['name'] ?? null)) {
             $query = $query->where('name', 'like', '%' . $queryParams['name'] . '%');

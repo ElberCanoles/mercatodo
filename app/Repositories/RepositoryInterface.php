@@ -7,7 +7,7 @@ namespace App\Repositories;
 
 interface RepositoryInterface
 {
-    public function all(array $queryParams = []);
+    public function all(array $queryParams = [], ...$arguments);
 
     public function store(array $data);
 
