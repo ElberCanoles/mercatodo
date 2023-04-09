@@ -46,9 +46,11 @@ const submit = () => {
             try {
                 const dataErrors = exception.response.data.errors
 
-                $.each(dataErrors, function (key, value) {
-                    errors.value[key] = value[0]
-                })
+                for (let key in dataErrors) {
+                    if (dataErrors.hasOwnProperty(key)) {
+                        errors.value[key] = dataErrors[key][0];
+                    }
+                }
 
             } catch (error) {
 

@@ -17,12 +17,12 @@ use Illuminate\View\View;
 final class RegisteredUserController extends Controller
 {
 
-    private UserRepositoryInterface $repository;
 
-
-    public function __construct(UserRepositoryInterface $repository)
+    /**
+     * @param UserRepositoryInterface $repository
+     */
+    public function __construct(private UserRepositoryInterface $repository)
     {
-        $this->repository = $repository;
     }
 
 
@@ -36,6 +36,7 @@ final class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+
     /**
      * Handle an incoming registration request.
      *
@@ -46,7 +47,7 @@ final class RegisteredUserController extends Controller
     {
         if ($user = $this->repository->store($request->validated())) {
 
-            $user->assignRole(RoleType::Buyer);
+            $user->assignRole(RoleType::BUYER);
 
             event(new Registered($user));
 

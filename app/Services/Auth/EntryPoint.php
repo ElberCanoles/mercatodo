@@ -20,11 +20,11 @@ class EntryPoint
 
         if (auth()->check()) {
 
-            if (request()->user()->hasRole(RoleType::Administrator)) {
+            if (request()->user()->hasRole(RoleType::ADMINISTRATOR)) {
                 $response = route('admin.dashboard');
             }
 
-            if (request()->user()->hasRole(RoleType::Buyer)) {
+            if (request()->user()->hasRole(RoleType::BUYER)) {
                 $response = route('buyer.dashboard');
             }
         }

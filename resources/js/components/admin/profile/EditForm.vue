@@ -1,6 +1,6 @@
 <script setup>
 
-import {ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 import PrimaryButton from '@/components/common/PrimaryButton.vue'
 import InputError from '@/components/common/InputError.vue'
 import UpdatePassword from "@/components/admin/profile/UpdatePassword.vue";
@@ -50,15 +50,17 @@ const submit = () => {
             try {
                 const dataErrors = exception.response.data.errors
 
-                $.each(dataErrors, function (key, value) {
-                    errors.value[key] = value[0]
-                })
+                for (let key in dataErrors) {
+                    if (dataErrors.hasOwnProperty(key)) {
+                        errors.value[key] = dataErrors[key][0];
+                    }
+                }
 
             } catch (error) {}
 
         }).finally(() => {
-        form.value.processing = false
-    });
+            form.value.processing = false
+        });
 }
 
 onMounted(() => {
@@ -70,22 +72,25 @@ onMounted(() => {
 </script>
 
 <template>
-
     <div class="row">
 
         <div class="col-md-12">
 
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="personal-data-tab" data-bs-toggle="tab" data-bs-target="#personal-data" type="button" role="tab" aria-controls="personal-data" aria-selected="true">Datos Personales</button>
+                    <button class="nav-link active" id="personal-data-tab" data-bs-toggle="tab"
+                        data-bs-target="#personal-data" type="button" role="tab" aria-controls="personal-data"
+                        aria-selected="true">Datos Personales</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="security-data-tab" data-bs-toggle="tab" data-bs-target="#security-data" type="button" role="tab" aria-controls="security-data" aria-selected="false">Seguridad</button>
+                    <button class="nav-link" id="security-data-tab" data-bs-toggle="tab" data-bs-target="#security-data"
+                        type="button" role="tab" aria-controls="security-data" aria-selected="false">Seguridad</button>
                 </li>
             </ul>
 
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="personal-data" role="tabpanel" aria-labelledby="personal-data-tab">
+                <div class="tab-pane fade show active" id="personal-data" role="tabpanel"
+                    aria-labelledby="personal-data-tab">
 
                     <form @submit.prevent="submit" class="form-medium">
 
@@ -108,19 +113,18 @@ onMounted(() => {
                             <div class="col-sm-6">
                                 <div class="form-floating">
                                     <input type="text" id="name" class="form-control" placeholder="Nombres"
-                                           v-model="form.name">
+                                        v-model="form.name">
                                     <label for="name">Nombres</label>
-                                    <InputError class="mt-2" :message="errors.name"/>
+                                    <InputError class="mt-2" :message="errors.name" />
                                 </div>
                             </div>
 
                             <div class="col-sm-6">
                                 <div class="form-floating">
-                                    <input type="text" id="last_name" class="form-control"
-                                           placeholder="Apellidos"
-                                           v-model="form.last_name">
+                                    <input type="text" id="last_name" class="form-control" placeholder="Apellidos"
+                                        v-model="form.last_name">
                                     <label for="last_name">Apellidos</label>
-                                    <InputError class="mt-2" :message="errors.last_name"/>
+                                    <InputError class="mt-2" :message="errors.last_name" />
                                 </div>
 
                             </div>
@@ -128,11 +132,10 @@ onMounted(() => {
 
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input type="email" id="email" class="form-control"
-                                           placeholder="nombre@example.com"
-                                           autocomplete="username" v-model="form.email">
+                                    <input type="email" id="email" class="form-control" placeholder="nombre@example.com"
+                                        autocomplete="username" v-model="form.email">
                                     <label for="email">Correo electrónico</label>
-                                    <InputError class="mt-2" :message="errors.email"/>
+                                    <InputError class="mt-2" :message="errors.email" />
                                 </div>
                             </div>
 

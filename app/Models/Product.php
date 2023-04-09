@@ -40,8 +40,8 @@ class Product extends Model
         static::addGlobalScope(new AvailableScope);
 
         static::updated(function ($product) {
-            if ($product->stock == 0 && $product->status == ProductStatus::Available) {
-                $product->status = ProductStatus::Unavailable;
+            if ($product->stock == 0 && $product->status == ProductStatus::AVAILABLE) {
+                $product->status = ProductStatus::UNAVAILABLE;
 
                 $product->save();
             }
@@ -65,7 +65,7 @@ class Product extends Model
 
     public function scopeAvailable($query)
     {
-        $query->where('status', ProductStatus::Available);
+        $query->where('status', ProductStatus::AVAILABLE);
     }
 
     public function getTotalAttribute()

@@ -19,11 +19,11 @@ const classVerification = (value) => {
 
     switch (value) {
 
-        case 'Verificado':
+        case 'user.verified':
             verifyClass = 'bg-primary'
             break;
 
-        case 'No Verificado':
+        case 'user.non_verified':
             verifyClass = 'bg-secondary'
             break;
 
@@ -37,11 +37,11 @@ const classStatus = (value) => {
 
     switch (value) {
 
-        case 'Activo':
+        case 'user.active':
             verifyClass = 'bg-success'
             break;
 
-        case 'Inactivo':
+        case 'user.inactive':
             verifyClass = 'bg-danger'
             break;
 
@@ -105,10 +105,10 @@ getData(url.value)
                 <td>{{ user?.last_name }}</td>
                 <td>{{ user?.email }}</td>
                 <td>
-                    <span class="badge rounded-pill" :class="classVerification(user?.verified)">{{ user?.verified }}</span>
+                    <span class="badge rounded-pill" :class="classVerification(user?.verified_key)">{{ user?.verified_value }}</span>
                 </td>
                 <td>
-                    <span class="badge rounded-pill" :class="classStatus(user?.status)">{{ user?.status }}</span>
+                    <span class="badge rounded-pill" :class="classStatus(user?.status_key)">{{ user?.status_value }}</span>
                 </td>
                 <td>{{ user?.created_at }}</td>
                 <td>

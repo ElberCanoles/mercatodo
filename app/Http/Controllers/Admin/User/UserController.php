@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\User;
 
+use App\Enums\User\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
 use App\Repositories\User\UserRepositoryInterface;
@@ -18,15 +19,12 @@ final class UserController extends Controller
 
     use MakeJsonResponse;
 
-    private UserRepositoryInterface $repository;
-
 
     /**
      * @param UserRepositoryInterface $repository
      */
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(private UserRepositoryInterface $repository)
     {
-        $this->repository = $repository;
     }
 
 
@@ -40,7 +38,14 @@ final class UserController extends Controller
     {
         if ($request->wantsJson()) {
 
-            return $this->successResponse(data: $this->repository->all($request->all()));
+            return $this->successResponse(
+
+                data: $this->repository->all(
+
+                    queryParams: $request->all(),
+                    role: RoleType::BUYER
+                )
+            );
         } else {
 
             return view('admin.users.index');

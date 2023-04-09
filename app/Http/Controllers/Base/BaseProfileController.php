@@ -18,19 +18,17 @@ abstract class BaseProfileController extends Controller
 
     use MakeJsonResponse;
 
-    private UserRepositoryInterface $repository;
 
     /**
      * @param UserRepositoryInterface $repository
      */
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(private UserRepositoryInterface $repository)
     {
-        $this->repository = $repository;
     }
-    
+
 
     abstract public function show(): View;
-    
+
 
     /**
      * Update personal data

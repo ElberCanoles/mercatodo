@@ -19,9 +19,9 @@ class Order extends Model
         'user_id',
     ];
 
-    public function payment()
+    public function payments()
     {
-        return $this->hasOne(Payment::class);
+        return $this->hasMany(Payment::class);
     }
 
     public function user()

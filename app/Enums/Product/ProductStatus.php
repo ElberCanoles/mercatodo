@@ -7,6 +7,6 @@ use BenSampo\Enum\Enum;
 
 final class ProductStatus extends Enum
 {
-    const Available = 'Disponible';
-    const Unavailable = 'No Disponible';
+    const AVAILABLE = 'product.available';
+    const UNAVAILABLE = 'product.unavailable';
 }

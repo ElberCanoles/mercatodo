@@ -50,11 +50,14 @@ const submit = () => {
             try {
                 const dataErrors = exception.response.data.errors
 
-                $.each(dataErrors, function (key, value) {
-                    errors.value[key] = value[0]
-                })
+                for (let key in dataErrors) {
+                    if (dataErrors.hasOwnProperty(key)) {
+                        errors.value[key] = dataErrors[key][0];
+                    }
+                }
 
-            } catch (error) {}
+            } catch (error) {
+            }
 
         }).finally(() => {
         form.value.processing = false
@@ -116,8 +119,8 @@ onMounted(() => {
                     <div class="col-12">
                         <div class="form-floating">
                             <input type="email" id="email" class="form-control"
-                                   placeholder="nombre@example.com"
-                                   autocomplete="username" v-model="form.email">
+                                   disabled
+                                   v-model="form.email">
                             <label for="email">Correo electrónico</label>
                             <InputError class="mt-2" :message="errors.email"/>
                         </div>
@@ -126,8 +129,8 @@ onMounted(() => {
                     <div class="col-12">
                         <div class="form-floating">
                             <select class="form-select" id="status" v-model="form.status">
-                                <option v-for="(status, index) in statuses" :key="index" :value="status">
-                                    {{ status }}
+                                <option v-for="(status, index) in statuses" :key="index" :value="status.key">
+                                    {{ status.value }}
                                 </option>
                             </select>
                             <label for="status">Estado</label>

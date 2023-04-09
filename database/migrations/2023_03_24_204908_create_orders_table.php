@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
-            $table->enum('status', OrderStatus::asArray())->default(OrderStatus::Pending);
+            $table->enum('status', OrderStatus::asArray())->default(OrderStatus::PENDING);
             $table->timestamps();
         });
     }

@@ -14,12 +14,12 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('slug', 500)->unique();
-            $table->string('description', 1000)->nullable();
+            $table->string('name', 100)->index();
+            $table->string('slug', 150)->unique();
+            $table->tinyText('description')->nullable();
             $table->unsignedFloat('price');
             $table->unsignedInteger('stock');
-            $table->enum('status', ProductStatus::asArray())->default(ProductStatus::Available);
+            $table->enum('status', ProductStatus::asArray())->default(ProductStatus::AVAILABLE);
             $table->softDeletes();
             $table->timestamps();
         });

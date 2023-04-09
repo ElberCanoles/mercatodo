@@ -21,7 +21,7 @@ class PermissionSeeder extends Seeder
         foreach ($routesAdminCollection as $key => $value) {
             if (Str::startsWith($value->action['as'] ?? '', 'admin.')) {
                 try {
-                    Permission::create(['name' => $value->action['as']])->assignRole(RoleType::Administrator);
+                    Permission::create(['name' => $value->action['as']])->assignRole(RoleType::ADMINISTRATOR);
                 } catch (\Throwable $throwable) {
                 }
             }
@@ -33,7 +33,7 @@ class PermissionSeeder extends Seeder
         foreach ($routesBuyerCollection as $key => $value) {
             if (Str::startsWith($value->action['as'] ?? '', 'buyer.')) {
                 try {
-                    Permission::create(['name' => $value->action['as']])->assignRole(RoleType::Buyer);
+                    Permission::create(['name' => $value->action['as']])->assignRole(RoleType::BUYER);
                 } catch (\Throwable $throwable) {
                 }
             }
