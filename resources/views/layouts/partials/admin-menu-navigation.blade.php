@@ -10,3 +10,10 @@
         Usuarios
     </a>
 </li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('admin.products*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">
+        <span data-feather="sliders"></span>
+        Productos
+    </a>
+</li>
+

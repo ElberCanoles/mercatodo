@@ -11,6 +11,8 @@ import AdminUsersTable from '@/components/admin/users/Table.vue'
 import AdminUsersEditForm from '@/components/admin/users/crud/EditForm.vue'
 import AdminProfileEditForm from '@/components/admin/profile/EditForm.vue'
 
+import AdminProductsTable from '@/components/admin/products/Table.vue'
+
 import BuyerProfileEditForm from '@/components/buyer/profile/EditForm.vue'
 
 
@@ -28,6 +30,7 @@ window.app = createApp({
         ResetPasswordForm,
         AdminUsersTable,
         AdminUsersEditForm,
+        AdminProductsTable,
         AdminProfileEditForm,
         BuyerProfileEditForm,
     },
