@@ -106,7 +106,8 @@ getData(url.value)
                     </td>
                     <td>{{ product?.created_at }}</td>
                     <td>
-                        <a :href="product?.edit_url">Editar</a>
+                        <a :href="product?.edit_url" class="me-2">Editar</a>
+                        <a :href="product?.edit_url">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

@@ -56,4 +56,15 @@ trait NormalizeData
         return Hash::make($input);
     }
 
+
+    /**
+     * Get the absolute value of a number
+     *
+     * @param integer|float $input
+     * @return integer|float
+     */
+    protected function normalizeNumberUsingAbs(int|float $input): int|float
+    {
+        return abs($input);
+    }
 }

@@ -6,12 +6,13 @@ use App\Enums\General\SystemParams;
 use App\Enums\Product\ProductStatus;
 use App\Models\Product;
 use App\Repositories\Repository;
+use App\Services\Utilities\SlugeableService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 final class ProductEloquentRepository extends Repository implements ProductRepositoryInterface
 {
 
-    public function __construct(private Product $model)
+    public function __construct(private Product $model, private SlugeableService $slugeableService)
     {
     }
 
@@ -49,12 +50,31 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 'status_value' => trans($product->status),
                 'created_at' => $product->created_at->format('d-m-Y'),
                 'edit_url' => route('admin.products.edit', ['product' => $product->id]),
+                'delete_url' => route('admin.products.destroy', ['product' => $product->id])
             ]);
     }
 
-    public function store(array $data)
+    public function store(array $data): ?Product
     {
-        // TODO: Implement store() method.
+        try {
+
+            $slug = $this->slugeableService->getUniqueSlugByEloquentModel(
+                input: $data['name'],
+                model: $this->model,
+                columName: 'slug'
+            );
+
+            return $this->model::create([
+                'name' => $this->normalizeStringUsingUcwords($data['name']),
+                'slug' => $slug,
+                'price' => $this->normalizeNumberUsingAbs($data['price']),
+                'stock' => $this->normalizeNumberUsingAbs($data['stock']),
+                'description' => $this->normalizeStringUsingUcfirst($data['description'])
+            ]);
+        } catch (\Throwable $throwable) {
+            dd($throwable);
+            return null;
+        }
     }
 
     public function update(array $data, int $id)
@@ -79,7 +99,7 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
      */
     public function allStatuses(): array
     {
-        return collect(ProductStatus::asArray())->map(fn($status) => [
+        return collect(ProductStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status)
         ])->toArray();
