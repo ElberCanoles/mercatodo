@@ -13,6 +13,7 @@ import AdminProfileEditForm from '@/components/admin/profile/EditForm.vue'
 
 import AdminProductsTable from '@/components/admin/products/Table.vue'
 import AdminProductsCreateForm from '@/components/admin/products/crud/CreateForm.vue'
+import AdminProductsEditForm from '@/components/admin/products/crud/EditForm.vue'
 
 import BuyerProfileEditForm from '@/components/buyer/profile/EditForm.vue'
 
@@ -33,6 +34,7 @@ window.app = createApp({
         AdminUsersEditForm,
         AdminProductsTable,
         AdminProductsCreateForm,
+        AdminProductsEditForm,
         AdminProfileEditForm,
         BuyerProfileEditForm,
     },

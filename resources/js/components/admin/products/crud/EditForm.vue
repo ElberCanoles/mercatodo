@@ -1,19 +1,20 @@
 <script setup>
 
-import {ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 import PrimaryButton from '@/components/common/PrimaryButton.vue'
 import InputError from '@/components/common/InputError.vue'
 
 const props = defineProps({
-    user: Object,
+    product: Object,
     statuses: {},
 });
 
 const form = ref({
     name: '',
-    last_name: '',
-    email: '',
-    status: null,
+    description: '',
+    price: '',
+    stock: '',
+    status: '',
     processing: false,
 })
 
@@ -23,6 +24,7 @@ const status = ref({
     message: '',
     success: false,
 })
+
 
 const resetStatus = () => {
     status.value = Object.assign({}, {
@@ -36,7 +38,7 @@ const submit = () => {
     form.value.processing = true
 
     axios
-        .put(`/admin/users/${props.user.id}`, form.value)
+        .put(`/admin/products/${props.product.id}`, form.value)
         .then((response) => {
             errors.value = {}
             status.value.message = response.data.message
@@ -60,21 +62,21 @@ const submit = () => {
             }
 
         }).finally(() => {
-        form.value.processing = false
-    });
+            form.value.processing = false
+        });
 }
 
 onMounted(() => {
-    form.value.name = props.user.name
-    form.value.last_name = props.user.last_name
-    form.value.email = props.user.email
-    form.value.status = props.user.status
+    form.value.name = props.product.name
+    form.value.description = props.product.description
+    form.value.price = props.product.price
+    form.value.stock = props.product.stock
+    form.value.status = props.product.status
 });
 
 </script>
 
 <template>
-
     <div class="row">
 
         <div class="col-md-12">
@@ -95,48 +97,57 @@ onMounted(() => {
                         </p>
                     </div>
 
-                    <div class="col-sm-6">
-                        <div class="form-floating">
-                            <input type="text" id="name" class="form-control" placeholder="Nombres"
-                                   v-model="form.name">
-                            <label for="name">Nombres</label>
-                            <InputError class="mt-2" :message="errors.name"/>
-                        </div>
-                    </div>
 
                     <div class="col-sm-6">
                         <div class="form-floating">
-                            <input type="text" id="last_name" class="form-control"
-                                   placeholder="Apellidos"
-                                   v-model="form.last_name">
-                            <label for="last_name">Apellidos</label>
-                            <InputError class="mt-2" :message="errors.last_name"/>
+                            <input type="text" id="name" class="form-control" placeholder="Nombre" v-model="form.name">
+                            <label for="name">Nombre</label>
+                            <InputError class="mt-2" :message="errors.name" />
                         </div>
-
                     </div>
 
-
-                    <div class="col-12">
+                    <div class="col-sm-6">
                         <div class="form-floating">
-                            <input type="email" id="email" class="form-control"
-                                   disabled
-                                   v-model="form.email">
-                            <label for="email">Correo electrónico</label>
-                            <InputError class="mt-2" :message="errors.email"/>
+                            <input type="number" step="0.01" id="price" class="form-control" placeholder="Precio"
+                                v-model="form.price">
+                            <label for="price">Precio</label>
+                            <InputError class="mt-2" :message="errors.price" />
                         </div>
+
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-sm-6">
+                        <div class="form-floating">
+                            <input type="number" id="stock" class="form-control" placeholder="Stock" v-model="form.stock">
+                            <label for="stock">Stock</label>
+                            <InputError class="mt-2" :message="errors.stock" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6">
                         <div class="form-floating">
                             <select class="form-select" id="status" v-model="form.status">
+                                <option value="">Elija una opción...</option>
                                 <option v-for="(status, index) in statuses" :key="index" :value="status.key">
                                     {{ status.value }}
                                 </option>
                             </select>
                             <label for="status">Estado</label>
-                            <InputError class="mt-2" :message="errors.status"/>
+                            <InputError class="mt-2" :message="errors.status" />
                         </div>
                     </div>
+
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <textarea id="description" class="form-control" v-model="form.description">
+                                        </textarea>
+                            <label for="description">Descripción</label>
+                            <InputError class="mt-2" :message="errors.description" />
+                        </div>
+                    </div>
+
+
 
                 </div>
 

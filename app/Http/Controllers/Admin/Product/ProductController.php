@@ -6,9 +6,9 @@ namespace App\Http\Controllers\Admin\Product;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
+use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Product;
 use App\Repositories\Product\ProductRepositoryInterface;
-use App\Scopes\AvailableScope;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -39,8 +39,7 @@ final class ProductController extends Controller
 
                 data: $this->repository->all(
 
-                    queryParams: $request->all(),
-                    withoutGlobalScope: AvailableScope::class
+                    queryParams: $request->all()
                 )
             );
         } else {
@@ -100,9 +99,18 @@ final class ProductController extends Controller
     }
 
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateRequest $request, Product $product)
     {
-        //
+        if ($this->repository->update($request->validated(), $product->id)) {
+
+            return $this->showMessage(message: trans('server.record_updated'));
+        } else {
+
+            return $this->errorResponseWithBag(
+                collection: ['server' => [trans('server.internal_error')]],
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
 

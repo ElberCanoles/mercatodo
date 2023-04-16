@@ -21,10 +21,6 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
         $query = $this->model::query()
             ->select('id', 'name', 'price', 'stock', 'status', 'created_at');
 
-        if ($this->isDefined($arguments['withoutGlobalScope'] ?? null)) {
-            $query = $query->withoutGlobalScope($arguments['withoutGlobalScope']);
-        }
-
         if ($this->isDefined($queryParams['name'] ?? null)) {
             $query = $query->where('name', 'like', '%' . $queryParams['name'] . '%');
         }
@@ -69,6 +65,7 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 'slug' => $slug,
                 'price' => $this->normalizeNumberUsingAbs($data['price']),
                 'stock' => $this->normalizeNumberUsingAbs($data['stock']),
+                'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
                 'description' => $this->normalizeStringUsingUcfirst($data['description'])
             ]);
         } catch (\Throwable $throwable) {
@@ -79,7 +76,33 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
 
     public function update(array $data, int $id)
     {
-        // TODO: Implement update() method.
+        $product = $this->find(id: $id);
+
+        try {
+
+            $product->fill([
+                'name' => $this->normalizeStringUsingUcwords($data['name']),
+                'price' => $this->normalizeNumberUsingAbs($data['price']),
+                'stock' => $this->normalizeNumberUsingAbs($data['stock']),
+                'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
+                'description' => $this->normalizeStringUsingUcfirst($data['description'])
+            ]);
+
+            if ($product->isDirty('name')) {
+
+                $slug = $this->slugeableService->getUniqueSlugByEloquentModel(
+                    input: $data['name'],
+                    model: $this->model,
+                    columName: 'slug'
+                );
+
+                $product->slug = $slug;
+            }
+
+            return $product->save();
+        } catch (\Throwable $throwable) {
+            return false;
+        }
     }
 
     public function delete(int $id)
@@ -87,9 +110,9 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
         // TODO: Implement delete() method.
     }
 
-    public function find(int $id)
+    public function find(int $id): ?Product
     {
-        // TODO: Implement find() method.
+        return $this->model->find($id);
     }
 
     /**
