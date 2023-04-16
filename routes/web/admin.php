@@ -17,6 +17,8 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.administ
             Route::patch('/profile/password', [App\Http\Controllers\Admin\ProfileController::class, 'updatePassword'])->name('profile.update.password');
 
             Route::resource('users', \App\Http\Controllers\Admin\User\UserController::class)->only(['index', 'edit', 'update']);
+
+            Route::resource('products', \App\Http\Controllers\Admin\Product\ProductController::class);
         });
     });
 });

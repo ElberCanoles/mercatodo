@@ -10,16 +10,13 @@ use App\Enums\User\UserVerify;
 use App\Models\User;
 use App\Repositories\Repository;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Model;
 
 final class UserEloquentRepository extends Repository implements UserRepositoryInterface
 {
 
-    private Model $model;
 
-    public function __construct(User $user)
+    public function __construct(private User $model)
     {
-        $this->model = $user;
     }
 
 

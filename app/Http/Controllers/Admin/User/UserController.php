@@ -23,7 +23,7 @@ final class UserController extends Controller
     /**
      * @param UserRepositoryInterface $repository
      */
-    public function __construct(private UserRepositoryInterface $repository)
+    public function __construct(private readonly UserRepositoryInterface $repository)
     {
     }
 
