@@ -1,6 +1,7 @@
 <script setup>
 
 import { ref } from 'vue'
+import Swal from 'sweetalert2'
 
 const props = defineProps({
     statuses: {},
@@ -39,11 +40,7 @@ const classStatus = (value) => {
 const getData = async (url) => {
 
     try {
-        const { data } = await axios.get(`${url}
-            &name=${search.value.name}
-            &price=${search.value.price}
-            &stock=${search.value.stock}
-            &status=${search.value.status}`)
+        const { data } = await axios.get(`${url}&name=${search.value.name}&price=${search.value.price}&stock=${search.value.stock}&status=${search.value.status}`)
 
         products.value = data.data
         links.value = data.links
@@ -51,6 +48,56 @@ const getData = async (url) => {
     } catch (error) {
 
     }
+}
+
+const reloadTable = async () => {
+    getData(url.value)
+}
+
+const deleteProduct = async (url) => {
+
+    Swal.fire({
+        title: "¿ Esta seguro ?",
+        text: "Confirme que desea eliminar este producto",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si, eliminar",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            try {
+
+                axios
+                    .delete(url)
+                    .then((response) => {
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Operación exitosa!',
+                            text: response.data.message,
+                        })
+
+                        reloadTable()
+                    })
+                    .catch((exception) => {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: exception.response.data.error,
+                        })
+                    });
+
+            } catch (error) {
+
+            }
+
+        }
+    });
+
 }
 
 
@@ -107,7 +154,7 @@ getData(url.value)
                     <td>{{ product?.created_at }}</td>
                     <td>
                         <a :href="product?.edit_url" class="me-2">Editar</a>
-                        <a :href="product?.edit_url">Eliminar</a>
+                        <a :href="product?.delete_url" @click.prevent="deleteProduct(product?.delete_url)">Eliminar</a>
                     </td>
                 </tr>
             </tbody>

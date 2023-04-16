@@ -116,6 +116,16 @@ final class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        //
+
+        if ($this->repository->delete($product->id)) {
+
+            return $this->showMessage(message: trans('server.record_deleted'));
+        } else {
+
+            return $this->errorResponse(
+                message: trans('server.internal_error'),
+                code: Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 }

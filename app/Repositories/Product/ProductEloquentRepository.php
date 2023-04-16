@@ -16,6 +16,7 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
     {
     }
 
+
     public function all(array $queryParams = [], ...$arguments): LengthAwarePaginator
     {
         $query = $this->model::query()
@@ -50,6 +51,7 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
             ]);
     }
 
+
     public function store(array $data): ?Product
     {
         try {
@@ -73,6 +75,7 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
             return null;
         }
     }
+
 
     public function update(array $data, int $id)
     {
@@ -105,15 +108,36 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
         }
     }
 
-    public function delete(int $id)
+
+    /**
+     * Delete one product on database
+     *
+     * @param integer $id
+     * @return boolean
+     */
+    public function delete(int $id): bool
     {
-        // TODO: Implement delete() method.
+        try {
+            $this->model->destroy($id);
+
+            return true;
+        } catch (\Throwable $throwable) {
+            return false;
+        }
     }
 
+
+    /**
+     * Get one product record by id
+     *
+     * @param integer $id
+     * @return Product|null
+     */
     public function find(int $id): ?Product
     {
         return $this->model->find($id);
     }
+
 
     /**
      * Get all product statuses
