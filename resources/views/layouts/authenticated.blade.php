@@ -39,11 +39,11 @@
                         </a>
                     </li>
 
-                    @role(App\Enums\User\RoleType::Administrator)
+                    @role(App\Enums\User\RoleType::ADMINISTRATOR)
                         @include('layouts.partials.admin-menu-navigation')
                     @endrole
 
-                    @role(App\Enums\User\RoleType::Buyer)
+                    @role(App\Enums\User\RoleType::BUYER)
                        @include('layouts.partials.buyer-menu-navigation')
                     @endrole
 
