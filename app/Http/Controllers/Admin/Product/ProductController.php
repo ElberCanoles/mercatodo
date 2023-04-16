@@ -24,7 +24,6 @@ final class ProductController extends Controller
     {
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -65,11 +64,10 @@ final class ProductController extends Controller
     /**
      * Store a new resource in storage.
      *
-     * @param UpdateRequest $request
-     * @param integer $id
+     * @param StoreRequest $request
      * @return JsonResponse
      */
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request): JsonResponse
     {
         if ($this->repository->store($request->validated())) {
 
@@ -83,13 +81,17 @@ final class ProductController extends Controller
         }
     }
 
-
     public function show(Product $product)
     {
         //
     }
 
-
+    /**
+     * Show edit form
+     *
+     * @param Product $product
+     * @return View
+     */
     public function edit(Product $product): View
     {
         return view('admin.products.crud.edit', [
@@ -98,8 +100,7 @@ final class ProductController extends Controller
         ]);
     }
 
-
-    public function update(UpdateRequest $request, Product $product)
+    public function update(UpdateRequest $request, Product $product): JsonResponse
     {
         if ($this->repository->update($request->validated(), $product->id)) {
 
@@ -113,8 +114,13 @@ final class ProductController extends Controller
         }
     }
 
-
-    public function destroy(Product $product)
+    /**
+     * Undocumented function
+     *
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function destroy(Product $product): JsonResponse
     {
 
         if ($this->repository->delete($product->id)) {
@@ -123,8 +129,7 @@ final class ProductController extends Controller
         } else {
 
             return $this->errorResponse(
-                message: trans('server.internal_error'),
-                code: Response::HTTP_INTERNAL_SERVER_ERROR
+                message: trans('server.internal_error')
             );
         }
     }
