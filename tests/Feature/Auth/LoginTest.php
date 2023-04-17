@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Enums\User\RoleType;
+use App\Enums\User\UserStatus;
 use App\Models\User;
 use App\Services\Auth\EntryPoint;
 use Database\Seeders\RoleSeeder;
@@ -45,4 +46,19 @@ class LoginTest extends TestCase
 
         $this->assertGuest();
     }
+
+    public function test_users_can_not_authenticate_with_inactive_status(): void
+    {
+        $user = User::factory()->create([
+            'status' => UserStatus::INACTIVE
+        ]);
+
+        $this->post('/login', [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $this->assertGuest();
+    }
+
 }
