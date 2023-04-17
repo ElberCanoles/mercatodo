@@ -8,17 +8,17 @@ use BenSampo\Enum\Enum;
 
 final class OrderStatus extends Enum
 {
-    const PENDING = 'order.pending';
+    public const PENDING = 'order.pending';
 
-    const CONFIRMED = 'order.confirmed';
+    public const CONFIRMED = 'order.confirmed';
 
-    const SENT = 'order.sent';
+    public const SENT = 'order.sent';
 
-    const DELIVERED = 'order.delivered';
+    public const DELIVERED = 'order.delivered';
 
-    const CANCELLED = 'order.cancelled';
+    public const CANCELLED = 'order.cancelled';
 
-    const IN_RETURN = 'order.in_return';
+    public const IN_RETURN = 'order.in_return';
 
-    const RETURNED = 'order.returned';
+    public const RETURNED = 'order.returned';
 }

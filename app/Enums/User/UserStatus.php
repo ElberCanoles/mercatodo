@@ -8,7 +8,7 @@ use BenSampo\Enum\Enum;
 
 final class UserStatus extends Enum
 {
-    const ACTIVE = 'user.active';
+    public const ACTIVE = 'user.active';
 
-    const INACTIVE = 'user.inactive';
+    public const INACTIVE = 'user.inactive';
 }

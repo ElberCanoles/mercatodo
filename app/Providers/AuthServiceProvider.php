@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         VerifyEmail::toMailUsing(function ($notifiable, $verificationUrl) {
-            return (new MailMessage)
+            return (new MailMessage())
                 ->subject('Verifición de cuenta')
                 ->line('haga clic en el botón de abajo para verificar su dirección de correo electrónico.')
                 ->action('Verificar Email', $verificationUrl)
@@ -34,7 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         ResetPassword::toMailUsing(function ($notifiable, $token) {
             $resetUrl = route('password.reset', ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()]);
 
-            return (new MailMessage)
+            return (new MailMessage())
                 ->subject('Restablecimiento de contraseña')
                 ->line('Está recibiendo este correo electrónico porque recibimos una solicitud de restablecimiento de contraseña para su cuenta.')
                 ->action('Restablecer la contraseña', $resetUrl)

@@ -29,9 +29,7 @@ final class UserController extends Controller
     {
         if ($request->wantsJson()) {
             return $this->successResponse(
-
                 data: $this->repository->all(
-
                     queryParams: $request->all(),
                     role: RoleType::BUYER
                 )

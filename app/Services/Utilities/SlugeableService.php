@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 
 class SlugeableService
 {
-    const SALT_LENGTH = 10;
+    public const SALT_LENGTH = 10;
 
     /**
      * Get unique slug by model

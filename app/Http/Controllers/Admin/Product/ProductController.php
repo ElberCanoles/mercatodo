@@ -30,9 +30,7 @@ final class ProductController extends Controller
     {
         if ($request->wantsJson()) {
             return $this->successResponse(
-
                 data: $this->repository->all(
-
                     queryParams: $request->all()
                 )
             );

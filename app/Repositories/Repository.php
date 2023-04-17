@@ -7,5 +7,6 @@ use App\Traits\Utilities\NormalizeData;
 
 class Repository
 {
-    use NormalizeData, CheckAttribute;
+    use NormalizeData;
+    use CheckAttribute;
 }

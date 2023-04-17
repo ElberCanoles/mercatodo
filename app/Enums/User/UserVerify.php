@@ -8,7 +8,7 @@ use BenSampo\Enum\Enum;
 
 final class UserVerify extends Enum
 {
-    const VERIFIED = 'user.verified';
+    public const VERIFIED = 'user.verified';
 
-    const NON_VERIFIED = 'user.non_verified';
+    public const NON_VERIFIED = 'user.non_verified';
 }
