@@ -19,7 +19,7 @@
         "laravel/breeze": "^1.20",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
-        "mockery/mockery": "^1.4.4",
+        "mockery/mockery": "^1.5",
         "nunomaduro/collision": "^7.0",
         "nunomaduro/laravel-mojito": "^0.2.10",
         "phpunit/phpunit": "^10.0",

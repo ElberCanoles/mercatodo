@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
 use App\Repositories\User\UserRepositoryInterface;
 use App\Services\Auth\EntryPoint;
+use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
@@ -17,6 +19,7 @@ use Illuminate\View\View;
 final class RegisteredUserController extends Controller
 {
 
+    use MakeJsonResponse;
 
     /**
      * @param UserRepositoryInterface $repository
@@ -43,7 +46,7 @@ final class RegisteredUserController extends Controller
      * @param StoreRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreRequest $request): RedirectResponse
+    public function store(StoreRequest $request): RedirectResponse|JsonResponse
     {
         if ($user = $this->repository->store($request->validated())) {
 
@@ -55,7 +58,8 @@ final class RegisteredUserController extends Controller
 
             return redirect(EntryPoint::resolveRedirectRoute());
         } else {
-            return redirect()->back()->withErrors(['status' => trans('server.unavailable_service')]);
+
+            return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]]);
         }
     }
 }

@@ -43,7 +43,7 @@ trait MakeJsonResponse
      * @param integer $code
      * @return JsonResponse
      */
-    protected function errorResponseWithBag(array $collection, int $code): JsonResponse
+    protected function errorResponseWithBag(array $collection, int $code = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
     {
         return response()->json(['errors' => $collection, 'code' => $code], $code);
     }
