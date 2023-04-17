@@ -2,25 +2,27 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Enums\User\RoleType;
 use App\Models\User;
 use App\Services\Auth\EntryPoint;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class AuthenticationTest extends TestCase
+class LoginTest extends TestCase
 {
+
     use RefreshDatabase;
 
-    public function test_login_screen_can_be_rendered(): void
+    public function setUp(): void
     {
-        $response = $this->get('/login');
-
-        $response->assertStatus(200);
+        parent::setUp();
+        $this->seed(RoleSeeder::class);
     }
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create()->assignRole(RoleType::BUYER);
 
         $response = $this->post('/login', [
             'email' => $user->email,
@@ -28,7 +30,9 @@ class AuthenticationTest extends TestCase
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(EntryPoint::resolveRedirectRoute());
+
+        $response->assertSessionDoesntHaveErrors()
+            ->assertRedirect(EntryPoint::resolveRedirectRoute());
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
@@ -42,4 +46,5 @@ class AuthenticationTest extends TestCase
 
         $this->assertGuest();
     }
+
 }
