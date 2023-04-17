@@ -7,8 +7,8 @@ use App\Repositories\User\UserRepositoryInterface;
 use App\Services\Auth\EntryPoint;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class RegisterStoreTest extends TestCase
 {
@@ -22,7 +22,6 @@ class RegisterStoreTest extends TestCase
 
     public function test_guest_user_can_send_register_data(): void
     {
-
         $user = User::factory()->make();
 
         $data = [
@@ -42,13 +41,12 @@ class RegisterStoreTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'name' => $user->name,
-            'email' => $user->email
+            'email' => $user->email,
         ]);
     }
 
     public function test_guest_user_can_not_send_register_when_internal_error(): void
     {
-
         $user = User::factory()->make();
 
         $data = [

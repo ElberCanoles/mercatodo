@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class LogoutTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function setUp(): void
@@ -32,7 +31,6 @@ class LogoutTest extends TestCase
 
         $this->assertGuest();
     }
-
 
     public function test_authenticated_buyer_users_can_logout(): void
     {

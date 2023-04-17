@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class AuthServiceProvider extends ServiceProvider
@@ -27,12 +27,11 @@ class AuthServiceProvider extends ServiceProvider
             return (new MailMessage)
                 ->subject('Verifición de cuenta')
                 ->line('haga clic en el botón de abajo para verificar su dirección de correo electrónico.')
-                ->action('Verificar Email',  $verificationUrl)
+                ->action('Verificar Email', $verificationUrl)
                 ->line('Si no creó una cuenta, no es necesario realizar ninguna otra acción.');
         });
 
         ResetPassword::toMailUsing(function ($notifiable, $token) {
-
             $resetUrl = route('password.reset', ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()]);
 
             return (new MailMessage)

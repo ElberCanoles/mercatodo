@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Enums\User\RoleType;
-use Spatie\Permission\Models\Role;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        #  registering system roles
+        //  registering system roles
         Role::create(['name' => RoleType::ADMINISTRATOR]);
         Role::create(['name' => RoleType::BUYER]);
     }

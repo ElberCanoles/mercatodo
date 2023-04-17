@@ -4,8 +4,8 @@ namespace Tests\Feature\Admin;
 
 use App\Enums\User\RoleType;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase

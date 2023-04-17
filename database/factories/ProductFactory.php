@@ -29,7 +29,7 @@ class ProductFactory extends Factory
             'description' => fake()->sentence(),
             'price' => rand(1000, 1000000),
             'stock' => rand(10, 100),
-            'status' => $statuses[rand(0, count($statuses)-1)],
+            'status' => $statuses[rand(0, count($statuses) - 1)],
         ];
     }
 }

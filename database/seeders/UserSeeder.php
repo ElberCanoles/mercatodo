@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        # register default admin
+        // register default admin
         User::create([
             'name' => config('admin.name'),
             'last_name' => config('admin.last_name'),
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ])->assignRole(RoleType::ADMINISTRATOR);
 
-        # register some users buyers demo
+        // register some users buyers demo
         User::factory()->count(1000)->create()->each(function ($user) {
             $user->assignRole(RoleType::BUYER);
         });

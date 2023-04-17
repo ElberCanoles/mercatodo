@@ -3,11 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']], function () {
-
     Route::prefix('buyer')->group(function () {
-
         Route::name('buyer.')->group(function () {
-
             Route::get('/dashboard', function () {
                 return view('buyer.dashboard');
             })->name('dashboard');

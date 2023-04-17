@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use App\Enums\User\RoleType;
-use Spatie\Permission\Models\Permission;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        #  registering admin role permissions
+        //  registering admin role permissions
         $routesAdminCollection = Route::getRoutes();
 
         foreach ($routesAdminCollection as $key => $value) {
@@ -27,7 +27,7 @@ class PermissionSeeder extends Seeder
             }
         }
 
-        #  registering buyer role permissions
+        //  registering buyer role permissions
         $routesBuyerCollection = Route::getRoutes();
 
         foreach ($routesBuyerCollection as $key => $value) {

@@ -18,38 +18,28 @@ use Illuminate\View\View;
 
 final class RegisteredUserController extends Controller
 {
-
     use MakeJsonResponse;
 
-    /**
-     * @param UserRepositoryInterface $repository
-     */
     public function __construct(private UserRepositoryInterface $repository)
     {
     }
 
-
     /**
      * Display the registration view.
-     *
-     * @return View
      */
     public function create(): View
     {
         return view('auth.register');
     }
 
-
     /**
      * Handle an incoming registration request.
      *
-     * @param StoreRequest $request
      * @return RedirectResponse
      */
     public function store(StoreRequest $request): RedirectResponse|JsonResponse
     {
         if ($user = $this->repository->store($request->validated())) {
-
             $user->assignRole(RoleType::BUYER);
 
             event(new Registered($user));
@@ -58,7 +48,6 @@ final class RegisteredUserController extends Controller
 
             return redirect(EntryPoint::resolveRedirectRoute());
         } else {
-
             return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]]);
         }
     }

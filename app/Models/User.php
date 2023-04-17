@@ -54,5 +54,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasManyThrough(Payment::class, Order::class);
     }
-
 }
