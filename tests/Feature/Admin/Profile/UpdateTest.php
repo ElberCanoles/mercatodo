@@ -1,21 +1,27 @@
 <?php
 
-namespace Tests\Feature\Admin;
+namespace Tests\Feature\Admin\Profile;
 
 use App\Enums\User\RoleType;
 use App\Models\User;
+use App\Repositories\User\UserRepositoryInterface;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Spatie\Permission\Models\Role;
+use Mockery;
 use Tests\TestCase;
 
-class ProfileTest extends TestCase
+class UpdateTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_profile_admin_page_is_displayed(): void
+    public function setUp(): void
     {
-        Role::create(['name' => RoleType::ADMINISTRATOR]);
+        parent::setUp();
+        $this->seed(RoleSeeder::class);
+    }
 
+    public function test_admin_profile_page_is_displayed(): void
+    {
         $user = User::factory()
             ->create()
             ->assignRole(RoleType::ADMINISTRATOR);
@@ -27,10 +33,8 @@ class ProfileTest extends TestCase
         $response->assertOk();
     }
 
-    public function test_profile_information_can_be_updated(): void
+    public function test_admin_profile_information_can_be_updated(): void
     {
-        Role::create(['name' => RoleType::ADMINISTRATOR]);
-
         $user = User::factory()
             ->create()
             ->assignRole(RoleType::ADMINISTRATOR);
@@ -54,10 +58,31 @@ class ProfileTest extends TestCase
         $this->assertNull($user->email_verified_at);
     }
 
-    public function test_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
+    public function test_admin_profile_can_not_update_when_internal_error(): void
     {
-        Role::create(['name' => RoleType::ADMINISTRATOR]);
+        $user = User::factory()
+            ->create()
+            ->assignRole(RoleType::ADMINISTRATOR);
 
+        $this->mock(UserRepositoryInterface::class, function ($mock) {
+            $mock->shouldReceive('update')->andReturn(null);
+        });
+
+        $response = $this
+            ->actingAs($user)
+            ->patch('/admin/profile', [
+                'name' => 'Test User',
+                'last_name' => 'User Test',
+                'email' => 'test@example.com',
+            ]);
+
+        $response->assertStatus(500);
+
+        Mockery::close();
+    }
+
+    public function test_admin_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
+    {
         $user = User::factory()
             ->create()
             ->assignRole(RoleType::ADMINISTRATOR);
