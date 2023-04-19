@@ -45,7 +45,7 @@ class ProductStoreTest extends TestCase
         $this->assertDatabaseCount('products', 1);
 
         $this->assertDatabaseHas('products', [
-            'name' => strtolower(ucwords($product->name)),
+            'name' => ucwords(strtolower($product->name)),
             'description' => $product->description,
         ]);
     }
