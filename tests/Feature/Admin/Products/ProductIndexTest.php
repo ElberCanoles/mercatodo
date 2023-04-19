@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class ProductIndexTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $admin;

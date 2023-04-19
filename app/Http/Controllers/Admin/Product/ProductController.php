@@ -42,7 +42,7 @@ final class ProductController extends Controller
     }
 
     /**
-     * Show create form
+     * Show create form.
      */
     public function create(): View
     {
@@ -66,13 +66,8 @@ final class ProductController extends Controller
         }
     }
 
-    public function show(Product $product)
-    {
-        //
-    }
-
     /**
-     * Show edit form
+     * Show edit form.
      */
     public function edit(Product $product): View
     {
@@ -82,6 +77,9 @@ final class ProductController extends Controller
         ]);
     }
 
+    /**
+     * Update a existing resource in storage.
+     */
     public function update(UpdateRequest $request, Product $product): JsonResponse
     {
         if ($this->repository->update($request->validated(), $product->id)) {
@@ -95,7 +93,7 @@ final class ProductController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Delete a resource in storage.
      */
     public function destroy(Product $product): JsonResponse
     {
