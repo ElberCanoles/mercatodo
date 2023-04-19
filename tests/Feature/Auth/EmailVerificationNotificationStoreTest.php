@@ -9,12 +9,10 @@ use Tests\TestCase;
 
 class EmailVerificationNotificationStoreTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function test_user_unverified_can_send_email_verification(): void
     {
-
         $user = User::factory()->create([
             'email_verified_at' => null,
         ]);
@@ -27,12 +25,10 @@ class EmailVerificationNotificationStoreTest extends TestCase
 
     public function test_user_verified_are_redirect_to_dashboard(): void
     {
-
         $user = User::factory()->create();
 
         $response = $this->actingAs($user)->post(route('verification.send'));
 
         $response->assertRedirect(EntryPoint::resolveRedirectRoute());
     }
-
 }

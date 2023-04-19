@@ -55,7 +55,7 @@ class EmailVerificationTest extends TestCase
         $response->assertRedirect(EntryPoint::resolveRedirectRoute() . '?verified=1');
     }
 
-    public function test_user_are_redirected_to_dashboard_when_is_already_verified():void
+    public function test_user_are_redirected_to_dashboard_when_is_already_verified(): void
     {
         $user = User::factory()->create();
 

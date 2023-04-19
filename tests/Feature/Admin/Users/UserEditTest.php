@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class UserEditTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $admin;

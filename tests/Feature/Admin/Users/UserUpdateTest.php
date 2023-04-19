@@ -13,7 +13,6 @@ use Mockery;
 
 class UserUpdateTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $admin;
@@ -29,7 +28,6 @@ class UserUpdateTest extends TestCase
 
     public function test_admin_can_update_users(): void
     {
-
         $response = $this
             ->actingAs($this->admin)
             ->put(route('admin.users.update', ['user' => $this->buyer->id]), [
@@ -50,7 +48,6 @@ class UserUpdateTest extends TestCase
 
     public function test_admin_can_not_update_users_when_internal_error(): void
     {
-
         $this->mock(UserRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('update')->andReturn(null);
         });
