@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class ProductController extends Controller
 {
-
     use MakeJsonResponse;
 
     public function __construct(private readonly ProductRepositoryInterface $repository)
@@ -26,54 +25,40 @@ final class ProductController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return JsonResponse|View
      */
     public function index(Request $request): JsonResponse|View
     {
         if ($request->wantsJson()) {
-
             return $this->successResponse(
-
                 data: $this->repository->all(
-
                     queryParams: $request->all()
                 )
             );
         } else {
-
             return view('admin.products.index', [
-                'statuses' => $this->repository->allStatuses()
+                'statuses' => $this->repository->allStatuses(),
             ]);
         }
     }
 
     /**
-     * Show create form
-     *
-     * @return View
+     * Show create form.
      */
     public function create(): View
     {
         return view('admin.products.crud.create', [
-            'statuses' => $this->repository->allStatuses()
+            'statuses' => $this->repository->allStatuses(),
         ]);
     }
 
     /**
      * Store a new resource in storage.
-     *
-     * @param StoreRequest $request
-     * @return JsonResponse
      */
     public function store(StoreRequest $request): JsonResponse
     {
         if ($this->repository->store($request->validated())) {
-
             return $this->showMessage(message: trans('server.record_created'));
         } else {
-
             return $this->errorResponseWithBag(
                 collection: ['server' => [trans('server.internal_error')]],
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
@@ -81,32 +66,25 @@ final class ProductController extends Controller
         }
     }
 
-    public function show(Product $product)
-    {
-        //
-    }
-
     /**
-     * Show edit form
-     *
-     * @param Product $product
-     * @return View
+     * Show edit form.
      */
     public function edit(Product $product): View
     {
         return view('admin.products.crud.edit', [
             'product' => $product,
-            'statuses' => $this->repository->allStatuses()
+            'statuses' => $this->repository->allStatuses(),
         ]);
     }
 
+    /**
+     * Update a existing resource in storage.
+     */
     public function update(UpdateRequest $request, Product $product): JsonResponse
     {
         if ($this->repository->update($request->validated(), $product->id)) {
-
             return $this->showMessage(message: trans('server.record_updated'));
         } else {
-
             return $this->errorResponseWithBag(
                 collection: ['server' => [trans('server.internal_error')]],
                 code: Response::HTTP_INTERNAL_SERVER_ERROR
@@ -115,19 +93,13 @@ final class ProductController extends Controller
     }
 
     /**
-     * Undocumented function
-     *
-     * @param Product $product
-     * @return JsonResponse
+     * Delete a resource in storage.
      */
     public function destroy(Product $product): JsonResponse
     {
-
         if ($this->repository->delete($product->id)) {
-
             return $this->showMessage(message: trans('server.record_deleted'));
         } else {
-
             return $this->errorResponse(
                 message: trans('server.internal_error')
             );

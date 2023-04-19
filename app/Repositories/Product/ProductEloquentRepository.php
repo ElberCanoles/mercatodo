@@ -11,11 +11,9 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 final class ProductEloquentRepository extends Repository implements ProductRepositoryInterface
 {
-
     public function __construct(private Product $model, private SlugeableService $slugeableService)
     {
     }
-
 
     public function all(array $queryParams = [], ...$arguments): LengthAwarePaginator
     {
@@ -23,15 +21,15 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
             ->select('id', 'name', 'price', 'stock', 'status', 'created_at');
 
         if ($this->isDefined($queryParams['name'] ?? null)) {
-            $query = $query->where('name', 'like', '%' . $queryParams['name'] . '%');
+            $query = $query->where('name', 'like', '%'.$queryParams['name'].'%');
         }
 
         if ($this->isDefined($queryParams['price'] ?? null)) {
-            $query = $query->where('price', 'like', '%' . $queryParams['price'] . '%');
+            $query = $query->where('price', 'like', '%'.$queryParams['price'].'%');
         }
 
         if ($this->isDefined($queryParams['stock'] ?? null)) {
-            $query = $query->where('stock', 'like', '%' . $queryParams['stock'] . '%');
+            $query = $query->where('stock', 'like', '%'.$queryParams['stock'].'%');
         }
 
         if ($this->isDefined($queryParams['status'] ?? null)) {
@@ -47,15 +45,13 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 'status_value' => trans($product->status),
                 'created_at' => $product->created_at->format('d-m-Y'),
                 'edit_url' => route('admin.products.edit', ['product' => $product->id]),
-                'delete_url' => route('admin.products.destroy', ['product' => $product->id])
+                'delete_url' => route('admin.products.destroy', ['product' => $product->id]),
             ]);
     }
-
 
     public function store(array $data): ?Product
     {
         try {
-
             $slug = $this->slugeableService->getUniqueSlugByEloquentModel(
                 input: $data['name'],
                 model: $this->model,
@@ -68,31 +64,28 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 'price' => $this->normalizeNumberUsingAbs($data['price']),
                 'stock' => $this->normalizeNumberUsingAbs($data['stock']),
                 'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
-                'description' => $this->normalizeStringUsingUcfirst($data['description'])
+                'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
         } catch (\Throwable $throwable) {
-            dd($throwable);
+
             return null;
         }
     }
-
 
     public function update(array $data, int $id)
     {
         $product = $this->find(id: $id);
 
         try {
-
             $product->fill([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'price' => $this->normalizeNumberUsingAbs($data['price']),
                 'stock' => $this->normalizeNumberUsingAbs($data['stock']),
                 'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
-                'description' => $this->normalizeStringUsingUcfirst($data['description'])
+                'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
 
             if ($product->isDirty('name')) {
-
                 $slug = $this->slugeableService->getUniqueSlugByEloquentModel(
                     input: $data['name'],
                     model: $this->model,
@@ -108,12 +101,8 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
         }
     }
 
-
     /**
      * Delete one product on database
-     *
-     * @param integer $id
-     * @return boolean
      */
     public function delete(int $id): bool
     {
@@ -126,29 +115,22 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
         }
     }
 
-
     /**
      * Get one product record by id
-     *
-     * @param integer $id
-     * @return Product|null
      */
     public function find(int $id): ?Product
     {
         return $this->model->find($id);
     }
 
-
     /**
      * Get all product statuses
-     *
-     * @return array
      */
     public function allStatuses(): array
     {
         return collect(ProductStatus::asArray())->map(fn ($status) => [
             'key' => $status,
-            'value' => trans($status)
+            'value' => trans($status),
         ])->toArray();
     }
 }

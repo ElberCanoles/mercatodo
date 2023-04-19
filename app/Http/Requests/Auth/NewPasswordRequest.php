@@ -42,7 +42,7 @@ class NewPasswordRequest extends FormRequest
             'email.email' => 'El email ingresado no es valido',
             'password.required' => 'La contraseña es requerida',
             'password.confirmed' => 'Las contraseñas no coinciden',
-            'password.min' => 'La contraseña debe tener minimo 8 caracteres'
+            'password.min' => 'La contraseña debe tener minimo 8 caracteres',
         ];
     }
 }

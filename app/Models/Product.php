@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
+    use SoftDeletes;
 
     protected $with = [
         'images',
@@ -36,7 +37,6 @@ class Product extends Model
      */
     protected static function booted()
     {
-
         static::updated(function ($product) {
             if ($product->stock == 0 && $product->status == ProductStatus::AVAILABLE) {
                 $product->status = ProductStatus::UNAVAILABLE;

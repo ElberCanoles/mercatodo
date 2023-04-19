@@ -10,22 +10,18 @@ use Illuminate\View\View;
 
 final class ProfileController extends BaseProfileController
 {
-
     public function __construct(UserRepositoryInterface $repository)
     {
         parent::__construct($repository);
     }
 
-
     /**
      * Show the form for editing data profile.
-     *
-     * @return View
      */
     public function show(): View
     {
         return view('buyer.profile.show', [
-            'user' => request()->user()
+            'user' => request()->user(),
         ]);
     }
 }

@@ -19,31 +19,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class NewPasswordController extends Controller
 {
-
     use MakeJsonResponse;
 
     /**
      * Display the password reset view.
-     *
-     * @param Request $request
-     * @return View
      */
     public function create(Request $request): View
     {
         return view('auth.reset-password', ['request' => $request]);
     }
 
-
     /**
      * Handle an incoming new password request.
      *
-     * @param NewPasswordRequest $request
-     * @return JsonResponse
      * @throws ValidationException
      */
     public function store(NewPasswordRequest $request): JsonResponse
     {
-
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {

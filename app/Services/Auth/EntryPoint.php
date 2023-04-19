@@ -8,18 +8,14 @@ use App\Enums\User\RoleType;
 
 class EntryPoint
 {
-
     /**
      * Resolve entry point when user is authenticated
-     *
-     * @return string
      */
     public static function resolveRedirectRoute(): string
     {
         $response = route('login');
 
         if (auth()->check()) {
-
             if (request()->user()->hasRole(RoleType::ADMINISTRATOR)) {
                 $response = route('admin.dashboard');
             }

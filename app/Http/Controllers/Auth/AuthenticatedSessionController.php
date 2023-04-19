@@ -15,23 +15,17 @@ use Illuminate\View\View;
 
 final class AuthenticatedSessionController extends Controller
 {
-
     /**
      * Display the login view.
-     *
-     * @return View
      */
     public function create(): View
     {
         return view('auth.login');
     }
 
-
     /**
      * Handle an incoming authentication request.
      *
-     * @param LoginRequest $request
-     * @return RedirectResponse
      * @throws ValidationException
      */
     public function store(LoginRequest $request): RedirectResponse
@@ -41,14 +35,10 @@ final class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return redirect(EntryPoint::resolveRedirectRoute());
-
     }
 
     /**
      * Destroy an authenticated session.
-     *
-     * @param Request $request
-     * @return RedirectResponse
      */
     public function destroy(Request $request): RedirectResponse
     {

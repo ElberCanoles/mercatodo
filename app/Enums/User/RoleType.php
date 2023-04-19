@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Enums\User;
 
@@ -6,6 +8,7 @@ use BenSampo\Enum\Enum;
 
 final class RoleType extends Enum
 {
-    const ADMINISTRATOR = 'role.administrator';
-    const BUYER = 'role.buyer';
+    public const ADMINISTRATOR = 'role.administrator';
+
+    public const BUYER = 'role.buyer';
 }

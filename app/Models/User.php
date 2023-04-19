@@ -11,7 +11,10 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -54,5 +57,4 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasManyThrough(Payment::class, Order::class);
     }
-
 }

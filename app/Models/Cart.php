@@ -18,5 +18,4 @@ class Cart extends Model
     {
         return $this->products->pluck('total')->sum();
     }
-    
 }

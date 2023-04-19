@@ -14,29 +14,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 final class PasswordResetLinkController extends Controller
 {
-
     use MakeJsonResponse;
 
     /**
      * Display the password reset link request view.
-     *
-     * @return View
      */
     public function create(): View
     {
         return view('auth.forgot-password');
     }
 
-
     /**
      * Handle an incoming password reset link request.
-     *
-     * @param ForgotPasswordRequest $request
-     * @return JsonResponse
      */
     public function store(ForgotPasswordRequest $request): JsonResponse
     {
-
         $status = Password::sendResetLink(
             $request->only('email')
         );

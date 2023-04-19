@@ -57,6 +57,13 @@ const submit = () => {
         <h1 class="h3 mb-3 fw-normal text-center">Crear una cuenta</h1>
 
         <div class="row g-3">
+
+            <div v-if="errors.server">
+                <p class="text-danger fw-bold mb-4">
+                    {{ errors.server }}
+                </p>
+            </div>
+
             <div class="col-sm-6">
                 <div class="form-floating">
                     <input type="text" name="name" id="name" class="form-control" placeholder="Nombres" v-model="form.name">

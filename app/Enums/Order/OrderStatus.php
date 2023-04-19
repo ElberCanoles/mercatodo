@@ -1,18 +1,24 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Enums\Order;
 
 use BenSampo\Enum\Enum;
 
-
 final class OrderStatus extends Enum
 {
-    const PENDING = 'order.pending';
-    const CONFIRMED = 'order.confirmed';
-    const SENT = 'order.sent';
-    const DELIVERED = 'order.delivered';
-    const CANCELLED = 'order.cancelled';
-    const IN_RETURN = 'order.in_return';
-    const RETURNED = 'order.returned';
+    public const PENDING = 'order.pending';
 
+    public const CONFIRMED = 'order.confirmed';
+
+    public const SENT = 'order.sent';
+
+    public const DELIVERED = 'order.delivered';
+
+    public const CANCELLED = 'order.cancelled';
+
+    public const IN_RETURN = 'order.in_return';
+
+    public const RETURNED = 'order.returned';
 }
