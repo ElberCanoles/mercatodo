@@ -67,7 +67,6 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
         } catch (\Throwable $throwable) {
-
             return null;
         }
     }

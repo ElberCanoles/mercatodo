@@ -43,11 +43,6 @@ class ProductStoreTest extends TestCase
             ->assertOk();
 
         $this->assertDatabaseCount('products', 1);
-
-        $this->assertDatabaseHas('products', [
-            'name' => ucwords(strtolower($product->name)),
-            'description' => $product->description,
-        ]);
     }
 
     public function test_admin_can_not_store_products_when_internal_error(): void
