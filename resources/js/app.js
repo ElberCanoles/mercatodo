@@ -1,4 +1,4 @@
-import './bootstrap';
+import '@/bootstrap';
 import { createApp } from 'vue/dist/vue.esm-bundler';
 
 import LoginForm from '@/components/auth/LoginForm.vue';
