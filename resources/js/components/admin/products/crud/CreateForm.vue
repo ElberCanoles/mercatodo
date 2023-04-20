@@ -19,7 +19,7 @@ const form = ref({
     price: '',
     stock: '',
     status: '',
-    files: [],
+    photos: [],
     processing: false,
 })
 
@@ -57,7 +57,7 @@ const resetForm = () => {
         price: '',
         stock: '',
         status: '',
-        files: [],
+        photos: [],
         processing: false,
     });
 }
@@ -73,10 +73,10 @@ const submit = () => {
 
     form.value.processing = true
 
-    form.value.files = files.value
+    form.value.photos = files.value
 
     axios
-        .post(`/admin/products`, form.value)
+        .post(`/admin/products`, form.value, {headers : {'content-type': 'multipart/form-data'}})
         .then((response) => {
             errors.value = {}
             status.value.message = response.data.message
@@ -94,7 +94,12 @@ const submit = () => {
 
                 for (let key in dataErrors) {
                     if (dataErrors.hasOwnProperty(key)) {
-                        errors.value[key] = dataErrors[key][0];
+                        
+                        if(key.startsWith('photos.')){
+                            errors.value['photo_items'] = dataErrors[key][0];
+                        }else{
+                            errors.value[key] = dataErrors[key][0];
+                        }
                     }
                 }
 
@@ -151,7 +156,12 @@ const submit = () => {
                             </div>
 
                             <div class="col-12 order-2 order-sm-3 mb-5 mt-3 mb-sm-0">
-                                <div id="image-upload-grid" class="image-upload-grid sortable-zone">
+                                
+                                <InputError class="mt-2" :message="errors.photos" />
+
+                                <InputError class="mt-2" :message="errors.photo_items" />
+
+                                <div id="image-upload-grid" class="image-upload-grid">
                                     <div v-for="(image, index) in images" :key="index" class="image-upload-item mx-auto">
                                         <div class="card text-center rounded-0 x-shadow-hover-bold">
                                             <div class="card-body p-0 position-relative">
