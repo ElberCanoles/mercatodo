@@ -65,7 +65,7 @@ class StoreRequest extends FormRequest
             'photos.required' => 'Debe agregar al menos una imagen',
             'photos.array' => 'Debe adjuntar una lista de imagenes',
             'photos.max' => 'Máximo 5 imágenes',
-            
+
             'photos.*.required' => 'El archivo en la posición: #:position es requerido',
             'photos.*.image' => 'El archivo en la posición: #:position debe ser una imagen',
             'photos.*.mimes' => 'El archivo en la posición: #:position deber ser de tipo (png,jpg,jpeg)',

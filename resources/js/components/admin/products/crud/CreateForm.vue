@@ -30,19 +30,24 @@ const status = ref({
     success: false,
 })
 
-const addImagesToGallery = (e) => {
+const addImagesToGallery = async (e) => {
     const filesToAdd = e.target.files
 
-    Array.from(filesToAdd).forEach(file => {
-
+    const promises = Array.from(filesToAdd).map(async (file) => {
         files.value.push(file)
 
         const reader = new FileReader()
+
+        const promise = new Promise((resolve) => {
+            reader.onload = () => resolve(reader.result)
+        })
+
         reader.readAsDataURL(file)
-        reader.onload = () => {
-            images.value.push(reader.result)
-        }
+        return promise
     })
+
+    const results = await Promise.all(promises)
+    images.value.push(...results)
 }
 
 const removeImageFromGallery = (index) => {
@@ -94,7 +99,7 @@ const submit = () => {
 
                 for (let key in dataErrors) {
                     if (dataErrors.hasOwnProperty(key)) {
-                        
+
                         if(key.startsWith('photos.')){
                             errors.value['photo_items'] = dataErrors[key][0];
                         }else{
@@ -156,7 +161,7 @@ const submit = () => {
                             </div>
 
                             <div class="col-12 order-2 order-sm-3 mb-5 mt-3 mb-sm-0">
-                                
+
                                 <InputError class="mt-2" :message="errors.photos" />
 
                                 <InputError class="mt-2" :message="errors.photo_items" />

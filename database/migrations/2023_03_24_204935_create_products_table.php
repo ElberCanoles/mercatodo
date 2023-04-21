@@ -16,8 +16,8 @@ return new class () extends Migration {
             $table->string('name', 100)->index();
             $table->string('slug', 150)->unique();
             $table->tinyText('description')->nullable();
-            $table->unsignedFloat('price');
-            $table->unsignedInteger('stock');
+            $table->unsignedDouble('price');
+            $table->unsignedBigInteger('stock');
             $table->enum('status', ProductStatus::asArray())->default(ProductStatus::AVAILABLE);
             $table->softDeletes();
             $table->timestamps();

@@ -1,18 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories\Product;
 
 use App\Enums\General\SystemParams;
 use App\Enums\Product\ProductStatus;
 use App\Models\Product;
 use App\Repositories\Repository;
+use App\Services\Utilities\FileService;
 use App\Services\Utilities\SlugeableService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 final class ProductEloquentRepository extends Repository implements ProductRepositoryInterface
 {
-    public function __construct(private Product $model, private SlugeableService $slugeableService)
-    {
+    public const PRODUCTS_GALLERY_PATH = 'images/products';
+
+    public function __construct(
+        private readonly Product          $model,
+        private readonly SlugeableService $slugeableService,
+        private readonly FileService      $fileService
+    ) {
     }
 
     public function all(array $queryParams = [], ...$arguments): LengthAwarePaginator
@@ -21,15 +29,15 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
             ->select('id', 'name', 'price', 'stock', 'status', 'created_at');
 
         if ($this->isDefined($queryParams['name'] ?? null)) {
-            $query = $query->where('name', 'like', '%'.$queryParams['name'].'%');
+            $query = $query->where('name', 'like', '%' . $queryParams['name'] . '%');
         }
 
         if ($this->isDefined($queryParams['price'] ?? null)) {
-            $query = $query->where('price', 'like', '%'.$queryParams['price'].'%');
+            $query = $query->where('price', 'like', '%' . $queryParams['price'] . '%');
         }
 
         if ($this->isDefined($queryParams['stock'] ?? null)) {
-            $query = $query->where('stock', 'like', '%'.$queryParams['stock'].'%');
+            $query = $query->where('stock', 'like', '%' . $queryParams['stock'] . '%');
         }
 
         if ($this->isDefined($queryParams['status'] ?? null)) {
@@ -58,28 +66,38 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 columName: 'slug'
             );
 
-            return $this->model::create([
+            $filePaths = $this->fileService->uploadMultipleFiles(files: $data['photos'], relativePath: $this::PRODUCTS_GALLERY_PATH);
+
+            $product = $this->model::create([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'slug' => $slug,
-                'price' => $this->normalizeNumberUsingAbs($data['price']),
-                'stock' => $this->normalizeNumberUsingAbs($data['stock']),
+                'price' => $data['price'],
+                'stock' => $data['stock'],
                 'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
+
+            foreach ($filePaths as $filePath) {
+                $product->images()->create([
+                    'path' => $filePath
+                ]);
+            }
+
+            return $product;
         } catch (\Throwable $throwable) {
             return null;
         }
     }
 
-    public function update(array $data, int $id)
+    public function update(array $data, int $id): bool
     {
         $product = $this->find(id: $id);
 
         try {
             $product->fill([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
-                'price' => $this->normalizeNumberUsingAbs($data['price']),
-                'stock' => $this->normalizeNumberUsingAbs($data['stock']),
+                'price' => $data['price'],
+                'stock' => $data['stock'],
                 'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
