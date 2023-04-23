@@ -8,8 +8,7 @@ use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
-
-    const MAX_IMAGES = 5;
+    public const MAX_IMAGES = 5;
 
     /**
      * Determine if the user is authorized to make this request.
