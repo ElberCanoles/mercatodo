@@ -1,18 +1,26 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repositories\Product;
 
 use App\Enums\General\SystemParams;
 use App\Enums\Product\ProductStatus;
 use App\Models\Product;
 use App\Repositories\Repository;
+use App\Services\Utilities\FileService;
 use App\Services\Utilities\SlugeableService;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 final class ProductEloquentRepository extends Repository implements ProductRepositoryInterface
 {
-    public function __construct(private Product $model, private SlugeableService $slugeableService)
-    {
+    public const PRODUCTS_GALLERY_PATH = 'images/products';
+
+    public function __construct(
+        private readonly Product          $model,
+        private readonly SlugeableService $slugeableService,
+        private readonly FileService      $fileService
+    ) {
     }
 
     public function all(array $queryParams = [], ...$arguments): LengthAwarePaginator
@@ -21,15 +29,15 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
             ->select('id', 'name', 'price', 'stock', 'status', 'created_at');
 
         if ($this->isDefined($queryParams['name'] ?? null)) {
-            $query = $query->where('name', 'like', '%'.$queryParams['name'].'%');
+            $query = $query->where('name', 'like', '%' . $queryParams['name'] . '%');
         }
 
         if ($this->isDefined($queryParams['price'] ?? null)) {
-            $query = $query->where('price', 'like', '%'.$queryParams['price'].'%');
+            $query = $query->where('price', 'like', '%' . $queryParams['price'] . '%');
         }
 
         if ($this->isDefined($queryParams['stock'] ?? null)) {
-            $query = $query->where('stock', 'like', '%'.$queryParams['stock'].'%');
+            $query = $query->where('stock', 'like', '%' . $queryParams['stock'] . '%');
         }
 
         if ($this->isDefined($queryParams['status'] ?? null)) {
@@ -58,29 +66,66 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 columName: 'slug'
             );
 
-            return $this->model::create([
+            $newImagesPaths = $this->fileService->uploadMultipleFiles(files: $data['images'], relativePath: $this::PRODUCTS_GALLERY_PATH);
+
+            $product = $this->model::create([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'slug' => $slug,
-                'price' => $this->normalizeNumberUsingAbs($data['price']),
-                'stock' => $this->normalizeNumberUsingAbs($data['stock']),
+                'price' => $data['price'],
+                'stock' => $data['stock'],
                 'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
-        } catch (\Throwable $throwable) {
 
+            foreach ($newImagesPaths as $imagePath) {
+                $product->images()->create([
+                    'path' => $imagePath
+                ]);
+            }
+
+            return $product;
+        } catch (\Throwable $throwable) {
             return null;
         }
     }
 
-    public function update(array $data, int $id)
+    public function update(array $data, int $id): bool
     {
-        $product = $this->find(id: $id);
-
         try {
+            $product = $this->find(id: $id);
+
+            $currentImagesPaths = $product->images()->pluck(column: 'path')->toArray();
+
+            $newImagesPaths = [];
+
+            $preloadedImagesPaths = array_map(function ($image) {
+                return $image['path'];
+            }, array: $data['preloaded_images'] ?? []);
+
+            $imagesToRemove = array_diff($currentImagesPaths, $preloadedImagesPaths);
+
+            if (isset($data['images']) && count($data['images']) > 0) {
+                $newImagesPaths = $this->fileService->uploadMultipleFiles(files: $data['images'], relativePath: $this::PRODUCTS_GALLERY_PATH);
+            }
+
+            if (count($imagesToRemove) > 0) {
+                $this->fileService->removeMultipleFiles(fullPaths: $imagesToRemove, fromThePrefix: '/images');
+
+                $product->images()
+                    ->whereIn(column: 'path', values: $imagesToRemove)
+                    ->delete();
+            }
+
+            foreach ($newImagesPaths as $imagePath) {
+                $product->images()->create([
+                    'path' => $imagePath
+                ]);
+            }
+
             $product->fill([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
-                'price' => $this->normalizeNumberUsingAbs($data['price']),
-                'stock' => $this->normalizeNumberUsingAbs($data['stock']),
+                'price' => $data['price'],
+                'stock' => $data['stock'],
                 'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);

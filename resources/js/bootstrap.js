@@ -1,7 +1,7 @@
 import axios from 'axios'
 import feather from 'feather-icons'
-import './bootstrap.bundle.min.js'
-import './jquery-3.6.4.min.js'
+import '@/bootstrap.bundle.min.js'
+import '@/jquery-3.6.4.min.js'
 
 window.axios = axios;
 

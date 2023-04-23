@@ -1,0 +1,142 @@
+$red:#d4433b;
+
+// 1. Container load images
+.image-upload-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 240px);
+	gap: 24px;
+	padding: 24px !important;
+	justify-content: center;
+	min-height: auto;
+	padding: 1.5rem 1.75rem;
+	border: 1px dashed #3B71CA;
+	background-color: #f3f7fb;
+	border-radius: 5px;
+	min-height: 120px;
+
+	@media(min-width: 490px) {
+		grid-template-columns: repeat(auto-fit, 180px);
+		gap: 18px;
+		padding: 18px !important;
+	}
+
+	&.drop {
+		background: #f5f5f5 !important;
+		border-style: dashed !important;
+		border-color: #e7e7e7 !important;
+	}
+}
+
+// 1.1 .Wrapper card photos
+.image-upload-item {
+	width: 100%;
+	border-width: 2px;
+	border-style: solid;
+	border-color: transparent;
+
+	&.mousedown {
+		border-style: dashed;
+		border-color: $red;
+		cursor: move;
+	}
+
+	.card {
+		border-width: 1px;
+		border-color: #fff;
+		border-radius: inherit !important;
+		margin-bottom: 0 !important;
+
+		.card-body {
+			background-color: #DDDDDD;
+			border-radius: inherit !important;
+		}
+
+		input.form-control {
+			background-color: #fff;
+			font-weight: 400;
+			border: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+			border-bottom-left-radius: inherit;
+			border-bottom-right-radius: inherit;
+			height: calc(1.5em + .5rem + 2px);
+			padding: .25rem .5rem;
+			font-size: .875rem;
+			line-height: 1.5;
+			margin-top: -1px;
+
+			&:hover {
+				box-shadow: 0 0 0 0.5px #4682b4 inset;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 0.5px #4682b4 inset;
+				color: $red;
+			}
+		}
+	}
+
+	img {
+		border-top-left-radius: inherit;
+		border-top-right-radius: inherit;
+		width: 100%;
+		height: calc(240px*0.75);
+		object-fit: cover;
+		position: relative;
+		z-index: 2;
+
+		@media(min-width: 490px) {
+			height: calc(180px*0.75);
+		}
+	}
+
+	.btn-remove {
+		position: absolute;
+		top: 0;
+		z-index: 10;
+		width: 28px;
+		height: 28px;
+		line-height: 1.8;
+		font-size: 16px;
+		background-color: rgba(0, 0, 0, 0.25);
+		color: rgba(255, 255, 255, 0.7);
+		transition: 0.3s ease-in;
+
+		@media(min-width: 490px) {
+			width: 24px;
+			height: 24px;
+			line-height: 1.7;
+			font-size: 14px;
+		}
+
+		&:hover {
+			// transform: scale(1.075);
+			cursor: pointer;
+			color: #fff;
+		}
+	}
+
+	.btn-remove {
+		right: 0;
+		border-top-right-radius: inherit;
+		border-bottom-left-radius: 3px;
+
+		&:before {
+			content: "\f1f8";
+			font-family: "FontAwesome";
+		}
+
+		&:hover {
+			background-color: white;
+			transform: translate(1px, -1px);
+			color: $red;
+		}
+	}
+}
+
+
+.file-mask {
+	&:focus {
+		box-shadow: none;
+	}
+}

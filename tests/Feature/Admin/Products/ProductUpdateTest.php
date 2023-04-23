@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\Product\ProductRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Mockery;
 use Tests\TestCase;
 
@@ -18,13 +19,19 @@ class ProductUpdateTest extends TestCase
 
     private User $admin;
     private Product $product;
-
+    private UploadedFile $image;
     public function setUp(): void
     {
         parent::setUp();
         $this->seed(RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
         $this->product = Product::factory()->create(['price' => 10, 'stock' => 10, 'status' => ProductStatus::AVAILABLE]);
+
+        $imagePath = tempnam(sys_get_temp_dir(), 'images');
+        $imageContent = file_get_contents('https://via.placeholder.com/150');
+        file_put_contents($imagePath, $imageContent);
+
+        $this->image = new UploadedFile($imagePath, 'image.jpg', null, null, true);
     }
 
     public function test_admin_can_update_products(): void
@@ -37,6 +44,7 @@ class ProductUpdateTest extends TestCase
                 'price' => 20.0,
                 'stock' => 0,
                 'status' => ProductStatus::UNAVAILABLE,
+                'images' => [$this->image]
             ]);
 
         $response->assertOk()
@@ -65,6 +73,7 @@ class ProductUpdateTest extends TestCase
                 'price' => 20,
                 'stock' => 0,
                 'status' => ProductStatus::UNAVAILABLE,
+                'images' => [$this->image]
             ]);
 
         $response->assertStatus(500);

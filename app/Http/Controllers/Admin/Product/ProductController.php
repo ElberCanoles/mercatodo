@@ -13,7 +13,6 @@ use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\Response;
 
 final class ProductController extends Controller
 {
@@ -60,8 +59,7 @@ final class ProductController extends Controller
             return $this->showMessage(message: trans('server.record_created'));
         } else {
             return $this->errorResponseWithBag(
-                collection: ['server' => [trans('server.internal_error')]],
-                code: Response::HTTP_INTERNAL_SERVER_ERROR
+                collection: ['server' => [trans('server.internal_error')]]
             );
         }
     }
@@ -78,7 +76,7 @@ final class ProductController extends Controller
     }
 
     /**
-     * Update a existing resource in storage.
+     * Update an existing resource in storage.
      */
     public function update(UpdateRequest $request, Product $product): JsonResponse
     {
@@ -86,8 +84,7 @@ final class ProductController extends Controller
             return $this->showMessage(message: trans('server.record_updated'));
         } else {
             return $this->errorResponseWithBag(
-                collection: ['server' => [trans('server.internal_error')]],
-                code: Response::HTTP_INTERNAL_SERVER_ERROR
+                collection: ['server' => [trans('server.internal_error')]]
             );
         }
     }

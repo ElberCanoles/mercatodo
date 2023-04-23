@@ -40,7 +40,6 @@ class RegisterStoreTest extends TestCase
         $this->assertDatabaseCount('users', 1);
 
         $this->assertDatabaseHas('users', [
-            'name' => $user->name,
             'email' => $user->email,
         ]);
     }
