@@ -19,7 +19,7 @@ const form = ref({
     price: '',
     stock: '',
     status: '',
-    photos: [],
+    images: [],
     processing: false,
 })
 
@@ -62,9 +62,12 @@ const resetForm = () => {
         price: '',
         stock: '',
         status: '',
-        photos: [],
+        images: [],
         processing: false,
     });
+
+    images.value = Object.assign([], [])
+    files.value = Object.assign([], [])
 }
 
 const resetStatus = () => {
@@ -78,7 +81,7 @@ const submit = () => {
 
     form.value.processing = true
 
-    form.value.photos = files.value
+    form.value.images = files.value
 
     axios
         .post(`/admin/products`, form.value, {headers : {'content-type': 'multipart/form-data'}})
@@ -100,8 +103,8 @@ const submit = () => {
                 for (let key in dataErrors) {
                     if (dataErrors.hasOwnProperty(key)) {
 
-                        if(key.startsWith('photos.')){
-                            errors.value['photo_items'] = dataErrors[key][0];
+                        if(key.startsWith('images.')){
+                            errors.value['image_items'] = dataErrors[key][0];
                         }else{
                             errors.value[key] = dataErrors[key][0];
                         }
@@ -162,9 +165,9 @@ const submit = () => {
 
                             <div class="col-12 order-2 order-sm-3 mb-5 mt-3 mb-sm-0">
 
-                                <InputError class="mt-2" :message="errors.photos" />
+                                <InputError class="mt-2" :message="errors.images" />
 
-                                <InputError class="mt-2" :message="errors.photo_items" />
+                                <InputError class="mt-2" :message="errors.image_items" />
 
                                 <div id="image-upload-grid" class="image-upload-grid">
                                     <div v-for="(image, index) in images" :key="index" class="image-upload-item mx-auto">

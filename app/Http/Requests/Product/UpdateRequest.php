@@ -8,6 +8,9 @@ use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
+
+    const MAX_IMAGES = 5;
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,12 +26,18 @@ class UpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $preloadedImagesCount = count($this->input('preloaded_images', []));
+        $imagesMaxCount = $this::MAX_IMAGES - $preloadedImagesCount;
+
         return [
             'name' => ['required', 'string', 'max:100'],
             'price' => ['required', 'numeric', 'min:1', 'max:99999999'],
             'stock' => ['required', 'integer', 'min:0', 'max:9999999'],
             'status' => ['required', Rule::in(ProductStatus::asArray())],
             'description' => ['required', 'string', 'max:500'],
+            'preloaded_images' => ['required_without:images', 'array', 'max:5'],
+            'images' => ['required_without:preloaded_images', 'array', 'max:'.$imagesMaxCount],
+            'images.*' => ['required','image','mimes:png,jpg,jpeg', 'max:5000'],
         ];
     }
 
@@ -59,6 +68,19 @@ class UpdateRequest extends FormRequest
 
             'description.required' => 'La descripción es requerida',
             'description.max' => 'La descripción no puede contener más de 500 caracteres',
+
+            'preloaded_images.required_without' => 'Si elimina todas las imagenes antiguas, debe adjuntar nuevas',
+            'preloaded_images.max' => 'Máximo 5 imágenes',
+
+            'images.required_without' => 'Debe agregar al menos una imagen',
+
+            'images.array' => 'Debe adjuntar una lista de imagenes',
+            'images.max' => 'Máximo 5 imágenes',
+
+            'images.*.required' => 'El archivo en la posición: #:position de los nuevos adjuntos es requerido',
+            'images.*.image' => 'El archivo en la posición: #:position de los nuevos adjuntos debe ser una imagen',
+            'images.*.mimes' => 'El archivo en la posición: #:position de los nuevos adjuntos deber ser de tipo (png,jpg,jpeg)',
+            'images.*.max' => 'El archivo en la posición: #:position de los nuevos adjuntos no debe pesar más de 5 MB'
         ];
     }
 }

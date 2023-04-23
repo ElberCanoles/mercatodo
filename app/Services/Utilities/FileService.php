@@ -35,18 +35,35 @@ class FileService
         return $response;
     }
 
-    public function removeSingleFile(string $relativePath): void
+    public function removeSingleFile(string $fullPath, $fromThePrefix): void
     {
-        //TODO
+        $relativePath = $this->getRelativePath(fileNameWithFullPath: $fullPath, fromThePrefix: $fromThePrefix);
+
+        if (Storage::disk(name: 'public')->exists($relativePath)) {
+            Storage::disk(name: 'public')->delete($relativePath);
+        }
     }
 
-    public function removeMultipleFiles(array $relativePaths): void
+    public function removeMultipleFiles(array $fullPaths, $fromThePrefix): void
     {
-        //TODO
+        foreach ($fullPaths as $fullPath) {
+            $this->removeSingleFile($fullPath, $fromThePrefix);
+        }
     }
 
     private function getFullFilePath(string $fileNameWithRelativePath): string
     {
         return asset("storage/$fileNameWithRelativePath");
+    }
+
+    private function getRelativePath(string $fileNameWithFullPath, string $fromThePrefix): string
+    {
+        $position = strpos($fileNameWithFullPath, $fromThePrefix);
+
+        if ($position !== false) {
+            return substr($fileNameWithFullPath, $position);
+        } else {
+            return $fileNameWithFullPath;
+        }
     }
 }

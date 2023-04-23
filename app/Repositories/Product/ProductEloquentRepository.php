@@ -66,7 +66,7 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 columName: 'slug'
             );
 
-            $filePaths = $this->fileService->uploadMultipleFiles(files: $data['photos'], relativePath: $this::PRODUCTS_GALLERY_PATH);
+            $newImagesPaths = $this->fileService->uploadMultipleFiles(files: $data['images'], relativePath: $this::PRODUCTS_GALLERY_PATH);
 
             $product = $this->model::create([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
@@ -77,9 +77,9 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
 
-            foreach ($filePaths as $filePath) {
+            foreach ($newImagesPaths as $imagePath) {
                 $product->images()->create([
-                    'path' => $filePath
+                    'path' => $imagePath
                 ]);
             }
 
@@ -91,9 +91,37 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
 
     public function update(array $data, int $id): bool
     {
-        $product = $this->find(id: $id);
-
         try {
+            $product = $this->find(id: $id);
+
+            $currentImagesPaths = $product->images()->pluck(column: 'path')->toArray();
+
+            $newImagesPaths = [];
+
+            $preloadedImagesPaths = array_map(function ($image) {
+                return $image['path'];
+            }, array: $data['preloaded_images'] ?? []);
+
+            $imagesToRemove = array_diff($currentImagesPaths, $preloadedImagesPaths);
+
+            if (isset($data['images']) && count($data['images']) > 0) {
+                $newImagesPaths = $this->fileService->uploadMultipleFiles(files: $data['images'], relativePath: $this::PRODUCTS_GALLERY_PATH);
+            }
+
+            if (count($imagesToRemove) > 0) {
+                $this->fileService->removeMultipleFiles(fullPaths: $imagesToRemove, fromThePrefix: '/images');
+
+                $product->images()
+                    ->whereIn(column: 'path', values: $imagesToRemove)
+                    ->delete();
+            }
+
+            foreach ($newImagesPaths as $imagePath) {
+                $product->images()->create([
+                    'path' => $imagePath
+                ]);
+            }
+
             $product->fill([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'price' => $data['price'],

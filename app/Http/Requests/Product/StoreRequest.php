@@ -29,8 +29,8 @@ class StoreRequest extends FormRequest
             'stock' => ['required', 'integer', 'min:0', 'max:9999999'],
             'status' => ['required', Rule::in(ProductStatus::asArray())],
             'description' => ['required', 'string', 'max:500'],
-            'photos' => ['required','array','max:5'],
-            'photos.*' => ['required','image','mimes:png,jpg,jpeg', 'max:5000'],
+            'images' => ['required','array','max:5'],
+            'images.*' => ['required','image','mimes:png,jpg,jpeg', 'max:5000'],
         ];
     }
 
@@ -62,14 +62,14 @@ class StoreRequest extends FormRequest
             'description.required' => 'La descripción es requerida',
             'description.max' => 'La descripción no puede contener más de 500 caracteres',
 
-            'photos.required' => 'Debe agregar al menos una imagen',
-            'photos.array' => 'Debe adjuntar una lista de imagenes',
-            'photos.max' => 'Máximo 5 imágenes',
+            'images.required' => 'Debe agregar al menos una imagen',
+            'images.array' => 'Debe adjuntar una lista de imagenes',
+            'images.max' => 'Máximo 5 imágenes',
 
-            'photos.*.required' => 'El archivo en la posición: #:position es requerido',
-            'photos.*.image' => 'El archivo en la posición: #:position debe ser una imagen',
-            'photos.*.mimes' => 'El archivo en la posición: #:position deber ser de tipo (png,jpg,jpeg)',
-            'photos.*.max' => 'El archivo en la posición: #:position no debe pesar más de 5 MB'
+            'images.*.required' => 'El archivo en la posición: #:position es requerido',
+            'images.*.image' => 'El archivo en la posición: #:position debe ser una imagen',
+            'images.*.mimes' => 'El archivo en la posición: #:position deber ser de tipo (png,jpg,jpeg)',
+            'images.*.max' => 'El archivo en la posición: #:position no debe pesar más de 5 MB'
         ];
     }
 }
