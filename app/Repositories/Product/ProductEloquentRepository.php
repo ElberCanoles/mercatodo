@@ -25,8 +25,10 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
 
     public function all(array $queryParams = [], ...$arguments): LengthAwarePaginator
     {
+        $lengthPerPage = SystemParams::LENGTH_PER_PAGE;
+
         $query = $this->model::query()
-            ->select('id', 'name', 'price', 'stock', 'status', 'created_at');
+            ->select('id', 'name', 'slug', 'price', 'stock', 'status', 'created_at');
 
         if ($this->isDefined($queryParams['name'] ?? null)) {
             $query = $query->where('name', 'like', '%' . $queryParams['name'] . '%');
@@ -44,14 +46,22 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
             $query = $query->where('status', $queryParams['status']);
         }
 
+        if ($this->isDefined($queryParams['per_page'] ?? null) && $queryParams['per_page'] <= $lengthPerPage) {
+            $lengthPerPage = $queryParams['per_page'];
+        }
+
         return $query->orderBy('created_at', 'DESC')
-            ->paginate(SystemParams::LENGTH_PER_PAGE)->through(fn ($product) => [
+            ->orderBy('id', 'DESC')
+            ->paginate($lengthPerPage)->through(fn ($product) => [
                 'name' => $product->name,
+                'description' => $product->description,
+                'images' => $product->images,
                 'price' => number_format($product->price),
                 'stock' => number_format($product->stock),
                 'status_key' => $product->status,
                 'status_value' => trans($product->status),
                 'created_at' => $product->created_at->format('d-m-Y'),
+                'show_url' => route('buyer.products.show', ['slug' => $product->slug]),
                 'edit_url' => route('admin.products.edit', ['product' => $product->id]),
                 'delete_url' => route('admin.products.destroy', ['product' => $product->id]),
             ]);
@@ -177,5 +187,10 @@ final class ProductEloquentRepository extends Repository implements ProductRepos
             'key' => $status,
             'value' => trans($status),
         ])->toArray();
+    }
+
+    public function findByParam(string $key, mixed $value): ?Product
+    {
+        return $this->model->where($key, $value)->first();
     }
 }

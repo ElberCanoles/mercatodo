@@ -12,6 +12,10 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::factory()->count(1000)->create();
+        Product::factory()->count(1000)->create()->each(function ($product) {
+            $product->images()->create([
+                'path' => "https://ui-avatars.com/api/?name={$product->name}&background=0D8ABC&color=fff&size=128"
+            ]);
+        });
     }
 }

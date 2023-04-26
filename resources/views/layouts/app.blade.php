@@ -9,7 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('scripts')
+    @stack('styles')
 </head>
 
 <body>
@@ -20,6 +20,12 @@
             <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Ninth navbar example">
                 <div class="container-xl">
                     <a class="navbar-brand" href="{{ route('home') }}">Merca Todo</a>
+
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('buyer.products.index') ? 'active' : '' }}" href="{{ route('buyer.products.index') }}">Productos</a>
+                        </li>
+                    </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#mainNavbarCollapsable" aria-controls="mainNavbarCollapsable" aria-expanded="false"
                         aria-label="Toggle navigation">
