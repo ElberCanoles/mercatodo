@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Buyer\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
-use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
@@ -15,10 +14,8 @@ class ProductController extends Controller
 {
     use MakeJsonResponse;
 
-    public function __construct(
-        private readonly ProductWriteRepositoryInterface $writeRepository,
-        private readonly ProductReadRepositoryInterface $readRepository
-    ) {
+    public function __construct(private readonly ProductReadRepositoryInterface $readRepository)
+    {
     }
 
     /**

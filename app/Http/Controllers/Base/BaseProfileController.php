@@ -16,7 +16,7 @@ abstract class BaseProfileController extends Controller
 {
     use MakeJsonResponse;
 
-    public function __construct(private readonly UserWriteRepositoryInterface $repository)
+    public function __construct(private readonly UserWriteRepositoryInterface $writeRepository)
     {
     }
 
@@ -27,7 +27,7 @@ abstract class BaseProfileController extends Controller
      */
     public function update(UpdateRequest $request): JsonResponse
     {
-        if ($this->repository->update(data: $request->validated(), id: $request->user()->id)) {
+        if ($this->writeRepository->update(data: $request->validated(), id: $request->user()->id)) {
             return $this->showMessage(message: trans('server.record_updated'));
         } else {
             return $this->errorResponseWithBag(
@@ -41,7 +41,7 @@ abstract class BaseProfileController extends Controller
      */
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
-        if ($this->repository->updatePassword(data: $request->safe()->only(['password']), id: $request->user()->id)) {
+        if ($this->writeRepository->updatePassword(data: $request->safe()->only(['password']), id: $request->user()->id)) {
             return $this->showMessage(message: trans('passwords.updated'));
         } else {
             return $this->errorResponseWithBag(
