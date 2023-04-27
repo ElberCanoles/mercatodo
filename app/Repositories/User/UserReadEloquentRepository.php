@@ -24,7 +24,7 @@ class UserReadEloquentRepository extends Repository implements UserReadRepositor
             ->select(columns: ['id', 'name', 'last_name', 'email', 'status', 'email_verified_at', 'created_at']);
 
         if ($this->isDefined(attribute: $arguments['role'] ?? null)) {
-            $query = $query->whereHas('roles', function ($subQuery) use ($arguments) {
+            $query = $query->whereHas(relation: 'roles', callback: function ($subQuery) use ($arguments) {
                 $subQuery->where('name', $arguments['role']);
             });
         }
@@ -41,7 +41,7 @@ class UserReadEloquentRepository extends Repository implements UserReadRepositor
             $query = $query->where(column: 'email', operator: 'like', value: '%'.$queryParams['email'].'%');
         }
 
-        return $query->orderBy('created_at', 'DESC')
+        return $query->orderBy(column: 'created_at', direction: 'DESC')
             ->orderBy(column: 'id', direction: 'DESC')
             ->paginate(perPage: SystemParams::LENGTH_PER_PAGE)->through(fn ($user) => [
                 'name' => $user->name,

@@ -45,7 +45,7 @@ class ProductReadEloquentRepository extends Repository implements ProductReadRep
         }
 
         if ($this->isDefined(attribute: $queryParams['status'] ?? null)) {
-            $query = $query->where(column: 'status', value: $queryParams['status']);
+            $query = $query->where(column: 'status', operator: '=', value: $queryParams['status']);
         }
 
         if ($this->isDefined(attribute: $queryParams['per_page'] ?? null) && $queryParams['per_page'] <= $lengthPerPage) {
