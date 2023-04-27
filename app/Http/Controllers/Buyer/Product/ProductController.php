@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Buyer;
+namespace App\Http\Controllers\Buyer\Product;
 
+use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
+use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Http\Controllers\Controller;
-use App\Repositories\Product\ProductRepositoryInterface;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -14,8 +15,10 @@ class ProductController extends Controller
 {
     use MakeJsonResponse;
 
-    public function __construct(private readonly ProductRepositoryInterface $repository)
-    {
+    public function __construct(
+        private readonly ProductWriteRepositoryInterface $writeRepository,
+        private readonly ProductReadRepositoryInterface $readRepository
+    ) {
     }
 
     /**
@@ -25,7 +28,7 @@ class ProductController extends Controller
     {
         if ($request->wantsJson()) {
             return $this->successResponse(
-                data: $this->repository->all(
+                data: $this->readRepository->all(
                     queryParams: $request->all()
                 )
             );
@@ -34,10 +37,10 @@ class ProductController extends Controller
         }
     }
 
-    public function show(string $slug)
+    public function show(string $slug): View
     {
         return view('buyer.products.show', [
-            'product' => $this->repository->findByParam(key: 'slug', value: $slug) ?? abort(Response::HTTP_NOT_FOUND)
+            'product' => $this->readRepository->find(key: 'slug', value: $slug) ?? abort(Response::HTTP_NOT_FOUND)
         ]);
     }
 }

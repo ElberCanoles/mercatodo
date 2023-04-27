@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Admin\Users;
 
+use App\Contracts\Repository\User\UserReadRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Models\User;
-use App\Repositories\User\UserRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -26,7 +26,7 @@ class UserEditTest extends TestCase
 
     public function test_admin_can_access_to_users_edit_screen(): void
     {
-        $repository = resolve(UserRepositoryInterface::class);
+        $readRepository = resolve(name: UserReadRepositoryInterface::class);
 
         $response = $this
             ->actingAs($this->admin)
@@ -35,6 +35,6 @@ class UserEditTest extends TestCase
         $response->assertOk()
             ->assertViewIs('admin.users.crud.edit')
             ->assertViewHas('user', $this->buyer)
-            ->assertViewHas('statuses', $repository->allStatuses());
+            ->assertViewHas('statuses', $readRepository->allStatuses());
     }
 }

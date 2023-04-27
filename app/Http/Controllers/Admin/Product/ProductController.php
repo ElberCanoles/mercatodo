@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin\Product;
 
+use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
+use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
-use App\Models\Product;
-use App\Repositories\Product\ProductRepositoryInterface;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,8 +18,10 @@ final class ProductController extends Controller
 {
     use MakeJsonResponse;
 
-    public function __construct(private readonly ProductRepositoryInterface $repository)
-    {
+    public function __construct(
+        private readonly ProductWriteRepositoryInterface $writeRepository,
+        private readonly ProductReadRepositoryInterface $readRepository
+    ) {
     }
 
     /**
@@ -29,13 +31,13 @@ final class ProductController extends Controller
     {
         if ($request->wantsJson()) {
             return $this->successResponse(
-                data: $this->repository->all(
+                data: $this->readRepository->all(
                     queryParams: $request->all()
                 )
             );
         } else {
             return view('admin.products.index', [
-                'statuses' => $this->repository->allStatuses(),
+                'statuses' => $this->readRepository->allStatuses(),
             ]);
         }
     }
@@ -46,7 +48,7 @@ final class ProductController extends Controller
     public function create(): View
     {
         return view('admin.products.crud.create', [
-            'statuses' => $this->repository->allStatuses(),
+            'statuses' => $this->readRepository->allStatuses(),
         ]);
     }
 
@@ -55,7 +57,7 @@ final class ProductController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        if ($this->repository->store($request->validated())) {
+        if ($this->writeRepository->store($request->validated())) {
             return $this->showMessage(message: trans('server.record_created'));
         } else {
             return $this->errorResponseWithBag(
@@ -67,20 +69,20 @@ final class ProductController extends Controller
     /**
      * Show edit form.
      */
-    public function edit(Product $product): View
+    public function edit(int $id): View
     {
         return view('admin.products.crud.edit', [
-            'product' => $product,
-            'statuses' => $this->repository->allStatuses(),
+            'product' => $this->readRepository->find(key: 'id', value: $id),
+            'statuses' => $this->readRepository->allStatuses(),
         ]);
     }
 
     /**
      * Update an existing resource in storage.
      */
-    public function update(UpdateRequest $request, Product $product): JsonResponse
+    public function update(UpdateRequest $request, int $id): JsonResponse
     {
-        if ($this->repository->update($request->validated(), $product->id)) {
+        if ($this->writeRepository->update(data: $request->validated(), id: $id)) {
             return $this->showMessage(message: trans('server.record_updated'));
         } else {
             return $this->errorResponseWithBag(
@@ -92,9 +94,9 @@ final class ProductController extends Controller
     /**
      * Delete a resource in storage.
      */
-    public function destroy(Product $product): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        if ($this->repository->delete($product->id)) {
+        if ($this->writeRepository->delete(id: $id)) {
             return $this->showMessage(message: trans('server.record_deleted'));
         } else {
             return $this->errorResponse(

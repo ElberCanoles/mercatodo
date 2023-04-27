@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
+use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Models\User;
-use App\Repositories\User\UserRepositoryInterface;
 use App\Services\Auth\EntryPoint;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -56,7 +56,7 @@ class RegisterStoreTest extends TestCase
             'password_confirmation' => 'password',
         ];
 
-        $this->mock(UserRepositoryInterface::class, function ($mock) {
+        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('store')->andReturn(null);
         });
 

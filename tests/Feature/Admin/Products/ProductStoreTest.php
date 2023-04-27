@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\Admin\Products;
 
+use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\Product\ProductRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class ProductStoreTest extends TestCase
 {
@@ -58,7 +58,7 @@ class ProductStoreTest extends TestCase
     {
         $product = Product::factory()->make();
 
-        $this->mock(ProductRepositoryInterface::class, function ($mock) {
+        $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('store')->andReturn(null);
         });
 

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Buyer\Profile;
 
+use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Models\User;
-use App\Repositories\User\UserRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -40,7 +40,7 @@ class UpdatePasswordTest extends TestCase
     {
         $user = User::factory()->create()->assignRole(RoleType::BUYER);
 
-        $this->mock(UserRepositoryInterface::class, function ($mock) {
+        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('updatePassword')->andReturn(null);
         });
 

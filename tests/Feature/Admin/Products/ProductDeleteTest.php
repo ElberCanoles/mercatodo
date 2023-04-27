@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Admin\Products;
 
+use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\Product\ProductRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -41,7 +41,7 @@ class ProductDeleteTest extends TestCase
 
     public function test_admin_can_not_delete_products_when_internal_error(): void
     {
-        $this->mock(ProductRepositoryInterface::class, function ($mock) {
+        $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('delete')->andReturn(null);
         });
 

@@ -2,14 +2,14 @@
 
 namespace Tests\Feature\Admin\Users;
 
+use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Enums\User\UserStatus;
 use App\Models\User;
-use App\Repositories\User\UserRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Mockery;
+use Tests\TestCase;
 
 class UserUpdateTest extends TestCase
 {
@@ -48,7 +48,7 @@ class UserUpdateTest extends TestCase
 
     public function test_admin_can_not_update_users_when_internal_error(): void
     {
-        $this->mock(UserRepositoryInterface::class, function ($mock) {
+        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('update')->andReturn(null);
         });
 
