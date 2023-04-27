@@ -17,6 +17,9 @@ import AdminProductsEditForm from '@/components/admin/products/crud/EditForm.vue
 
 import BuyerProfileEditForm from '@/components/buyer/profile/EditForm.vue'
 
+import BuyerProductsGallery from '@/components/buyer/products/Gallery.vue'
+import BuyerProductsShow from '@/components/buyer/products/Show.vue'
+
 
 window.app = createApp({
     setup() {
@@ -37,5 +40,7 @@ window.app = createApp({
         AdminProductsEditForm,
         AdminProfileEditForm,
         BuyerProfileEditForm,
+        BuyerProductsGallery,
+        BuyerProductsShow
     },
 }).mount('#app');

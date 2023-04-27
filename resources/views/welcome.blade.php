@@ -7,7 +7,7 @@
                 somos
                 expertos en ir de compras, asi que te acompañamos para que encuentres eso que tanto necesitas al mejor
                 precio y de forma segura, ¡Vamos a ello!</p>
-            <button class="btn btn-primary btn-lg" type="button">Navegar por la tienda</button>
+            <a class="btn btn-primary btn-lg" href="{{ route('buyer.products.index') }}">Navegar por la tienda</a>
         </div>
     </div>
 

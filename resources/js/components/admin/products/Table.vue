@@ -51,7 +51,7 @@ const getData = async (url) => {
 }
 
 const reloadTable = async () => {
-    getData(url.value)
+    await getData(url.value)
 }
 
 const deleteProduct = async (url) => {

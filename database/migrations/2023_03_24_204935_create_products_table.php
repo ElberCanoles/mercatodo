@@ -15,7 +15,7 @@ return new class () extends Migration {
             $table->id();
             $table->string('name', 100)->index();
             $table->string('slug', 150)->unique();
-            $table->tinyText('description')->nullable();
+            $table->mediumText('description')->nullable();
             $table->unsignedDouble('price');
             $table->unsignedBigInteger('stock');
             $table->enum('status', ProductStatus::asArray())->default(ProductStatus::AVAILABLE);

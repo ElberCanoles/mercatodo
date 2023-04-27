@@ -105,13 +105,3 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
-
-
-.page-link {
-  color: black;
-}
-
-.page-item.active .page-link {
-  background-color: #00525D;
-  border-color: #00525D;
-}

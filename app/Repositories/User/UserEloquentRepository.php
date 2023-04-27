@@ -46,6 +46,7 @@ final class UserEloquentRepository extends Repository implements UserRepositoryI
         }
 
         return $query->orderBy('created_at', 'DESC')
+            ->orderBy('id', 'DESC')
             ->paginate(SystemParams::LENGTH_PER_PAGE)->through(fn ($user) => [
                 'name' => $user->name,
                 'last_name' => $user->last_name,
