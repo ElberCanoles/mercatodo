@@ -14,7 +14,7 @@ final class ProfileController extends BaseProfileController
      */
     public function show(): View
     {
-        return view('buyer.profile.show', [
+        return view(view: 'buyer.profile.show', data: [
             'user' => request()->user(),
         ]);
     }

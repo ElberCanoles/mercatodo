@@ -32,14 +32,17 @@ class ProductController extends Controller
                 )
             );
         } else {
-            return view('buyer.products.index');
+            return view(view: 'buyer.products.index');
         }
     }
 
+    /**
+     * Show a specific resource.
+     */
     public function show(string $slug): View
     {
-        return view('buyer.products.show', [
-            'product' => $this->readRepository->find(key: 'slug', value: $slug) ?? abort(Response::HTTP_NOT_FOUND)
+        return view(view: 'buyer.products.show', data: [
+            'product' => $this->readRepository->find(key: 'slug', value: $slug) ?? abort(code: Response::HTTP_NOT_FOUND)
         ]);
     }
 }

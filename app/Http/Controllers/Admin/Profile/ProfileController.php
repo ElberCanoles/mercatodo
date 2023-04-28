@@ -14,7 +14,7 @@ final class ProfileController extends BaseProfileController
      */
     public function show(): View
     {
-        return view('admin.profile.show', [
+        return view(view: 'admin.profile.show', data: [
             'user' => request()->user(),
         ]);
     }

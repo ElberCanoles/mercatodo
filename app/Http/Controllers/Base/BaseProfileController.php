@@ -28,10 +28,10 @@ abstract class BaseProfileController extends Controller
     public function update(UpdateRequest $request): JsonResponse
     {
         if ($this->writeRepository->update(data: $request->validated(), id: $request->user()->id)) {
-            return $this->showMessage(message: trans('server.record_updated'));
+            return $this->showMessage(message: trans(key: 'server.record_updated'));
         } else {
             return $this->errorResponseWithBag(
-                collection: ['server' => [trans('server.internal_error')]]
+                collection: ['server' => [trans(key: 'server.internal_error')]]
             );
         }
     }
@@ -42,10 +42,10 @@ abstract class BaseProfileController extends Controller
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
         if ($this->writeRepository->updatePassword(data: $request->safe()->only(['password']), id: $request->user()->id)) {
-            return $this->showMessage(message: trans('passwords.updated'));
+            return $this->showMessage(message: trans(key: 'passwords.updated'));
         } else {
             return $this->errorResponseWithBag(
-                collection: ['server' => [trans('server.internal_error')]]
+                collection: ['server' => [trans(key: 'server.internal_error')]]
             );
         }
     }

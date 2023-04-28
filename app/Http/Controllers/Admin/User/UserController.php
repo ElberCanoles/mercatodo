@@ -20,8 +20,9 @@ final class UserController extends Controller
 
     public function __construct(
         private readonly UserWriteRepositoryInterface $writeRepository,
-        private readonly UserReadRepositoryInterface $readRepository
-    ) {
+        private readonly UserReadRepositoryInterface  $readRepository
+    )
+    {
     }
 
     /**
@@ -37,7 +38,7 @@ final class UserController extends Controller
                 )
             );
         } else {
-            return view('admin.users.index');
+            return view(view: 'admin.users.index');
         }
     }
 
@@ -46,7 +47,7 @@ final class UserController extends Controller
      */
     public function edit(int $id): View
     {
-        return view('admin.users.crud.edit', [
+        return view(view: 'admin.users.crud.edit', data: [
             'user' => $this->readRepository->find(key: 'id', value: $id),
             'statuses' => $this->readRepository->allStatuses(),
         ]);
@@ -58,10 +59,10 @@ final class UserController extends Controller
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
         if ($this->writeRepository->update(data: $request->validated(), id: $id)) {
-            return $this->showMessage(message: trans('server.record_updated'));
+            return $this->showMessage(message: trans(key: 'server.record_updated'));
         } else {
             return $this->errorResponseWithBag(
-                collection: ['server' => [trans('server.internal_error')]]
+                collection: ['server' => [trans(key: 'server.internal_error')]]
             );
         }
     }

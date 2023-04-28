@@ -20,8 +20,9 @@ final class ProductController extends Controller
 
     public function __construct(
         private readonly ProductWriteRepositoryInterface $writeRepository,
-        private readonly ProductReadRepositoryInterface $readRepository
-    ) {
+        private readonly ProductReadRepositoryInterface  $readRepository
+    )
+    {
     }
 
     /**
@@ -36,7 +37,7 @@ final class ProductController extends Controller
                 )
             );
         } else {
-            return view('admin.products.index', [
+            return view(view: 'admin.products.index', data: [
                 'statuses' => $this->readRepository->allStatuses(),
             ]);
         }
@@ -47,7 +48,7 @@ final class ProductController extends Controller
      */
     public function create(): View
     {
-        return view('admin.products.crud.create', [
+        return view(view: 'admin.products.crud.create', data: [
             'statuses' => $this->readRepository->allStatuses(),
         ]);
     }
@@ -58,10 +59,10 @@ final class ProductController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         if ($this->writeRepository->store($request->validated())) {
-            return $this->showMessage(message: trans('server.record_created'));
+            return $this->showMessage(message: trans(key: 'server.record_created'));
         } else {
             return $this->errorResponseWithBag(
-                collection: ['server' => [trans('server.internal_error')]]
+                collection: ['server' => [trans(key: 'server.internal_error')]]
             );
         }
     }
@@ -71,7 +72,7 @@ final class ProductController extends Controller
      */
     public function edit(int $id): View
     {
-        return view('admin.products.crud.edit', [
+        return view(view: 'admin.products.crud.edit', data: [
             'product' => $this->readRepository->find(key: 'id', value: $id),
             'statuses' => $this->readRepository->allStatuses(),
         ]);
@@ -83,10 +84,10 @@ final class ProductController extends Controller
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
         if ($this->writeRepository->update(data: $request->validated(), id: $id)) {
-            return $this->showMessage(message: trans('server.record_updated'));
+            return $this->showMessage(message: trans(key: 'server.record_updated'));
         } else {
             return $this->errorResponseWithBag(
-                collection: ['server' => [trans('server.internal_error')]]
+                collection: ['server' => [trans(key: 'server.internal_error')]]
             );
         }
     }
@@ -97,10 +98,10 @@ final class ProductController extends Controller
     public function destroy(int $id): JsonResponse
     {
         if ($this->writeRepository->delete(id: $id)) {
-            return $this->showMessage(message: trans('server.record_deleted'));
+            return $this->showMessage(message: trans(key: 'server.record_deleted'));
         } else {
             return $this->errorResponse(
-                message: trans('server.internal_error')
+                message: trans(key: 'server.internal_error')
             );
         }
     }
