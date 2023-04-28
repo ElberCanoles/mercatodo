@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Repositories\Product;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
-use App\Enums\Product\ProductStatus;
 use App\Models\Product;
 use App\Repositories\Repository;
 use App\Services\Utilities\FileService;

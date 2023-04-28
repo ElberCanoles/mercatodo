@@ -21,8 +21,7 @@ final class UserController extends Controller
     public function __construct(
         private readonly UserWriteRepositoryInterface $writeRepository,
         private readonly UserReadRepositoryInterface  $readRepository
-    )
-    {
+    ) {
     }
 
     /**

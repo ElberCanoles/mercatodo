@@ -9,4 +9,6 @@ use App\Contracts\Repository\Base\ReadRepositoryInterface;
 interface ProductReadRepositoryInterface extends ReadRepositoryInterface
 {
     public function allStatuses();
+
+    public function findAvailable(string $key, mixed $value);
 }

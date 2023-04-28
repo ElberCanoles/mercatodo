@@ -42,7 +42,7 @@ class ProductController extends Controller
     public function show(string $slug): View
     {
         return view(view: 'buyer.products.show', data: [
-            'product' => $this->readRepository->find(key: 'slug', value: $slug) ?? abort(code: Response::HTTP_NOT_FOUND)
+            'product' => $this->readRepository->findAvailable(key: 'slug', value: $slug) ?? abort(code: Response::HTTP_NOT_FOUND)
         ]);
     }
 }

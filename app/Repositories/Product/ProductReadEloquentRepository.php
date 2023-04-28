@@ -22,10 +22,10 @@ class ProductReadEloquentRepository extends Repository implements ProductReadRep
         $lengthPerPage = SystemParams::LENGTH_PER_PAGE;
 
         $query = $this->model::query()
-            ->select(columns:  ['id', 'name', 'slug', 'price', 'stock', 'status', 'created_at']);
+            ->select(columns: ['id', 'name', 'slug', 'price', 'stock', 'status', 'created_at']);
 
         if ($this->isDefined(attribute: $arguments['status'] ?? null)) {
-            $query = $query->where(column: 'status', operator: '=',value: $arguments['status']);
+            $query = $query->where(column: 'status', operator: '=', value: $arguments['status']);
         }
 
         if ($this->isDefined(attribute: $queryParams['name'] ?? null)) {
@@ -73,16 +73,23 @@ class ProductReadEloquentRepository extends Repository implements ProductReadRep
             ]);
     }
 
-    public function find(string $key, mixed $value): ?Product
-    {
-        return $this->model->where($key, $value)->first();
-    }
-
     public function allStatuses(): array
     {
         return collect(ProductStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();
+    }
+
+    public function find(string $key, mixed $value): ?Product
+    {
+        return $this->model->where($key, $value)->first();
+    }
+
+    public function findAvailable(string $key, mixed $value)
+    {
+        return $this->model->where($key, $value)
+            ->where('status', ProductStatus::AVAILABLE)
+            ->first();
     }
 }
