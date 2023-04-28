@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Buyer\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Enums\Product\ProductStatus;
+use App\Enums\User\RoleType;
 use App\Http\Controllers\Controller;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
@@ -28,7 +29,8 @@ class ProductController extends Controller
             return $this->successResponse(
                 data: $this->readRepository->all(
                     queryParams: $request->all(),
-                    status: ProductStatus::AVAILABLE
+                    status: ProductStatus::AVAILABLE,
+                    roleTarget: RoleType::BUYER
                 )
             );
         } else {

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
+use App\Enums\User\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
@@ -32,7 +33,8 @@ final class ProductController extends Controller
         if ($request->wantsJson()) {
             return $this->successResponse(
                 data: $this->readRepository->all(
-                    queryParams: $request->all()
+                    queryParams: $request->all(),
+                    roleTarget: RoleType::ADMINISTRATOR
                 )
             );
         } else {
