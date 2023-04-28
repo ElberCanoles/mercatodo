@@ -38,7 +38,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
                 'slug' => $slug,
                 'price' => $data['price'],
                 'stock' => $data['stock'],
-                'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
+                'status' => $data['status'],
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
 
@@ -91,7 +91,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
                 'price' => $data['price'],
                 'stock' => $data['stock'],
-                'status' => $data['stock'] > 0 ? $data['status'] : ProductStatus::UNAVAILABLE,
+                'status' => $data['status'],
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
 
