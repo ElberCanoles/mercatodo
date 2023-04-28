@@ -24,6 +24,10 @@ class ProductReadEloquentRepository extends Repository implements ProductReadRep
         $query = $this->model::query()
             ->select(columns:  ['id', 'name', 'slug', 'price', 'stock', 'status', 'created_at']);
 
+        if ($this->isDefined(attribute: $arguments['status'] ?? null)) {
+            $query = $query->where(column: 'status', operator: '=',value: $arguments['status']);
+        }
+
         if ($this->isDefined(attribute: $queryParams['name'] ?? null)) {
             $query = $query->where(column: 'name', operator: 'like', value: '%' . $queryParams['name'] . '%');
         }
