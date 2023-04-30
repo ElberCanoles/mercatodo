@@ -17,7 +17,10 @@ class ProductStoreImagesFactory
 
     public function make(Product $product, array $images): void
     {
-        $newImagesPaths = $this->fileService->uploadMultipleFiles(files: $images, relativePath: $this::PRODUCTS_GALLERY_PATH);
+        $newImagesPaths = $this->fileService->uploadMultipleFiles(
+            files: $images,
+            relativePath: $this::PRODUCTS_GALLERY_PATH
+        );
 
         foreach ($newImagesPaths as $imagePath) {
             $product->images()->create([
