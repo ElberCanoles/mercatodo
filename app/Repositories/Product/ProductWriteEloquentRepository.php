@@ -14,10 +14,10 @@ use App\Services\Utilities\SlugeableService;
 final class ProductWriteEloquentRepository extends Repository implements ProductWriteRepositoryInterface
 {
     public function __construct(
-        private readonly Product          $model,
+        private readonly Product $model,
         private readonly SlugeableService $slugeableService,
         private readonly ProductStoreImagesFactory $storeImagesFactory,
-        private  readonly ProductUpdateImagesFactory $updateImagesFactory
+        private readonly ProductUpdateImagesFactory $updateImagesFactory
     ) {
     }
 
