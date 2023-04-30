@@ -6,46 +6,38 @@ namespace App\Repositories\Product;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Models\Product;
+use App\Patterns\Factory\Product\ProductStoreImagesFactory;
+use App\Patterns\Factory\Product\ProductUpdateImagesFactory;
 use App\Repositories\Repository;
-use App\Services\Utilities\FileService;
 use App\Services\Utilities\SlugeableService;
 
 final class ProductWriteEloquentRepository extends Repository implements ProductWriteRepositoryInterface
 {
-    public const PRODUCTS_GALLERY_PATH = 'images/products';
-
     public function __construct(
         private readonly Product          $model,
         private readonly SlugeableService $slugeableService,
-        private readonly FileService      $fileService
+        private readonly ProductStoreImagesFactory $storeImagesFactory,
+        private  readonly ProductUpdateImagesFactory $updateImagesFactory
     ) {
     }
 
     public function store(array $data): ?Product
     {
         try {
-            $slug = $this->slugeableService->getUniqueSlugByEloquentModel(
-                input: $data['name'],
-                model: $this->model,
-                columName: 'slug'
-            );
-
-            $newImagesPaths = $this->fileService->uploadMultipleFiles(files: $data['images'], relativePath: $this::PRODUCTS_GALLERY_PATH);
-
             $product = $this->model::create([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
-                'slug' => $slug,
+                'slug' => $this->slugeableService->getUniqueSlugByEloquentModel(
+                    input: $data['name'],
+                    model: $this->model,
+                    columName: 'slug'
+                ),
                 'price' => $data['price'],
                 'stock' => $data['stock'],
                 'status' => $data['status'],
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
 
-            foreach ($newImagesPaths as $imagePath) {
-                $product->images()->create([
-                    'path' => $imagePath
-                ]);
-            }
+            $this->storeImagesFactory->make($product, $data['images']);
 
             return $product;
         } catch (\Throwable $throwable) {
@@ -57,34 +49,6 @@ final class ProductWriteEloquentRepository extends Repository implements Product
     {
         try {
             $product = $this->model::find($id);
-
-            $currentImagesPaths = $product->images()->pluck(column: 'path')->toArray();
-
-            $newImagesPaths = [];
-
-            $preloadedImagesPaths = array_map(function ($image) {
-                return $image['path'];
-            }, array: $data['preloaded_images'] ?? []);
-
-            $imagesToRemove = array_diff($currentImagesPaths, $preloadedImagesPaths);
-
-            if (isset($data['images']) && count($data['images']) > 0) {
-                $newImagesPaths = $this->fileService->uploadMultipleFiles(files: $data['images'], relativePath: $this::PRODUCTS_GALLERY_PATH);
-            }
-
-            if (count($imagesToRemove) > 0) {
-                $this->fileService->removeMultipleFiles(fullPaths: $imagesToRemove, fromThePrefix: '/images');
-
-                $product->images()
-                    ->whereIn(column: 'path', values: $imagesToRemove)
-                    ->delete();
-            }
-
-            foreach ($newImagesPaths as $imagePath) {
-                $product->images()->create([
-                    'path' => $imagePath
-                ]);
-            }
 
             $product->fill([
                 'name' => $this->normalizeStringUsingUcwords($data['name']),
@@ -103,6 +67,12 @@ final class ProductWriteEloquentRepository extends Repository implements Product
 
                 $product->slug = $slug;
             }
+
+            $this->updateImagesFactory->make(
+                product: $product,
+                preloadedImages: $data['preloaded_images'] ?? null,
+                newImages: $data['images'] ?? null
+            );
 
             return $product->save();
         } catch (\Throwable $throwable) {
