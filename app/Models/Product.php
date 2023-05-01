@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Enums\Product\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -30,43 +32,27 @@ class Product extends Model
         'status',
     ];
 
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
+    public function carts(): MorphToMany
     {
-        static::updated(function ($product) {
-            if ($product->stock == 0 && $product->status == ProductStatus::AVAILABLE) {
-                $product->status = ProductStatus::UNAVAILABLE;
-
-                $product->save();
-            }
-        });
+        return $this->morphedByMany(related: Cart::class, name: 'productable')->withPivot(columns: 'quantity');
     }
 
-    public function carts()
+    public function orders(): MorphToMany
     {
-        return $this->morphedByMany(Cart::class, 'productable')->withPivot('quantity');
+        return $this->morphedByMany(related: Order::class, name: 'productable')->withPivot(columns: 'quantity');
     }
 
-    public function orders()
+    public function images(): MorphMany
     {
-        return $this->morphedByMany(Order::class, 'productable')->withPivot('quantity');
+        return $this->morphMany(related: Image::class, name: 'imageable');
     }
 
-    public function images()
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
-
-    public function scopeAvailable($query)
+    public function scopeAvailable($query): void
     {
         $query->where('status', ProductStatus::AVAILABLE);
     }
 
-    public function getTotalAttribute()
+    public function getTotalAttribute(): float|int
     {
         return $this->pivot->quantity * $this->price;
     }

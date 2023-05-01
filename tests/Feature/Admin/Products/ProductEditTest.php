@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Admin\Products;
 
+use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\Product\ProductRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -27,7 +27,7 @@ class ProductEditTest extends TestCase
 
     public function test_admin_can_access_to_products_edit_screen(): void
     {
-        $repository = resolve(ProductRepositoryInterface::class);
+        $readRepository = resolve(ProductReadRepositoryInterface::class);
 
         $response = $this
             ->actingAs($this->admin)
@@ -36,6 +36,6 @@ class ProductEditTest extends TestCase
         $response->assertOk()
             ->assertViewIs('admin.products.crud.edit')
             ->assertViewHas('product', $this->product)
-            ->assertViewHas('statuses', $repository->allStatuses());
+            ->assertViewHas('statuses', $readRepository->allStatuses());
     }
 }

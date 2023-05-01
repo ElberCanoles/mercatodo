@@ -25,7 +25,7 @@ class FileService
         $response = [];
 
         foreach ($files as $file) {
-            if (is_a($file, UploadedFile::class)) {
+            if (is_a(object_or_class: $file, class: UploadedFile::class)) {
                 if ($fullFilePath = $this->uploadSingleFile(file: $file, relativePath: $relativePath)) {
                     $response[] = $fullFilePath;
                 }
@@ -53,7 +53,7 @@ class FileService
 
     private function getFullFilePath(string $fileNameWithRelativePath): string
     {
-        return asset("storage/$fileNameWithRelativePath");
+        return asset(path: "storage/$fileNameWithRelativePath");
     }
 
     private function getRelativePath(string $fileNameWithFullPath, string $fromThePrefix): string

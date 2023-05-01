@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Admin\Profile;
 
+use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Models\User;
-use App\Repositories\User\UserRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
@@ -64,7 +64,7 @@ class UpdateTest extends TestCase
             ->create()
             ->assignRole(RoleType::ADMINISTRATOR);
 
-        $this->mock(UserRepositoryInterface::class, function ($mock) {
+        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('update')->andReturn(null);
         });
 

@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Admin\Products;
 
+use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Models\User;
-use App\Repositories\Product\ProductRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -24,7 +24,7 @@ class ProductCreateTest extends TestCase
 
     public function test_admin_can_access_to_products_create_screen(): void
     {
-        $repository = resolve(ProductRepositoryInterface::class);
+        $readRepository = resolve(name: ProductReadRepositoryInterface::class);
 
         $response = $this
             ->actingAs($this->admin)
@@ -32,6 +32,6 @@ class ProductCreateTest extends TestCase
 
         $response->assertOk()
             ->assertViewIs('admin.products.crud.create')
-            ->assertViewHas('statuses', $repository->allStatuses());
+            ->assertViewHas('statuses', $readRepository->allStatuses());
     }
 }

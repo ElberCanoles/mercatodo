@@ -32,7 +32,7 @@ const props = defineProps({
         </div>
 
         <div>
-            <h2 class="mt-4">${{ product.price.toLocaleString() }}</h2>
+            <h2 class="mt-4">${{ product.price }}</h2>
             <span>Unidades disponibles: {{ product.stock }}</span>
             <p class="mt-4">{{ product.description }}</p>
         </div>

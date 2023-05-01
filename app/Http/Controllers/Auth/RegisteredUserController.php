@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Enums\User\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
-use App\Repositories\User\UserRepositoryInterface;
 use App\Services\Auth\EntryPoint;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Auth\Events\Registered;
@@ -20,7 +20,7 @@ final class RegisteredUserController extends Controller
 {
     use MakeJsonResponse;
 
-    public function __construct(private UserRepositoryInterface $repository)
+    public function __construct(private readonly UserWriteRepositoryInterface $writeRepository)
     {
     }
 
@@ -34,12 +34,10 @@ final class RegisteredUserController extends Controller
 
     /**
      * Handle an incoming registration request.
-     *
-     * @return RedirectResponse
      */
     public function store(StoreRequest $request): RedirectResponse|JsonResponse
     {
-        if ($user = $this->repository->store($request->validated())) {
+        if ($user = $this->writeRepository->store($request->validated())) {
             $user->assignRole(RoleType::BUYER);
 
             event(new Registered($user));

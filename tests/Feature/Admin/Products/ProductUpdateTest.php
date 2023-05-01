@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Admin\Products;
 
+use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Enums\Product\ProductStatus;
 use App\Enums\User\RoleType;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\Product\ProductRepositoryInterface;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -52,7 +52,7 @@ class ProductUpdateTest extends TestCase
 
         $this->product->refresh();
 
-        $this->assertSame('New Name', $this->product->name);
+        $this->assertSame('New name', $this->product->name);
         $this->assertSame('New description', $this->product->description);
         $this->assertSame(20.0, $this->product->price);
         $this->assertSame(0, $this->product->stock);
@@ -61,7 +61,7 @@ class ProductUpdateTest extends TestCase
 
     public function test_admin_can_not_update_products_when_internal_error(): void
     {
-        $this->mock(ProductRepositoryInterface::class, function ($mock) {
+        $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
             $mock->shouldReceive('update')->andReturn(null);
         });
 

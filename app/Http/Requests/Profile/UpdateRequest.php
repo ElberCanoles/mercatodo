@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -23,9 +25,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:40'],
-            'last_name' => ['required', 'string', 'max:40'],
-            'email' => ['required', 'string', 'email', 'max:80', Rule::unique('users')->ignore(request()->user())],
+            'name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:40'],
+            'last_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:40'],
+            'email' => ['required', 'string', 'email', 'max:80', Rule::unique(table: 'users')->ignore(request()->user())],
         ];
     }
 
@@ -39,10 +41,12 @@ class UpdateRequest extends FormRequest
         return [
             'name.required' => 'El nombre es requerido',
             'name.string' => 'El nombre debe ser una cadena de texto',
+            'name.regex' => 'El nombre no es valido',
             'name.max' => 'El nombre no puede contener mas de 40 caracteres',
 
             'last_name.required' => 'El apellido es requerido',
             'last_name.string' => 'El apellido debe ser una cadena de texto',
+            'last_name.regex' => 'El apellido no es valido',
             'last_name.max' => 'El apellido no puede contener mas de 40 caracteres',
 
             'email.required' => 'El email es requerido',
