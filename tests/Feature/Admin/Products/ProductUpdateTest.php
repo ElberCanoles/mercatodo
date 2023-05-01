@@ -52,7 +52,7 @@ class ProductUpdateTest extends TestCase
 
         $this->product->refresh();
 
-        $this->assertSame('New Name', $this->product->name);
+        $this->assertSame('New name', $this->product->name);
         $this->assertSame('New description', $this->product->description);
         $this->assertSame(20.0, $this->product->price);
         $this->assertSame(0, $this->product->stock);

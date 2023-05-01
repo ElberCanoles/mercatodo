@@ -22,12 +22,10 @@ class RegisterStoreTest extends TestCase
 
     public function test_guest_user_can_send_register_data(): void
     {
-        $user = User::factory()->make();
-
         $data = [
-            'name' => $user->name,
-            'last_name' => $user->last_name,
-            'email' => $user->email,
+            'name' => 'Juan Pablo',
+            'last_name' => 'Gonzales Lopez',
+            'email' => 'juanpablo@mercatodo.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ];
@@ -40,18 +38,16 @@ class RegisterStoreTest extends TestCase
         $this->assertDatabaseCount('users', 1);
 
         $this->assertDatabaseHas('users', [
-            'email' => $user->email,
+            'email' => $data['email'],
         ]);
     }
 
     public function test_guest_user_can_not_send_register_when_internal_error(): void
     {
-        $user = User::factory()->make();
-
         $data = [
-            'name' => $user->name,
-            'last_name' => $user->last_name,
-            'email' => $user->email,
+            'name' => 'Juan Pablo',
+            'last_name' => 'Gonzales Lopez',
+            'email' => 'juanpablo@mercatodo.com',
             'password' => 'password',
             'password_confirmation' => 'password',
         ];

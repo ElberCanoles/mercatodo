@@ -26,8 +26,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:40'],
-            'last_name' => ['required', 'string', 'max:40'],
+            'name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:40'],
+            'last_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:40'],
             'status' => ['required', Rule::in(UserStatus::asArray())],
         ];
     }
@@ -42,10 +42,12 @@ class UpdateRequest extends FormRequest
         return [
             'name.required' => 'El nombre es requerido',
             'name.string' => 'El nombre debe ser una cadena de texto',
+            'name.regex' => 'El nombre no es valido',
             'name.max' => 'El nombre no puede contener mas de 40 caracteres',
 
             'last_name.required' => 'El apellido es requerido',
             'last_name.string' => 'El apellido debe ser una cadena de texto',
+            'last_name.regex' => 'El apellido no es valido',
             'last_name.max' => 'El apellido no puede contener mas de 40 caracteres',
 
             'status.required' => 'El estado es requerido',
