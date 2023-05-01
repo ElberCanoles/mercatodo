@@ -47,11 +47,6 @@ class Product extends Model
         return $this->morphMany(related: Image::class, name: 'imageable');
     }
 
-    public function scopeAvailable($query): void
-    {
-        $query->where('status', ProductStatus::AVAILABLE);
-    }
-
     public function getTotalAttribute(): float|int
     {
         return $this->pivot->quantity * $this->price;
