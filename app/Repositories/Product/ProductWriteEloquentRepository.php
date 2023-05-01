@@ -25,7 +25,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
     {
         try {
             $product = $this->model::create([
-                'name' => $this->normalizeStringUsingUcwords($data['name']),
+                'name' => $this->normalizeStringUsingUcfirst($data['name']),
                 'slug' => $this->slugeableService->getUniqueSlugByEloquentModel(
                     input: $data['name'],
                     model: $this->model,
@@ -51,7 +51,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
             $product = $this->model::find($id);
 
             $product->fill([
-                'name' => $this->normalizeStringUsingUcwords($data['name']),
+                'name' => $this->normalizeStringUsingUcfirst($data['name']),
                 'price' => $data['price'],
                 'stock' => $data['stock'],
                 'status' => $data['status'],

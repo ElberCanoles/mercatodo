@@ -13,7 +13,7 @@ trait NormalizeData
      */
     protected function normalizeStringUsingStrtolower(string $input = null): ?string
     {
-        return $input ? strtolower(trim($input)) : null;
+        return $input ? strtolower(trim(preg_replace(pattern: '/ +/', replacement: ' ', subject: $input))) : null;
     }
 
     /**

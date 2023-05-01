@@ -21,10 +21,10 @@ final class UserWriteEloquentRepository extends Repository implements UserWriteR
     {
         try {
             return $this->model::create([
-                'name' => $this->normalizeStringUsingUcwords($data['name']),
-                'last_name' => $this->normalizeStringUsingUcwords($data['last_name']),
-                'email' => $this->normalizeStringUsingStrtolower($data['email']),
-                'password' => $this->normalizeStringUsingHash($data['password']),
+                'name' => $this->normalizeStringUsingUcwords(input: $data['name']),
+                'last_name' => $this->normalizeStringUsingUcwords(input: $data['last_name']),
+                'email' => $this->normalizeStringUsingStrtolower(input: $data['email']),
+                'password' => $this->normalizeStringUsingHash(input: $data['password']),
             ]);
         } catch (\Throwable $throwable) {
             return null;
@@ -40,9 +40,9 @@ final class UserWriteEloquentRepository extends Repository implements UserWriteR
 
         try {
             $user->fill([
-                'name' => $this->normalizeStringUsingUcwords($data['name']),
-                'last_name' => $this->normalizeStringUsingUcwords($data['last_name']),
-                'email' => $this->normalizeStringUsingStrtolower($data['email'] ?? null) ?? $user->email,
+                'name' => $this->normalizeStringUsingUcwords(input: $data['name']),
+                'last_name' => $this->normalizeStringUsingUcwords(input: $data['last_name']),
+                'email' => $this->normalizeStringUsingStrtolower(input: $data['email'] ?? null) ?? $user->email,
                 'status' => $data['status'] ?? $user->status,
             ]);
 
@@ -79,7 +79,7 @@ final class UserWriteEloquentRepository extends Repository implements UserWriteR
         $user = $this->model::find($id);
 
         try {
-            $user->password = $this->normalizeStringUsingHash($data['password']);
+            $user->password = $this->normalizeStringUsingHash(input: $data['password']);
 
             return $user->save();
         } catch (\Throwable $throwable) {
