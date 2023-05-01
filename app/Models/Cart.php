@@ -4,18 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Cart extends Model
 {
     use HasFactory;
 
-    public function products()
+    public function products(): MorphToMany
     {
-        return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
+        return $this->morphToMany(related: Product::class, name: 'productable')->withPivot(columns: 'quantity');
     }
 
-    public function getTotalAttribute()
+    public function getTotalAttribute(): float|int
     {
-        return $this->products->pluck('total')->sum();
+        return $this->products()->pluck(column: 'total')->sum();
     }
 }

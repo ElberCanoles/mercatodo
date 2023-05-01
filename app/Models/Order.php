@@ -37,7 +37,6 @@ class Order extends Model
     public function getTotalAttribute()
     {
         return $this->products()
-            ->withoutGlobalScope(AvailableScope::class)
             ->get()
             ->pluck('total')
             ->sum();

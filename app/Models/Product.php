@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\Product\ProductStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property object $pivot
+ * @property float $price
+ */
 class Product extends Model
 {
     use HasFactory;
@@ -45,11 +48,6 @@ class Product extends Model
     public function images(): MorphMany
     {
         return $this->morphMany(related: Image::class, name: 'imageable');
-    }
-
-    public function scopeAvailable($query): void
-    {
-        $query->where('status', ProductStatus::AVAILABLE);
     }
 
     public function getTotalAttribute(): float|int
