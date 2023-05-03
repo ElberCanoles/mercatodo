@@ -6,9 +6,9 @@ namespace App\Contracts\Repository\Base;
 
 interface WriteRepositoryInterface
 {
-    public function store(array $data);
+    public function store(array $data): ?object;
 
-    public function update(array $data, int $id);
+    public function update(array $data, int $id): bool;
 
-    public function delete(int $id);
+    public function delete(int $id): bool;
 }
