@@ -19,7 +19,7 @@ class PermissionSeeder extends Seeder
         $routesAdminCollection = Route::getRoutes();
 
         foreach ($routesAdminCollection as $key => $value) {
-            if (Str::startsWith($value->action['as'] ?? '', 'admin.')) {
+            if (Str::startsWith(haystack: $value->action['as'] ?? '', needles: 'admin.')) {
                 try {
                     Permission::create(['name' => $value->action['as']])->assignRole(RoleType::ADMINISTRATOR);
                 } catch (\Throwable $throwable) {
@@ -31,7 +31,7 @@ class PermissionSeeder extends Seeder
         $routesBuyerCollection = Route::getRoutes();
 
         foreach ($routesBuyerCollection as $key => $value) {
-            if (Str::startsWith($value->action['as'] ?? '', 'buyer.')) {
+            if (Str::startsWith(haystack: $value->action['as'] ?? '', needles: 'buyer.')) {
                 try {
                     Permission::create(['name' => $value->action['as']])->assignRole(RoleType::BUYER);
                 } catch (\Throwable $throwable) {

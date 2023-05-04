@@ -17,17 +17,17 @@ class UserSeeder extends Seeder
     {
         // register default admin
         User::create([
-            'name' => config('admin.name'),
-            'last_name' => config('admin.last_name'),
-            'email' => config('admin.email'),
-            'password' => Hash::make(config('admin.password')),
+            'name' => config(key: 'admin.name'),
+            'last_name' => config(key: 'admin.last_name'),
+            'email' => config(key: 'admin.email'),
+            'password' => Hash::make(config(key: 'admin.password')),
             'email_verified_at' => Carbon::now(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ])->assignRole(RoleType::ADMINISTRATOR);
 
         // register some users buyers demo
-        User::factory()->count(1000)->create()->each(function ($user) {
+        User::factory()->count(count: 1000)->create()->each(function ($user) {
             $user->assignRole(RoleType::BUYER);
         });
     }
