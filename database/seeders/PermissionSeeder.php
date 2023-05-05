@@ -23,6 +23,7 @@ class PermissionSeeder extends Seeder
                 try {
                     Permission::create(['name' => $value->action['as']])->assignRole(RoleType::ADMINISTRATOR);
                 } catch (\Throwable $throwable) {
+                    report(exception: $throwable);
                 }
             }
         }
@@ -35,6 +36,7 @@ class PermissionSeeder extends Seeder
                 try {
                     Permission::create(['name' => $value->action['as']])->assignRole(RoleType::BUYER);
                 } catch (\Throwable $throwable) {
+                    report(exception: $throwable);
                 }
             }
         }

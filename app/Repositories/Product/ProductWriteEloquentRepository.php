@@ -41,6 +41,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
 
             return $product;
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return null;
         }
     }
@@ -76,6 +77,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
 
             return $product->save();
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return false;
         }
     }
@@ -87,6 +89,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
 
             return true;
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return false;
         }
     }

@@ -27,6 +27,7 @@ final class UserWriteEloquentRepository extends Repository implements UserWriteR
                 'password' => $this->normalizeStringUsingHash(input: $data['password']),
             ]);
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return null;
         }
     }
@@ -53,6 +54,7 @@ final class UserWriteEloquentRepository extends Repository implements UserWriteR
 
             return $user->save();
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return false;
         }
     }
@@ -67,6 +69,7 @@ final class UserWriteEloquentRepository extends Repository implements UserWriteR
 
             return true;
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return false;
         }
     }
@@ -83,6 +86,7 @@ final class UserWriteEloquentRepository extends Repository implements UserWriteR
 
             return $user->save();
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return false;
         }
     }
