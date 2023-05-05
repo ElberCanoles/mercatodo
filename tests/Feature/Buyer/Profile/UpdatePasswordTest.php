@@ -41,7 +41,7 @@ class UpdatePasswordTest extends TestCase
         $user = User::factory()->create()->assignRole(RoleType::BUYER);
 
         $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('updatePassword')->andReturn(null);
+            $mock->shouldReceive('updatePassword')->andReturn(false);
         });
 
         $response = $this

@@ -49,7 +49,7 @@ class UserUpdateTest extends TestCase
     public function test_admin_can_not_update_users_when_internal_error(): void
     {
         $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('update')->andReturn(null);
+            $mock->shouldReceive('update')->andReturn(false);
         });
 
         $response = $this

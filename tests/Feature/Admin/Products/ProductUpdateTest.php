@@ -62,7 +62,7 @@ class ProductUpdateTest extends TestCase
     public function test_admin_can_not_update_products_when_internal_error(): void
     {
         $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('update')->andReturn(null);
+            $mock->shouldReceive('update')->andReturn(false);
         });
 
         $response = $this

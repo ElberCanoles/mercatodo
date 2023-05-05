@@ -65,7 +65,7 @@ class UpdateTest extends TestCase
             ->assignRole(RoleType::ADMINISTRATOR);
 
         $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('update')->andReturn(null);
+            $mock->shouldReceive('update')->andReturn(false);
         });
 
         $response = $this

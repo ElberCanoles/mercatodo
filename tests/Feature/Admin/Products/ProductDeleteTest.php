@@ -42,7 +42,7 @@ class ProductDeleteTest extends TestCase
     public function test_admin_can_not_delete_products_when_internal_error(): void
     {
         $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('delete')->andReturn(null);
+            $mock->shouldReceive('delete')->andReturn(false);
         });
 
         $response = $this
