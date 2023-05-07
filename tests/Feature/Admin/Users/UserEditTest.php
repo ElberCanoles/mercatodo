@@ -19,7 +19,7 @@ class UserEditTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
         $this->buyer = User::factory()->create()->assignRole(RoleType::BUYER);
     }
@@ -30,10 +30,10 @@ class UserEditTest extends TestCase
 
         $response = $this
             ->actingAs($this->admin)
-            ->get(route('admin.users.edit', ['user' => $this->buyer->id]));
+            ->get(route(name: 'admin.users.edit', parameters: ['user' => $this->buyer->id]));
 
         $response->assertOk()
-            ->assertViewIs('admin.users.crud.edit')
+            ->assertViewIs(value: 'admin.users.crud.edit')
             ->assertViewHas('user', $this->buyer)
             ->assertViewHas('statuses', $readRepository->allStatuses());
     }

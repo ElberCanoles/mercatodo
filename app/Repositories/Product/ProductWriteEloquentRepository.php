@@ -41,6 +41,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
 
             return $product;
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return null;
         }
     }
@@ -76,6 +77,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
 
             return $product->save();
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return false;
         }
     }
@@ -83,10 +85,13 @@ final class ProductWriteEloquentRepository extends Repository implements Product
     public function delete(int $id): bool
     {
         try {
-            $this->model->destroy($id);
+            $product = $this->model::find($id);
+
+            $product->delete();
 
             return true;
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return false;
         }
     }

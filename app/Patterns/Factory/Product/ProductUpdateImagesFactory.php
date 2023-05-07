@@ -52,6 +52,7 @@ class ProductUpdateImagesFactory
                 ]);
             }
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
         }
     }
 }

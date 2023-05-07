@@ -17,7 +17,7 @@ class UpdateTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
     }
 
     public function test_buyer_profile_page_is_displayed(): void
@@ -28,7 +28,7 @@ class UpdateTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->get('/buyer/profile');
+            ->get(uri: '/buyer/profile');
 
         $response->assertOk();
     }
@@ -53,8 +53,8 @@ class UpdateTest extends TestCase
 
         $user->refresh();
 
-        $this->assertSame('Test User', $user->name);
-        $this->assertSame('test@example.com', $user->email);
+        $this->assertSame(expected: 'Test User', actual: $user->name);
+        $this->assertSame(expected: 'test@example.com', actual: $user->email);
         $this->assertNull($user->email_verified_at);
     }
 
@@ -64,8 +64,8 @@ class UpdateTest extends TestCase
             ->create()
             ->assignRole(RoleType::BUYER);
 
-        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('update')->andReturn(null);
+        $this->mock(abstract: UserWriteRepositoryInterface::class, mock: function ($mock) {
+            $mock->shouldReceive('update')->andReturn(false);
         });
 
         $response = $this
@@ -76,7 +76,7 @@ class UpdateTest extends TestCase
                 'email' => 'test@example.com',
             ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(status: 500);
 
         Mockery::close();
     }
@@ -89,7 +89,7 @@ class UpdateTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/buyer/profile', [
+            ->patch(uri: '/buyer/profile', data: [
                 'name' => 'Test User',
                 'last_name' => 'User Test',
                 'email' => $user->email,

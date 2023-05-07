@@ -36,7 +36,7 @@ class ProductReadEloquentRepository extends Repository implements ProductReadRep
         return $this->model->where($key, $value)->first();
     }
 
-    public function findAvailable(string $key, mixed $value)
+    public function findAvailable(string $key, mixed $value): ?Product
     {
         return $this->model->where($key, $value)
             ->where('status', ProductStatus::AVAILABLE)

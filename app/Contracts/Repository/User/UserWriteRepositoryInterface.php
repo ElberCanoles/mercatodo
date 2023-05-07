@@ -8,5 +8,5 @@ use App\Contracts\Repository\Base\WriteRepositoryInterface;
 
 interface UserWriteRepositoryInterface extends WriteRepositoryInterface
 {
-    public function updatePassword(array $data, int $id);
+    public function updatePassword(array $data, int $id): bool;
 }

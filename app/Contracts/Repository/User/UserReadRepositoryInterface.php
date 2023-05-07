@@ -8,5 +8,5 @@ use App\Contracts\Repository\Base\ReadRepositoryInterface;
 
 interface UserReadRepositoryInterface extends ReadRepositoryInterface
 {
-    public function allStatuses();
+    public function allStatuses(): array;
 }

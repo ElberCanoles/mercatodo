@@ -17,7 +17,7 @@ class UpdatePasswordTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
     }
 
     public function test_admin_password_can_be_updated(): void
@@ -26,7 +26,7 @@ class UpdatePasswordTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/admin/profile/password', [
+            ->patch(uri: '/admin/profile/password', data: [
                 'current_password' => 'password',
                 'password' => 'new_password',
                 'password_confirmation' => 'new_password',
@@ -40,19 +40,19 @@ class UpdatePasswordTest extends TestCase
     {
         $user = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
 
-        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('updatePassword')->andReturn(null);
+        $this->mock(abstract: UserWriteRepositoryInterface::class, mock: function ($mock) {
+            $mock->shouldReceive('updatePassword')->andReturn(false);
         });
 
         $response = $this
             ->actingAs($user)
-            ->patch('/admin/profile/password', [
+            ->patch(uri: '/admin/profile/password', data: [
                 'current_password' => 'password',
                 'password' => 'new_password',
                 'password_confirmation' => 'new_password',
             ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(status: 500);
 
         Mockery::close();
     }

@@ -21,7 +21,7 @@ class ProductDeleteTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
         $this->product = Product::factory()->create();
     }
@@ -30,7 +30,7 @@ class ProductDeleteTest extends TestCase
     {
         $response = $this
             ->actingAs($this->admin)
-            ->delete(route('admin.products.destroy', ['product' => $this->product->id]));
+            ->delete(route(name: 'admin.products.destroy', parameters: ['product' => $this->product->id]));
 
         $response->assertOk();
 
@@ -41,15 +41,15 @@ class ProductDeleteTest extends TestCase
 
     public function test_admin_can_not_delete_products_when_internal_error(): void
     {
-        $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('delete')->andReturn(null);
+        $this->mock(abstract: ProductWriteRepositoryInterface::class, mock: function ($mock) {
+            $mock->shouldReceive('delete')->andReturn(false);
         });
 
         $response = $this
             ->actingAs($this->admin)
-            ->delete(route('admin.products.destroy', ['product' => $this->product->id]));
+            ->delete(route(name: 'admin.products.destroy', parameters: ['product' => $this->product->id]));
 
-        $response->assertStatus(500);
+        $response->assertStatus(status: 500);
 
         Mockery::close();
     }

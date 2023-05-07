@@ -16,6 +16,7 @@ class FileService
 
             return $this->getFullFilePath($file->hashName(path: $relativePath));
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
             return null;
         }
     }

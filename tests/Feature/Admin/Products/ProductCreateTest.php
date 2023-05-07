@@ -18,7 +18,7 @@ class ProductCreateTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
     }
 
@@ -28,10 +28,10 @@ class ProductCreateTest extends TestCase
 
         $response = $this
             ->actingAs($this->admin)
-            ->get(route('admin.products.create'));
+            ->get(route(name: 'admin.products.create'));
 
         $response->assertOk()
-            ->assertViewIs('admin.products.crud.create')
+            ->assertViewIs(value: 'admin.products.crud.create')
             ->assertViewHas('statuses', $readRepository->allStatuses());
     }
 }

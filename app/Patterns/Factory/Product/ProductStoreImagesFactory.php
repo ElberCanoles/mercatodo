@@ -29,6 +29,7 @@ class ProductStoreImagesFactory
                 ]);
             }
         } catch (\Throwable $throwable) {
+            report(exception: $throwable);
         }
     }
 }

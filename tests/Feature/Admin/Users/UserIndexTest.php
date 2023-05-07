@@ -17,7 +17,7 @@ class UserIndexTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->user = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
     }
 
@@ -26,10 +26,10 @@ class UserIndexTest extends TestCase
     {
         $response = $this
             ->actingAs($this->user)
-            ->get(route('admin.users.index'));
+            ->get(route(name: 'admin.users.index'));
 
         $response->assertOk()
-            ->assertViewIs('admin.users.index');
+            ->assertViewIs(value: 'admin.users.index');
     }
 
 
@@ -37,7 +37,7 @@ class UserIndexTest extends TestCase
     {
         $response = $this
             ->actingAs($this->user)
-            ->getJson(route('admin.users.index'));
+            ->getJson(route(name: 'admin.users.index'));
 
         $response->assertOk()
             ->assertJsonStructure([
