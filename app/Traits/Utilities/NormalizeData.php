@@ -39,12 +39,4 @@ trait NormalizeData
     {
         return Hash::make($input);
     }
-
-    /**
-     * Get the absolute value of a number
-     */
-    protected function normalizeNumberUsingAbs(int|float $input): int|float
-    {
-        return abs($input);
-    }
 }

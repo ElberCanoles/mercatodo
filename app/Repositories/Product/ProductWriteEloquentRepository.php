@@ -85,7 +85,9 @@ final class ProductWriteEloquentRepository extends Repository implements Product
     public function delete(int $id): bool
     {
         try {
-            $this->model->destroy($id);
+            $product = $this->model::find($id);
+
+            $product->delete();
 
             return true;
         } catch (\Throwable $throwable) {
