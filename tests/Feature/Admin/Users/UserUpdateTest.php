@@ -41,26 +41,26 @@ class UserUpdateTest extends TestCase
 
         $this->buyer->refresh();
 
-        $this->assertSame('New Name', $this->buyer->name);
-        $this->assertSame('New Last Name', $this->buyer->last_name);
-        $this->assertSame(UserStatus::INACTIVE, $this->buyer->status);
+        $this->assertSame(expected: 'New Name', actual: $this->buyer->name);
+        $this->assertSame(expected: 'New Last Name', actual: $this->buyer->last_name);
+        $this->assertSame(expected: UserStatus::INACTIVE, actual: $this->buyer->status);
     }
 
     public function test_admin_can_not_update_users_when_internal_error(): void
     {
-        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
+        $this->mock(abstract: UserWriteRepositoryInterface::class, mock: function ($mock) {
             $mock->shouldReceive('update')->andReturn(false);
         });
 
         $response = $this
             ->actingAs($this->admin)
-            ->put(route('admin.users.update', ['user' => $this->buyer->id]), [
+            ->put(route(name: 'admin.users.update', parameters: ['user' => $this->buyer->id]), [
                 'name' => 'New Name',
                 'last_name' => 'New Last Name',
                 'status' => UserStatus::INACTIVE,
             ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(status: 500);
 
         Mockery::close();
     }

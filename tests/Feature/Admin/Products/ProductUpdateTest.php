@@ -20,25 +20,26 @@ class ProductUpdateTest extends TestCase
     private User $admin;
     private Product $product;
     private UploadedFile $image;
+
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
         $this->product = Product::factory()->create(['price' => 10, 'stock' => 10, 'status' => ProductStatus::AVAILABLE]);
 
-        $imagePath = tempnam(sys_get_temp_dir(), 'images');
-        $imageContent = file_get_contents('https://via.placeholder.com/150');
+        $imagePath = tempnam(sys_get_temp_dir(), prefix: 'images');
+        $imageContent = file_get_contents(filename: 'https://via.placeholder.com/150');
         file_put_contents($imagePath, $imageContent);
 
-        $this->image = new UploadedFile($imagePath, 'image.jpg', null, null, true);
+        $this->image = new UploadedFile($imagePath, originalName: 'image.jpg', mimeType: null, error: null, test: true);
     }
 
     public function test_admin_can_update_products(): void
     {
         $response = $this
             ->actingAs($this->admin)
-            ->put(route('admin.products.update', ['product' => $this->product->id]), [
+            ->put(route(name: 'admin.products.update', parameters: ['product' => $this->product->id]), [
                 'name' => 'New name',
                 'description' => 'New description',
                 'price' => 20.0,
@@ -52,22 +53,22 @@ class ProductUpdateTest extends TestCase
 
         $this->product->refresh();
 
-        $this->assertSame('New name', $this->product->name);
-        $this->assertSame('New description', $this->product->description);
-        $this->assertSame(20.0, $this->product->price);
-        $this->assertSame(0, $this->product->stock);
-        $this->assertSame(ProductStatus::UNAVAILABLE, $this->product->status);
+        $this->assertSame(expected: 'New name', actual: $this->product->name);
+        $this->assertSame(expected: 'New description', actual: $this->product->description);
+        $this->assertSame(expected: 20.0, actual: $this->product->price);
+        $this->assertSame(expected: 0, actual: $this->product->stock);
+        $this->assertSame(expected: ProductStatus::UNAVAILABLE, actual: $this->product->status);
     }
 
     public function test_admin_can_not_update_products_when_internal_error(): void
     {
-        $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
+        $this->mock(abstract: ProductWriteRepositoryInterface::class, mock: function ($mock) {
             $mock->shouldReceive('update')->andReturn(false);
         });
 
         $response = $this
             ->actingAs($this->admin)
-            ->put(route('admin.products.update', ['product' => $this->product->id]), [
+            ->put(route(name: 'admin.products.update', parameters: ['product' => $this->product->id]), [
                 'name' => 'New name',
                 'description' => 'New description',
                 'price' => 20,
@@ -76,7 +77,7 @@ class ProductUpdateTest extends TestCase
                 'images' => [$this->image]
             ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(status: 500);
 
         Mockery::close();
     }

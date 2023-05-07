@@ -17,7 +17,7 @@ class UpdatePasswordTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
     }
 
     public function test_buyer_password_can_be_updated(): void
@@ -40,19 +40,19 @@ class UpdatePasswordTest extends TestCase
     {
         $user = User::factory()->create()->assignRole(RoleType::BUYER);
 
-        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
+        $this->mock(abstract: UserWriteRepositoryInterface::class, mock: function ($mock) {
             $mock->shouldReceive('updatePassword')->andReturn(false);
         });
 
         $response = $this
             ->actingAs($user)
-            ->patch('/buyer/profile/password', [
+            ->patch(uri: '/buyer/profile/password', data: [
                 'current_password' => 'password',
                 'password' => 'new_password',
                 'password_confirmation' => 'new_password',
             ]);
 
-        $response->assertStatus(500);
+        $response->assertStatus(status: 500);
 
         Mockery::close();
     }

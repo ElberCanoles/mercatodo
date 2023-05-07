@@ -22,14 +22,14 @@ class ProductStoreTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
 
-        $imagePath = tempnam(sys_get_temp_dir(), 'images');
-        $imageContent = file_get_contents('https://via.placeholder.com/150');
+        $imagePath = tempnam(directory: sys_get_temp_dir(), prefix: 'images');
+        $imageContent = file_get_contents(filename: 'https://via.placeholder.com/150');
         file_put_contents($imagePath, $imageContent);
 
-        $this->image = new UploadedFile($imagePath, 'image.jpg', null, null, true);
+        $this->image = new UploadedFile($imagePath, originalName: 'image.jpg', mimeType: null, error: null, test: true);
     }
 
     public function test_admin_can_store_products(): void
@@ -46,19 +46,19 @@ class ProductStoreTest extends TestCase
         ];
 
         $response = $this->actingAs($this->admin)
-            ->post(route('admin.products.store'), $data);
+            ->post(route(name: 'admin.products.store'), $data);
 
         $response->assertSessionDoesntHaveErrors()
             ->assertOk();
 
-        $this->assertDatabaseCount('products', 1);
+        $this->assertDatabaseCount(table: 'products', count: 1);
     }
 
     public function test_admin_can_not_store_products_when_internal_error(): void
     {
         $product = Product::factory()->make();
 
-        $this->mock(ProductWriteRepositoryInterface::class, function ($mock) {
+        $this->mock(abstract: ProductWriteRepositoryInterface::class, mock: function ($mock) {
             $mock->shouldReceive('store')->andReturn(null);
         });
 
@@ -72,9 +72,9 @@ class ProductStoreTest extends TestCase
         ];
 
         $response = $this->actingAs($this->admin)
-            ->post(route('admin.products.store'), $data);
+            ->post(route(name: 'admin.products.store'), $data);
 
-        $response->assertStatus(500);
+        $response->assertStatus(status: 500);
 
         Mockery::close();
     }

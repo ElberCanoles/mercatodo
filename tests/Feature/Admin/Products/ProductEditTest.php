@@ -20,21 +20,21 @@ class ProductEditTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
         $this->product = Product::factory()->create();
     }
 
     public function test_admin_can_access_to_products_edit_screen(): void
     {
-        $readRepository = resolve(ProductReadRepositoryInterface::class);
+        $readRepository = resolve(name: ProductReadRepositoryInterface::class);
 
         $response = $this
             ->actingAs($this->admin)
-            ->get(route('admin.products.edit', ['product' => $this->product->id]));
+            ->get(route(name: 'admin.products.edit', parameters: ['product' => $this->product->id]));
 
         $response->assertOk()
-            ->assertViewIs('admin.products.crud.edit')
+            ->assertViewIs(value: 'admin.products.crud.edit')
             ->assertViewHas('product', $this->product)
             ->assertViewHas('statuses', $readRepository->allStatuses());
     }

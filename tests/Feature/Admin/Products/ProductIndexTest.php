@@ -17,7 +17,7 @@ class ProductIndexTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
     }
 
@@ -26,17 +26,17 @@ class ProductIndexTest extends TestCase
     {
         $response = $this
             ->actingAs($this->admin)
-            ->get(route('admin.products.index'));
+            ->get(route(name: 'admin.products.index'));
 
         $response->assertOk()
-            ->assertViewIs('admin.products.index');
+            ->assertViewIs(value: 'admin.products.index');
     }
 
     public function test_admin_can_get_products_list_paginated_data(): void
     {
         $response = $this
             ->actingAs($this->admin)
-            ->getJson(route('admin.products.index'));
+            ->getJson(route(name: 'admin.products.index'));
 
         $response->assertOk()
             ->assertJsonStructure([
