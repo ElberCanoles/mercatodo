@@ -9,10 +9,18 @@ use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
+
+    private readonly string $diskName;
+
+    public function __construct()
+    {
+        $this->diskName = config(key: 'filesystems.default');
+    }
+
     public function uploadSingleFile(UploadedFile $file, string $relativePath): ?string
     {
         try {
-            Storage::disk(name: 'public')->put($relativePath, $file);
+            Storage::disk(name: $this->diskName)->put($relativePath, $file);
 
             return $this->getFullFilePath($file->hashName(path: $relativePath));
         } catch (\Throwable $throwable) {
@@ -40,8 +48,8 @@ class FileService
     {
         $relativePath = $this->getRelativePath(fileNameWithFullPath: $fullPath, fromThePrefix: $fromThePrefix);
 
-        if (Storage::disk(name: 'public')->exists($relativePath)) {
-            Storage::disk(name: 'public')->delete($relativePath);
+        if (Storage::disk(name: $this->diskName)->exists($relativePath)) {
+            Storage::disk(name: $this->diskName)->delete($relativePath);
         }
     }
 
@@ -54,7 +62,7 @@ class FileService
 
     private function getFullFilePath(string $fileNameWithRelativePath): string
     {
-        return asset(path: "storage/$fileNameWithRelativePath");
+        return Storage::url(path: $fileNameWithRelativePath);
     }
 
     private function getRelativePath(string $fileNameWithFullPath, string $fromThePrefix): string
