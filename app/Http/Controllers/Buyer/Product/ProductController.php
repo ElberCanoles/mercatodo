@@ -22,27 +22,21 @@ class ProductController extends Controller
     {
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request): JsonResponse|View
     {
-        if ($request->wantsJson()) {
-            return $this->successResponse(
-                data: $this->readRepository->all(
-                    queryParams: $request->all(),
-                    status: ProductStatus::AVAILABLE,
-                    roleTarget: RoleType::BUYER
-                )
-            );
-        } else {
+        if (!$request->wantsJson()) {
             return view(view: 'buyer.products.index');
         }
+
+        return $this->successResponse(
+            data: $this->readRepository->all(
+                queryParams: $request->all(),
+                status: ProductStatus::AVAILABLE,
+                roleTarget: RoleType::BUYER
+            )
+        );
     }
 
-    /**
-     * Show a specific resource.
-     */
     public function show(string $slug): View
     {
         return view(view: 'buyer.products.show', data: [

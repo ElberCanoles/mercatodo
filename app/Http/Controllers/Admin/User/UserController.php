@@ -24,26 +24,20 @@ final class UserController extends Controller
     ) {
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request): JsonResponse|View
     {
-        if ($request->wantsJson()) {
-            return $this->successResponse(
-                data: $this->readRepository->all(
-                    queryParams: $request->all(),
-                    role: RoleType::BUYER
-                )
-            );
-        } else {
+        if (!$request->wantsJson()) {
             return view(view: 'admin.users.index');
         }
+
+        return $this->successResponse(
+            data: $this->readRepository->all(
+                queryParams: $request->all(),
+                role: RoleType::BUYER
+            )
+        );
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(int $id): View
     {
         return view(view: 'admin.users.crud.edit', data: [
@@ -52,17 +46,14 @@ final class UserController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateRequest $request, int $id): JsonResponse
     {
-        if ($this->writeRepository->update(data: $request->validated(), id: $id)) {
-            return $this->showMessage(message: trans(key: 'server.record_updated'));
-        } else {
+        if (!$this->writeRepository->update(data: $request->validated(), id: $id)) {
             return $this->errorResponseWithBag(
                 collection: ['server' => [trans(key: 'server.internal_error')]]
             );
         }
+
+        return $this->showMessage(message: trans(key: 'server.record_updated'));
     }
 }
