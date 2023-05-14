@@ -9,9 +9,6 @@ use Illuminate\View\View;
 
 final class ProfileController extends BaseProfileController
 {
-    /**
-     * Show the form for editing data profile.
-     */
     public function show(): View
     {
         return view(view: 'buyer.profile.show', data: [
