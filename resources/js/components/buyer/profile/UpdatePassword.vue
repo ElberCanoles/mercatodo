@@ -77,10 +77,8 @@ const submit = () => {
 
         <div class="row g-3">
 
-            <div v-if="status.success">
-                <p class="text-success fw-bold mb-4">
-                    {{ status.message }}
-                </p>
+            <div v-if="status.success" class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ status.message }}</strong>
             </div>
 
             <div v-if="errors.server">
