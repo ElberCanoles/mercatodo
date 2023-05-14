@@ -12,9 +12,6 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']]
             Route::get('/profile', [\App\Http\Controllers\Buyer\Profile\ProfileController::class, 'show'])->name('profile.show');
             Route::patch('/profile', [\App\Http\Controllers\Buyer\Profile\ProfileController::class, 'update'])->name('profile.update');
             Route::patch('/profile/password', [\App\Http\Controllers\Buyer\Profile\ProfileController::class, 'updatePassword'])->name('profile.update.password');
-
-            Route::get('products', [\App\Http\Controllers\Buyer\Product\ProductController::class, 'index'])->name('products.index');
-            Route::get('products/{slug}', [\App\Http\Controllers\Buyer\Product\ProductController::class, 'show'])->name('products.show');
         });
     });
 });

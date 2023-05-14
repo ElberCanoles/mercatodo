@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class DeleteTest extends TestCase
 {
-
     use RefreshDatabase;
 
     public function test_delete_product(): void

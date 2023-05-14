@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class FileService
 {
-
     private readonly string $diskName;
 
     public function __construct()

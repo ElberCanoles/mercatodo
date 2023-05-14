@@ -7,7 +7,7 @@ const links = ref([])
 
 const LENGTH_PER_PAGE = 9;
 
-const url = ref(`/buyer/products?`)
+const url = ref(`/products?`)
 
 const search = ref({
     name: '',

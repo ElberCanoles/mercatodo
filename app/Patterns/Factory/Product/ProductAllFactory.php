@@ -33,8 +33,7 @@ final class ProductAllFactory
     {
         return match ($this->arguments['roleTarget'] ?? null) {
             RoleType::ADMINISTRATOR => $this->buildQueryForAdmin(),
-            RoleType::BUYER => $this->buildQueryForBuyer(),
-            default => $this->product::query()->paginate($this->lengthPerPage)
+            default => $this->buildQueryForBuyer()
         };
     }
 
@@ -108,7 +107,7 @@ final class ProductAllFactory
                 'images' => $product->images,
                 'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
                 'stock' => number_format(num: $product->stock, decimal_separator: ',', thousands_separator: '.'),
-                'show_url' => route(name: 'buyer.products.show', parameters: ['slug' => $product->slug]),
+                'show_url' => route(name: 'products.show', parameters: ['slug' => $product->slug]),
             ]);
     }
 }

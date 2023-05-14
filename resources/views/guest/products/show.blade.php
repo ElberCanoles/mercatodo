@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <buyer-products-show
+    <guest-products-show
         :product="{{ json_encode($product) }}">
-    </buyer-products-show>
+    </guest-products-show>
 @endsection

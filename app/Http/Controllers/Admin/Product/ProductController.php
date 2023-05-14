@@ -22,8 +22,7 @@ final class ProductController extends Controller
     public function __construct(
         private readonly ProductWriteRepositoryInterface $writeRepository,
         private readonly ProductReadRepositoryInterface  $readRepository
-    )
-    {
+    ) {
     }
 
     public function index(Request $request): JsonResponse|View

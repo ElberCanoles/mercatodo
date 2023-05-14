@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Buyer\Product;
+namespace App\Http\Controllers\Guest\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Enums\Product\ProductStatus;
-use App\Enums\User\RoleType;
 use App\Http\Controllers\Controller;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
@@ -25,22 +24,25 @@ class ProductController extends Controller
     public function index(Request $request): JsonResponse|View
     {
         if (!$request->wantsJson()) {
-            return view(view: 'buyer.products.index');
+            return view(view: 'guest.products.index');
         }
 
         return $this->successResponse(
             data: $this->readRepository->all(
                 queryParams: $request->all(),
-                status: ProductStatus::AVAILABLE,
-                roleTarget: RoleType::BUYER
+                status: ProductStatus::AVAILABLE
             )
         );
     }
 
     public function show(string $slug): View
     {
-        return view(view: 'buyer.products.show', data: [
-            'product' => $this->readRepository->findAvailable(key: 'slug', value: $slug) ?? abort(code: Response::HTTP_NOT_FOUND)
+        return view(view: 'guest.products.show', data: [
+            'product' => $this->readRepository->findAvailable(
+                key: 'slug',
+                value: $slug
+            ) ??
+                abort(code: Response::HTTP_NOT_FOUND)
         ]);
     }
 }
