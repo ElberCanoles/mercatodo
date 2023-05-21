@@ -14,8 +14,6 @@ return new class () extends Migration {
             $table->unsignedBigInteger('product_id');
             $table->unsignedInteger('quantity');
             $table->morphs('productable');
-
-            $table->timestamps();
         });
     }
 

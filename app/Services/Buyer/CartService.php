@@ -36,7 +36,7 @@ class CartService
     {
         return Cookie::make(
             name: $this->cookieName,
-            value: $cart->id,
+            value: (string)$cart->id,
             minutes: $this->cookieExpiration
         );
     }
@@ -46,7 +46,7 @@ class CartService
         $cart = $this->getFromCookie();
 
         if ($cart != null) {
-            return $cart->products->pluck('pivot.quantity')->sum();
+            return $cart->products()->pluck(column: 'pivot.quantity')->sum();
         }
 
         return 0;

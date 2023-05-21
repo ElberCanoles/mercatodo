@@ -6,8 +6,8 @@ namespace App\Repositories\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Enums\Product\ProductStatus;
+use App\Factories\Product\ProductAllFactory;
 use App\Models\Product;
-use App\Patterns\Factory\Product\ProductAllFactory;
 use App\Repositories\Repository;
 use Illuminate\Pagination\LengthAwarePaginator;
 

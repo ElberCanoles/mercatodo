@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Patterns\Factory\Product;
+namespace App\Factories\Product;
 
 use App\Models\Product;
 use App\Services\Utilities\FileService;

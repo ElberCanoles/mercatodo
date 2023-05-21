@@ -152,8 +152,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'product' => [
+            'with-out-stock' => 'The product does not have available quantities',
         ],
     ],
 

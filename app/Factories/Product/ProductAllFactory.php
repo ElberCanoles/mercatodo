@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Patterns\Factory\Product;
+namespace App\Factories\Product;
 
 use App\Enums\General\SystemParams;
 use App\Enums\User\RoleType;
@@ -103,6 +103,7 @@ final class ProductAllFactory
         return $query->orderBy(column: 'products.created_at', direction: 'DESC')
             ->orderBy(column: 'products.id', direction: 'DESC')
             ->paginate(perPage: $this->lengthPerPage)->through(fn ($product) => [
+                'id' => $product->id,
                 'name' => $product->name,
                 'images' => $product->images,
                 'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),

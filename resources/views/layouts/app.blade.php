@@ -25,6 +25,10 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}" href="{{ route('products.index') }}">Productos</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('cart.index') ? 'active' : '' }}" href="{{ route('cart.index') }}">Ver Carrito</a>
+                        </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#mainNavbarCollapsable" aria-controls="mainNavbarCollapsable" aria-expanded="false"

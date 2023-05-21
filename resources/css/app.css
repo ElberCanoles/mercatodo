@@ -1,5 +1,6 @@
 @import 'bootstrap.min.css';
 @import url("font-awesome.min.css");
+@import '../sass/plugins/toastr.scss';
 
 /* narrow styles */
 
