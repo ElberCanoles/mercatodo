@@ -22,6 +22,7 @@ import BuyerProfileEditForm from '@/components/buyer/profile/EditForm.vue'
 import GuestProductsGallery from '@/components/guest/products/Gallery.vue'
 import GuestProductsShow from '@/components/guest/products/Show.vue'
 
+import GuestCart from '@/components/guest/cart/Cart.vue'
 
 window.app = createApp({
     setup() {
@@ -43,6 +44,7 @@ window.app = createApp({
         AdminProfileEditForm,
         BuyerProfileEditForm,
         GuestProductsGallery,
-        GuestProductsShow
+        GuestProductsShow,
+        GuestCart
     },
 }).mount('#app');

@@ -20,6 +20,6 @@ class Cart extends Model
 
     public function getTotalAttribute(): float|int
     {
-        return $this->products()->pluck(column: 'total')->sum();
+        return $this->products->pluck('total')->sum();
     }
 }
