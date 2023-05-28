@@ -33,7 +33,11 @@ class AddItemAction
         }
 
         $cart->products()->syncWithoutDetaching([
-            $product->id => ['quantity' => $quantity + 1],
+            $product->id => [
+                'quantity' => $quantity + 1,
+                'name' => $product->name,
+                'price' => $product->price
+            ],
         ]);
 
         $cart->touch();
