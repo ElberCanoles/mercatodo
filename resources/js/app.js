@@ -19,6 +19,8 @@ import AdminProductsEditForm from '@/components/admin/products/crud/EditForm.vue
 
 import BuyerProfileEditForm from '@/components/buyer/profile/EditForm.vue'
 
+import BuyerCheckoutForm from '@/components/buyer/checkout/Form.vue'
+
 import GuestProductsGallery from '@/components/guest/products/Gallery.vue'
 import GuestProductsShow from '@/components/guest/products/Show.vue'
 
@@ -43,6 +45,7 @@ window.app = createApp({
         AdminProductsEditForm,
         AdminProfileEditForm,
         BuyerProfileEditForm,
+        BuyerCheckoutForm,
         GuestProductsGallery,
         GuestProductsShow,
         GuestCart

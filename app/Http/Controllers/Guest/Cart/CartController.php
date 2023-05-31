@@ -37,12 +37,12 @@ class CartController extends Controller
                     'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
                     'quantity' => $product->pivot->quantity,
                     'sub_total' => number_format(num: $product->total, decimal_separator: ',', thousands_separator: '.'),
-                    'add_to_cart_url' => route(name: 'products.add.to.cart',parameters: ['product' => $product->id]),
-                    'less_to_cart_url' => route(name: 'products.less.to.cart',parameters: ['product' => $product->id]),
-                    'remove_from_cart_url' => route(name: 'products.carts.destroy',parameters: ['product' => $product->id, 'cart' => $cart->id])
+                    'add_to_cart_url' => route(name: 'products.add.to.cart', parameters: ['product' => $product->id]),
+                    'less_to_cart_url' => route(name: 'products.less.to.cart', parameters: ['product' => $product->id]),
+                    'remove_from_cart_url' => route(name: 'products.carts.destroy', parameters: ['product' => $product->id, 'cart' => $cart->id])
                 ]);
 
-            $total = number_format(num: $cart->getTotalAttribute(), decimal_separator: ',', thousands_separator: '.');
+            $total = number_format(num: $cart->total, decimal_separator: ',', thousands_separator: '.');
 
             return $this->successResponse(data: ['products' => $products, 'total' => $total]);
         } else {

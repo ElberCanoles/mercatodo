@@ -1,9 +1,9 @@
 <script setup>
 
 import {ref, onMounted} from "vue";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faTrash, faGears } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faTrash, faGears} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 import Swal from "sweetalert2";
 
 library.add(faTrash, faGears)
@@ -16,7 +16,7 @@ const url = ref('/cart')
 const getData = async (url) => {
 
     try {
-        const { data } = await axios.get(`${url}`)
+        const {data} = await axios.get(`${url}`)
 
         products.value = data.products
         total.value = data.total
@@ -149,7 +149,9 @@ onMounted(() => {
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col"><font-awesome-icon icon="gears"/></th>
+                        <th scope="col">
+                            <font-awesome-icon icon="gears"/>
+                        </th>
                         <th scope="col">Producto</th>
                         <th scope="col">Precio</th>
                         <th scope="col">Cantidad</th>
@@ -159,7 +161,8 @@ onMounted(() => {
                     <tbody>
                     <tr v-for="(product, index) in products" :key="index">
                         <td>
-                            <button class="btn btn-outline-danger" type="button" @click.prevent="removeFromCart(product?.remove_from_cart_url)">
+                            <button class="btn btn-outline-danger" type="button"
+                                    @click.prevent="removeFromCart(product?.remove_from_cart_url)">
                                 <font-awesome-icon icon="trash"/>
                             </button>
                         </td>
@@ -168,11 +171,15 @@ onMounted(() => {
                         <th scope="row">
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <button class="btn btn-outline-secondary" type="button" @click.prevent="lessToCart(product?.less_to_cart_url)">-</button>
+                                    <button class="btn btn-outline-secondary" type="button"
+                                            @click.prevent="lessToCart(product?.less_to_cart_url)">-
+                                    </button>
                                 </div>
                                 <span id="quantity" class="form-control mx-2">{{ product.quantity }}</span>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" @click.prevent="addToCart(product?.add_to_cart_url)">+</button>
+                                    <button class="btn btn-outline-secondary" type="button"
+                                            @click.prevent="addToCart(product?.add_to_cart_url)">+
+                                    </button>
                                 </div>
                             </div>
                         </th>
@@ -183,7 +190,7 @@ onMounted(() => {
 
                 <div class="text-end">
                     <h3>Total: ${{ total }}</h3>
-                    <button class="btn btn-primary">Ir a pagar</button>
+                    <a class="btn btn-primary" href="/buyer/checkout">Continuar</a>
                 </div>
             </div>
 

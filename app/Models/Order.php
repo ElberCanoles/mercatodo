@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Order extends Model
 {
@@ -19,26 +22,19 @@ class Order extends Model
         'user_id',
     ];
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function products()
+    public function products(): MorphToMany
     {
         return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
     }
 
-    public function getTotalAttribute()
-    {
-        return $this->products()
-            ->get()
-            ->pluck('total')
-            ->sum();
-    }
 }
