@@ -11,7 +11,7 @@ library.add(faTrash, faGears)
 const products = ref([])
 const total = ref(0)
 
-const url = ref('/cart')
+const url = ref('/buyer/cart')
 
 const getData = async (url) => {
 

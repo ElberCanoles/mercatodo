@@ -108,6 +108,7 @@ final class ProductAllFactory
                 'images' => $product->images,
                 'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
                 'stock' => number_format(num: $product->stock, decimal_separator: ',', thousands_separator: '.'),
+                'add_to_cart_url' => route(name: 'buyer.products.add.to.cart', parameters: ['product' => $product->id]),
                 'show_url' => route(name: 'products.show', parameters: ['slug' => $product->slug]),
             ]);
     }

@@ -27,7 +27,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('cart.index') ? 'active' : '' }}" href="{{ route('cart.index') }}">Ver Carrito</a>
+                            <a class="nav-link {{ request()->routeIs('buyer.cart.index') ? 'active' : '' }}" href="{{ route('buyer.cart.index') }}">Ver Carrito</a>
                         </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

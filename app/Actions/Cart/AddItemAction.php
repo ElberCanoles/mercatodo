@@ -4,25 +4,19 @@ declare(strict_types=1);
 namespace App\Actions\Cart;
 
 use App\Exceptions\ProductExceptions;
+use App\Models\Cart;
 use App\Models\Product;
-use App\Services\Buyer\CartService;
-use Symfony\Component\HttpFoundation\Cookie;
 
 class AddItemAction
 {
-    public function __construct(private readonly CartService $cartService)
-    {
-    }
-
     /**
      * @param Product $product
-     * @return Cookie
+     * @param Cart $cart
+     * @return void
      * @throws ProductExceptions
      */
-    public function execute(Product $product): Cookie
+    public function execute(Product $product, Cart $cart): void
     {
-        $cart = $this->cartService->getFromCookieOrCreate();
-
         $quantity = $cart->products()
             ->find($product->id)
             ->pivot
@@ -41,7 +35,5 @@ class AddItemAction
         ]);
 
         $cart->touch();
-
-        return $this->cartService->makeCookie($cart);
     }
 }

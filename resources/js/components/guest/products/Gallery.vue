@@ -29,20 +29,25 @@ const getData = async (url) => {
     }
 }
 
-const addToCart = (productId) => {
+const addToCart = (url) => {
     try {
 
         axios
-            .post(`/products/add/${productId}/carts`)
+            .post(url)
             .then((response) => {
                 toastr.success(response.data.message, 'Operación exitosa', {
                     timeOut: 5000
                 })
             })
             .catch((exception) => {
-                toastr.error(exception.response.data.error, 'Atención', {
-                    timeOut: 5000
-                })
+
+                if (exception.response.status == 401) {
+                    window.location.replace('/login')
+                }else{
+                    toastr.error(exception.response.data.error, 'Atención', {
+                        timeOut: 5000
+                    })
+                }
             });
 
     } catch (error) {
@@ -99,7 +104,7 @@ onMounted(() => {
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary"
-                                            @click="addToCart(product.id)">Al carrito</button>
+                                            @click="addToCart(product.add_to_cart_url)">Al carrito</button>
                                     <a :href="product.show_url" class="btn btn-sm btn-outline-secondary">Ver</a>
                                 </div>
                                 <small class="text-muted">${{ product.price }}</small>
