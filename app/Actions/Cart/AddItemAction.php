@@ -31,7 +31,7 @@ class AddItemAction
                 'quantity' => $quantity + 1,
                 'name' => $product->name,
                 'price' => $product->price
-            ],
+            ]
         ]);
 
         $cart->touch();

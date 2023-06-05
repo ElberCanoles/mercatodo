@@ -18,8 +18,9 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
+        'amount',
         'status',
-        'user_id',
+        'user_id'
     ];
 
     public function payments(): HasMany

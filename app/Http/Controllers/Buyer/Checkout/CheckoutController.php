@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Buyer\Checkout;
 
+use App\Actions\Order\StoreOrderAction;
+use App\Actions\Payment\StorePaymentAction;
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
+use App\Enums\Payment\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\StoreRequest;
 use App\Services\Payments\PlaceToPay;
@@ -21,11 +24,11 @@ class CheckoutController extends Controller
         $cart = request()->user()->cart;
 
         $products = $cart->products->map(fn($product) => [
-                'name' => $product->name,
-                'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
-                'quantity' => $product->pivot->quantity,
-                'sub_total' => number_format(num: $product->total, decimal_separator: ',', thousands_separator: '.')
-            ]);
+            'name' => $product->name,
+            'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
+            'quantity' => $product->pivot->quantity,
+            'sub_total' => number_format(num: $product->total, decimal_separator: ',', thousands_separator: '.')
+        ]);
 
         $total = number_format(num: $cart->total, decimal_separator: ',', thousands_separator: '.');
 
@@ -36,11 +39,25 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function store(StoreRequest $request, PlaceToPay $placeToPay): JsonResponse
+    public function store(StoreRequest $request, StoreOrderAction $storeOrderAction, StorePaymentAction $storePaymentAction): JsonResponse
     {
         try {
+
+            $order = $storeOrderAction->execute();
+
+            $storePaymentAction->execute(
+                order: $order,
+                provider: Provider::PLACE_TO_PAY
+            );
+
+            $placeToPay = new PlaceToPay();
+
             return $this->successResponse(
-                data: ['process_url' => $placeToPay->pay(StoreCheckoutData::fromRequest($request))]
+                data: ['process_url' => $placeToPay->pay(
+                    data: StoreCheckoutData::fromRequest($request),
+                    paymentReference: $order->id,
+                    amount: $order->amount
+                )]
             );
         } catch (Throwable $exception) {
 

@@ -22,10 +22,13 @@ class PlaceToPay
     /**
      * @throws Exception
      */
-    public function pay(StoreCheckoutData $data): string
+    public function pay(StoreCheckoutData $data, string|int $paymentReference, float $amount): string
     {
 
-        $response = Http::post(url: $this->baseUrl . '/api/session', data: $this->createSession(data: $data));
+        $response = Http::post(
+            url: $this->baseUrl . '/api/session',
+            data: $this->createSession(data: $data, paymentReference: $paymentReference, amount: $amount)
+        );
 
         if ($response->ok()) {
             return $response->json()['processUrl'];
@@ -52,10 +55,8 @@ class PlaceToPay
         ];
     }
 
-    private function createSession(StoreCheckoutData $data): array
+    private function createSession(StoreCheckoutData $data, string|int $paymentReference, float $amount): array
     {
-        $cart = auth()->user()->cart;
-
         $expirationDate = Carbon::now()->addMinutes(value: 20)->format(format: 'c');
 
         return [
@@ -70,16 +71,16 @@ class PlaceToPay
                 "address" => [
                     "street" => $data->address,
                     "city" => $data->city,
-                    "country" => "Colombia",
+                    "country" => config(key: 'placetopay.country'),
                     "phone" => $data->cellPhone
                 ]
             ],
             "payment" => [
-                "reference" => "12345",
+                "reference" => $paymentReference,
                 "description" => "Compra de productos",
                 "amount" => [
-                    "currency" => "COP",
-                    "total" => $cart->total,
+                    "currency" => config(key: 'placetopay.currency'),
+                    "total" => $amount,
                 ],
             ],
             "expiration" => $expirationDate,
