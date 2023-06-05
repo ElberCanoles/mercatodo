@@ -5,5 +5,6 @@ return [
     'tran_key' => env(key: 'PLACE_TO_PAY_TRAN_KEY'),
     'url' => env(key: 'PLACE_TO_PAY_BASE_URL'),
     'country' => env(key: 'PLACE_TO_PAY_COUNTRY'),
-    'currency' => env(key: 'PLACE_TO_PAY_CURRENCY')
+    'currency' => env(key: 'PLACE_TO_PAY_CURRENCY'),
+    'session_minutes_duration' => env(key: 'PLACE_TO_PAY_SESSION_MINUTES_DURATION')
 ];

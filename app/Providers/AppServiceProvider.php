@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Contracts\Payment\PaymentFactoryInterface;
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
+use App\Factories\Payment\PaymentFactory;
 use App\Repositories\Product\ProductReadEloquentRepository;
 use App\Repositories\Product\ProductWriteEloquentRepository;
 use App\Repositories\User\UserReadEloquentRepository;
@@ -37,6 +39,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             abstract: ProductReadRepositoryInterface::class,
             concrete: ProductReadEloquentRepository::class
+        );
+
+        $this->app->bind(
+            abstract: PaymentFactoryInterface::class,
+            concrete: PaymentFactory::class
         );
     }
 

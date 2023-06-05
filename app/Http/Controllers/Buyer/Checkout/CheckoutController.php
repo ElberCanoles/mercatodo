@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Buyer\Checkout;
 
 use App\Actions\Order\StoreOrderAction;
 use App\Actions\Payment\StorePaymentAction;
+use App\Contracts\Payment\PaymentFactoryInterface;
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
 use App\Enums\Payment\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\StoreRequest;
-use App\Services\Payments\PlaceToPay;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
@@ -39,25 +39,27 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function store(StoreRequest $request, StoreOrderAction $storeOrderAction, StorePaymentAction $storePaymentAction): JsonResponse
+    public function store(StoreRequest $request, PaymentFactoryInterface $paymentFactory): JsonResponse
     {
         try {
 
-            $order = $storeOrderAction->execute();
+            $order = (new StoreOrderAction())->execute();
 
-            $storePaymentAction->execute(
+            (new StorePaymentAction())->execute(
                 order: $order,
                 provider: Provider::PLACE_TO_PAY
             );
 
-            $placeToPay = new PlaceToPay();
+            $paymentProcessor = $paymentFactory->buildPaymentGateway(provider: Provider::PLACE_TO_PAY);
 
             return $this->successResponse(
-                data: ['process_url' => $placeToPay->pay(
-                    data: StoreCheckoutData::fromRequest($request),
-                    paymentReference: $order->id,
-                    amount: $order->amount
-                )]
+                data: ['process_url' =>
+                    $paymentProcessor->getProcessUrl(
+                        data: StoreCheckoutData::fromRequest($request),
+                        reference: $order->id,
+                        amount: $order->amount
+                    )
+                ]
             );
         } catch (Throwable $exception) {
 

@@ -153,7 +153,10 @@ return [
 
     'custom' => [
         'product' => [
-            'with-out-stock' => 'The product does not have available quantities',
+            'with_out_stock' => 'The product does not have available quantities',
+        ],
+        'payment' => [
+            'gateway_not_yet_supported' => 'Payment gateway not yet supported',
         ],
     ],
 
