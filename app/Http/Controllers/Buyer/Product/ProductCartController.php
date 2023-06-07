@@ -27,6 +27,9 @@ class ProductCartController extends Controller
             return response()->json(data: ['message' => trans(key: 'product.added_to_cart')]);
 
         } catch (ProductExceptions $exception) {
+
+            report($exception);
+
             return $this->errorResponse(
                 message: $exception->getMessage(),
                 code: Response::HTTP_UNPROCESSABLE_ENTITY

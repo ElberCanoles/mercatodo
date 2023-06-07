@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Payment\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,9 +16,11 @@ class Payment extends Model
      * @var array
      */
     protected $fillable = [
-        'amount',
-        'payed_at',
         'order_id',
+        'provider',
+        'data_provider',
+        'status',
+        'payed_at',
     ];
 
     /**
@@ -29,8 +32,27 @@ class Payment extends Model
         'payed_at',
     ];
 
+    protected $casts = [
+        'data_provider' => 'array'
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function paid(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::PAID
+        ]);
+    }
+
+    public function rejected(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::REJECTED
+        ]);
+    }
+
 }

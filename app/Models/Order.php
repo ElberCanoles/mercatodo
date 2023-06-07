@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Order\OrderStatus;
+use App\QueryBuilders\OrderQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property int $user_id
  * @property float $amount
  * @property string $status
+ *
+ * @method static OrderQueryBuilder query()
  */
 class Order extends Model
 {
@@ -24,9 +28,9 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
+        'user_id',
         'amount',
-        'status',
-        'user_id'
+        'status'
     ];
 
     public function payments(): HasMany
@@ -42,6 +46,20 @@ class Order extends Model
     public function products(): MorphToMany
     {
         return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
+    }
+
+    public function confirmed(): void
+    {
+        $this->update([
+            'status' => OrderStatus::CONFIRMED
+        ]);
+    }
+
+    public function cancelled(): void
+    {
+        $this->update([
+            'status' => OrderStatus::CANCELLED
+        ]);
     }
 
 }

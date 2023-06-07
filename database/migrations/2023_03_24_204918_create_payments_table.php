@@ -16,6 +16,7 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
             $table->enum('provider', Provider::asArray());
+            $table->json('data_provider')->nullable();
             $table->enum('status', PaymentStatus::asArray())->default(PaymentStatus::PENDING);
             $table->timestamp('payed_at')->nullable();
             $table->timestamps();

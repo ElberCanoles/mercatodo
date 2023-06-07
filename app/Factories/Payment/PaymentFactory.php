@@ -6,7 +6,7 @@ namespace App\Factories\Payment;
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\Contracts\Payment\PaymentGatewayInterface;
 use App\Enums\Payment\Provider;
-use App\Services\Payments\PlaceToPay;
+use App\Services\Payments\PlaceToPay\PlaceToPayService;
 use Exception;
 
 class PaymentFactory implements PaymentFactoryInterface
@@ -17,7 +17,7 @@ class PaymentFactory implements PaymentFactoryInterface
     public function buildPaymentGateway(string $provider): PaymentGatewayInterface
     {
         return match ($provider) {
-            Provider::PLACE_TO_PAY => new PlaceToPay(),
+            Provider::PLACE_TO_PAY => new PlaceToPayService(),
             default => throw new Exception(message: trans(key: 'validation.custom.payment.gateway_not_yet_supported'))
         };
     }

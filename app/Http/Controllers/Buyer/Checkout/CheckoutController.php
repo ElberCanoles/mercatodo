@@ -7,9 +7,11 @@ use App\Actions\Order\StoreOrderAction;
 use App\Actions\Payment\StorePaymentAction;
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
+use App\Enums\Order\OrderStatus;
 use App\Enums\Payment\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\StoreRequest;
+use App\Models\Order;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
@@ -43,23 +45,32 @@ class CheckoutController extends Controller
     {
         try {
 
-            $order = (new StoreOrderAction())->execute();
+            $order = Order::query()
+                ->where(column: 'user_id', operator: '=', value: auth()->user()->getAuthIdentifier())
+                ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
+                ->latest()
+                ->first();
 
-            (new StorePaymentAction())->execute(
-                order: $order,
-                provider: Provider::PLACE_TO_PAY
-            );
+            if (!isset($order)) {
+                $order = (new StoreOrderAction())->execute();
+            }
 
             $paymentProcessor = $paymentFactory->buildPaymentGateway(provider: Provider::PLACE_TO_PAY);
 
+            $response = $paymentProcessor->getPaymentProcessData(
+                data: StoreCheckoutData::fromRequest($request),
+                reference: $order->id,
+                amount: $order->amount
+            );
+
+            (new StorePaymentAction())->execute(
+                order: $order,
+                provider: Provider::PLACE_TO_PAY,
+                dataProvider: $response
+            );
+
             return $this->successResponse(
-                data: ['process_url' =>
-                    $paymentProcessor->getProcessUrl(
-                        data: StoreCheckoutData::fromRequest($request),
-                        reference: $order->id,
-                        amount: $order->amount
-                    )
-                ]
+                data: ['process_url' => $response['processUrl']]
             );
         } catch (Throwable $exception) {
 

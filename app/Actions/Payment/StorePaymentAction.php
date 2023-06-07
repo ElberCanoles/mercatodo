@@ -8,11 +8,12 @@ use App\Models\Payment;
 
 class StorePaymentAction
 {
-    public function execute(Order $order, string $provider): Payment
+    public function execute(Order $order, string $provider, mixed $dataProvider): Payment
     {
         return Payment::create([
             'order_id' => $order->id,
-            'provider' => $provider
+            'provider' => $provider,
+            'data_provider' => $dataProvider
         ]);
     }
 }
