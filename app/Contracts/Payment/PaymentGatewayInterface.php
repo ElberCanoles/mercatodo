@@ -7,6 +7,7 @@ use App\DataTransferObjects\Checkout\StoreCheckoutData;
 
 interface PaymentGatewayInterface
 {
-    public function getPaymentProcessData(StoreCheckoutData $data, int|string $reference, float $amount, $items = []): array;
+    public function getPaymentProcessData(StoreCheckoutData $data, int|string $reference, float $amount, array $items = []): array;
 
+    public function getProcessUrl(array $paymentProcessData): string;
 }

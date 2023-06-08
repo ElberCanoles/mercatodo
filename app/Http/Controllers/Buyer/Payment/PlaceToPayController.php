@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Buyer\Payment;
@@ -30,13 +31,19 @@ class PlaceToPayController extends Controller
 
             $status = $response['status']['status'];
 
-            if ($status == 'APPROVED') {
+            if ($this->placeToPayService->paymentIsPending(status: $status)) {
+
+                $order->pending();
+                $order->payments()->latest()->first()->pending();
+            } elseif ($this->placeToPayService->paymentIsApproved(status: $status)) {
+
                 $order->confirmed();
                 $order->payments()->latest()->first()->paid();
-            } elseif ($status == 'REJECTED') {
-                $order->cancelled();
-            }
+            } else {
 
+                $order->cancelled();
+                $order->payments()->latest()->first()->rejected();
+            }
         } catch (Throwable $exception) {
             report($exception);
         }

@@ -1,8 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services\Payments\PlaceToPay;
 
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
+use App\Enums\Payment\PlaceToPay\ApprovedStatuses;
+use App\Enums\Payment\PlaceToPay\PendingStatuses;
+use App\Enums\Payment\PlaceToPay\RejectedStatuses;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -71,6 +75,21 @@ class PlaceToPayBase
             "skipResult" => false,
             "noBuyerFill" => false
         ];
+    }
+
+    public function paymentIsApproved(string $status): bool
+    {
+        return (in_array(needle: $status, haystack: ApprovedStatuses::asArray()));
+    }
+
+    public function paymentIsPending(string $status): bool
+    {
+        return (in_array(needle: $status, haystack: PendingStatuses::asArray()));
+    }
+
+    public function paymentIsRejected(string $status): bool
+    {
+        return (in_array(needle: $status, haystack: RejectedStatuses::asArray()));
     }
 
 }

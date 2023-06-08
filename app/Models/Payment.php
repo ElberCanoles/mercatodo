@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\Payment\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
@@ -36,9 +37,16 @@ class Payment extends Model
         'data_provider' => 'array'
     ];
 
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function pending(): void
+    {
+        $this->update([
+            'status' => PaymentStatus::PENDING
+        ]);
     }
 
     public function paid(): void

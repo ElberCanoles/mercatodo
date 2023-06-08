@@ -70,7 +70,7 @@ class CheckoutController extends Controller
             );
 
             return $this->successResponse(
-                data: ['process_url' => $response['processUrl']]
+                data: ['process_url' => $paymentProcessor->getProcessUrl($response)]
             );
         } catch (Throwable $exception) {
 

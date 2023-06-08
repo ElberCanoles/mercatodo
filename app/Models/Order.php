@@ -48,6 +48,13 @@ class Order extends Model
         return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
     }
 
+    public function pending(): void
+    {
+        $this->update([
+            'status' => OrderStatus::PENDING
+        ]);
+    }
+
     public function confirmed(): void
     {
         $this->update([

@@ -6,7 +6,6 @@ namespace App\Services\Payments\PlaceToPay;
 use App\Contracts\Payment\PaymentGatewayInterface;
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
 use Exception;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterface
@@ -32,6 +31,11 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
         throw new Exception(trans(key: 'server.unavailable_service'));
     }
 
+    public function getProcessUrl(array $paymentProcessData): string
+    {
+        return $paymentProcessData['processUrl'];
+    }
+
     /**
      * @throws Exception
      */
@@ -47,5 +51,4 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
 
         throw new Exception(trans(key: 'server.unavailable_service'));
     }
-
 }

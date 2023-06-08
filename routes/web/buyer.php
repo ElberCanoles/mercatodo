@@ -18,6 +18,8 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']]
             Route::post('products/less/{product}/carts', [App\Http\Controllers\Buyer\Product\ProductCartController::class, 'less'])->name('products.less.to.cart');
             Route::delete('products/{product}/carts', [App\Http\Controllers\Buyer\Product\ProductCartController::class, 'destroy'])->name('products.carts.destroy');
 
+            Route::resource('orders', App\Http\Controllers\Buyer\Order\OrderController::class);
+
             Route::get('cart', [App\Http\Controllers\Buyer\Cart\CartController::class, 'index'])->name('cart.index');
 
             Route::get('checkout', [App\Http\Controllers\Buyer\Checkout\CheckoutController::class, 'create'])->name('checkout.create');
