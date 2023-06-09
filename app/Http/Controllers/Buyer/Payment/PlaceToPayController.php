@@ -22,7 +22,7 @@ class PlaceToPayController extends Controller
     {
         try {
 
-            $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->getKey())
+            $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->id)
                 ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
                 ->latest()
                 ->first();
@@ -45,7 +45,7 @@ class PlaceToPayController extends Controller
 
     public function abortSession(): RedirectResponse
     {
-        $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->getKey())
+        $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->id)
             ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
             ->latest()
             ->first();

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\Payment\PaymentStatus;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -52,7 +53,8 @@ class Payment extends Model
     public function paid(): void
     {
         $this->update([
-            'status' => PaymentStatus::PAID
+            'status' => PaymentStatus::PAID,
+            'payed_at' => Carbon::now()
         ]);
     }
 
