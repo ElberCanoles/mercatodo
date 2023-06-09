@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']], function () {
     Route::prefix('buyer')->group(function () {
         Route::name('buyer.')->group(function () {
-
             Route::get('/dashboard', function () {
                 return view('buyer.dashboard');
             })->name('dashboard');
@@ -33,7 +32,6 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']]
             Route::get('placetopay/payment/response', [App\Http\Controllers\Buyer\Payment\PlaceToPayController::class, 'processResponse'])->name('placetopay.payment.response');
 
             Route::get('placetopay/payment/cancelled', [App\Http\Controllers\Buyer\Payment\PlaceToPayController::class, 'abortSession'])->name('placetopay.payment.cancelled');
-
         });
     });
 });

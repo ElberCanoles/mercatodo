@@ -21,7 +21,6 @@ class PlaceToPayController extends Controller
     public function processResponse(): RedirectResponse
     {
         try {
-
             $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->id)
                 ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
                 ->latest()
@@ -31,11 +30,9 @@ class PlaceToPayController extends Controller
 
             $checkPaymentActions = (new PlaceToPayPaymentActionsFactory($this->placeToPayService))->make();
 
-            foreach ($checkPaymentActions as $checkPaymentAction)
-            {
+            foreach ($checkPaymentActions as $checkPaymentAction) {
                 $checkPaymentAction($status, $order);
             }
-
         } catch (Throwable $exception) {
             report($exception);
         }

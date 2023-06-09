@@ -3,10 +3,7 @@
 namespace Tests\Feature\Guest\Products;
 
 use App\Enums\Product\ProductStatus;
-use App\Enums\User\RoleType;
 use App\Models\Product;
-use App\Models\User;
-use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

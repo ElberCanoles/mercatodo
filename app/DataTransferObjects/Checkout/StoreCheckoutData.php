@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\DataTransferObjects\Checkout;
@@ -17,8 +18,7 @@ class StoreCheckoutData
         public string $department,
         public string $city,
         public string $address
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(FormRequest $request): self

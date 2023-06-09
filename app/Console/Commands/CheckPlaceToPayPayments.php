@@ -41,25 +41,19 @@ class CheckPlaceToPayPayments extends Command
             ->get();
 
         try {
-
             $checkPaymentActions = (new PlaceToPayPaymentActionsFactory($placeToPayService))->make();
 
             foreach ($payments as $payment) {
-
                 $status = $placeToPayService->getSession($payment->data_provider['requestId'])['status']['status'];
 
-                foreach ($checkPaymentActions as $checkPaymentAction)
-                {
+                foreach ($checkPaymentActions as $checkPaymentAction) {
                     $checkPaymentAction($status, $payment->order);
                 }
-
             }
 
             $this->info(string: 'Scheduled task to check PlaceToPay payments statuses executed successfully');
-
         } catch (Throwable $throwable) {
             report($throwable);
         }
-
     }
 }

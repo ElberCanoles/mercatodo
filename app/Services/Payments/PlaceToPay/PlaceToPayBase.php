@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Payments\PlaceToPay;
@@ -91,5 +92,4 @@ class PlaceToPayBase
     {
         return (in_array(needle: $status, haystack: RejectedStatuses::asArray()));
     }
-
 }

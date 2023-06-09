@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Buyer\Product;
@@ -15,19 +16,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ProductCartController extends Controller
 {
-
     use MakeJsonResponse;
 
     public function add(Product $product, AddItemAction $addItemAction): JsonResponse
     {
         try {
-
             $addItemAction->execute(product: $product, cart: auth()->user()->cart);
 
             return response()->json(data: ['message' => trans(key: 'product.added_to_cart')]);
-
         } catch (ProductExceptions $exception) {
-
             report($exception);
 
             return $this->errorResponse(

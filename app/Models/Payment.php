@@ -64,5 +64,4 @@ class Payment extends Model
             'status' => PaymentStatus::REJECTED
         ]);
     }
-
 }

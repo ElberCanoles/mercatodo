@@ -68,5 +68,4 @@ class Order extends Model
             'status' => OrderStatus::CANCELLED
         ]);
     }
-
 }

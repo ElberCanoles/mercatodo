@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Services\Payments\PlaceToPay;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Http;
 
 class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterface
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -26,7 +26,9 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
             data: $this->createSession(data: $data, paymentReference: $reference, amount: $amount)
         );
 
-        if ($response->ok()) return $response->json();
+        if ($response->ok()) {
+            return $response->json();
+        }
 
         throw new Exception(trans(key: 'server.unavailable_service'));
     }
@@ -41,7 +43,8 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
      */
     public function getSession(int|string $requestId): array
     {
-        $response = Http::post(url: $this->baseUrl . '/api/session/' . $requestId,
+        $response = Http::post(
+            url: $this->baseUrl . '/api/session/' . $requestId,
             data: ['auth' => $this->getAuth()]
         );
 

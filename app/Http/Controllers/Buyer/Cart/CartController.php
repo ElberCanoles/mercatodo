@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Buyer\Cart;
@@ -21,7 +22,7 @@ class CartController extends Controller
 
         $cart = $request->user()->cart;
 
-        $products = $cart->products->map(fn($product) => [
+        $products = $cart->products->map(fn ($product) => [
             'name' => $product->name,
             'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
             'quantity' => $product->pivot->quantity,

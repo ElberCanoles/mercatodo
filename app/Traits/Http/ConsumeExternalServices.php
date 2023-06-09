@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Traits\Http;
@@ -11,7 +12,6 @@ use GuzzleHttp\Exception\GuzzleException;
  */
 trait ConsumeExternalServices
 {
-
     /**
      * @throws GuzzleException
      */
@@ -22,8 +22,7 @@ trait ConsumeExternalServices
         array $formParams = [],
         array $headers = [],
         bool $isJsonRequest = false
-    )
-    {
+    ) {
         $client = new Client([
             'base_uri' => $this->baseUrl,
         ]);
@@ -47,4 +46,3 @@ trait ConsumeExternalServices
         return $response;
     }
 }
-

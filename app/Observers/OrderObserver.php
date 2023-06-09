@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Observers;
@@ -14,8 +15,7 @@ class OrderObserver
     {
         $cart = auth()->user()->cart;
 
-        foreach ($cart->products as $product)
-        {
+        foreach ($cart->products as $product) {
             $order->products()->syncWithoutDetaching([
                 $product->id => [
                     'quantity' => $product->pivot->quantity,

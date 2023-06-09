@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http\Controllers\Buyer\Checkout;
@@ -25,7 +26,7 @@ class CheckoutController extends Controller
     {
         $cart = request()->user()->cart;
 
-        $products = $cart->products->map(fn($product) => [
+        $products = $cart->products->map(fn ($product) => [
             'name' => $product->name,
             'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
             'quantity' => $product->pivot->quantity,
@@ -44,7 +45,6 @@ class CheckoutController extends Controller
     public function store(StoreRequest $request, PaymentFactoryInterface $paymentFactory): JsonResponse
     {
         try {
-
             $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->getKey())
                 ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
                 ->latest()
@@ -72,7 +72,6 @@ class CheckoutController extends Controller
                 data: ['process_url' => $paymentProcessor->getProcessUrl($response)]
             );
         } catch (Throwable $exception) {
-
             report($exception);
 
             return $this->errorResponseWithBag(
