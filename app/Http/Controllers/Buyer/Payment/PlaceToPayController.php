@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Buyer\Payment;
 
 use App\Enums\Order\OrderStatus;
+use App\Factories\PlaceToPay\PlaceToPayPaymentActionsFactory;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\Payments\PlaceToPay\PlaceToPayService;
@@ -21,29 +22,20 @@ class PlaceToPayController extends Controller
     {
         try {
 
-            $order = Order::query()
-                ->where(column: 'user_id', operator: '=', value: auth()->user()->getAuthIdentifier())
+            $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->getKey())
                 ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
                 ->latest()
                 ->first();
 
-            $response = $this->placeToPayService->getSession($order->payments()->latest()->first()->data_provider['requestId']);
+            $status = $this->placeToPayService->getSession($order->payments()->latest()->first()->data_provider['requestId'])['status']['status'];
 
-            $status = $response['status']['status'];
+            $checkPaymentActions = (new PlaceToPayPaymentActionsFactory($this->placeToPayService))->make();
 
-            if ($this->placeToPayService->paymentIsPending(status: $status)) {
-
-                $order->pending();
-                $order->payments()->latest()->first()->pending();
-            } elseif ($this->placeToPayService->paymentIsApproved(status: $status)) {
-
-                $order->confirmed();
-                $order->payments()->latest()->first()->paid();
-            } else {
-
-                $order->cancelled();
-                $order->payments()->latest()->first()->rejected();
+            foreach ($checkPaymentActions as $checkPaymentAction)
+            {
+                $checkPaymentAction($status, $order);
             }
+
         } catch (Throwable $exception) {
             report($exception);
         }
@@ -53,14 +45,12 @@ class PlaceToPayController extends Controller
 
     public function abortSession(): RedirectResponse
     {
-        $order = Order::query()
-            ->where(column: 'user_id', operator: '=', value: auth()->user()->getAuthIdentifier())
+        $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->getKey())
             ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
             ->latest()
             ->first();
 
         $order->cancelled();
-
         $order->payments()->latest()->first()->rejected();
 
         return redirect()->to(path: route(name: 'buyer.checkout.result'));

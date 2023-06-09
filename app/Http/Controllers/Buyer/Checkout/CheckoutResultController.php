@@ -15,7 +15,7 @@ class CheckoutResultController extends Controller
     {
 
         try {
-            $status = Order::where('user_id', request()->user()->id)
+            $status = Order::where('user_id', auth()->user()->id)
                 ->latest()
                 ->first()
                 ->payments()

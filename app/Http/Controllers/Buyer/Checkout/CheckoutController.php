@@ -45,8 +45,7 @@ class CheckoutController extends Controller
     {
         try {
 
-            $order = Order::query()
-                ->where(column: 'user_id', operator: '=', value: auth()->user()->getAuthIdentifier())
+            $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->getKey())
                 ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
                 ->latest()
                 ->first();
