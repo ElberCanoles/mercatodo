@@ -23,6 +23,8 @@ import BuyerCart from '@/components/buyer/cart/Cart.vue'
 
 import BuyerCheckoutForm from '@/components/buyer/checkout/Form.vue'
 
+import BuyerOrdersTable from '@/components/buyer/orders/Table.vue'
+
 import GuestProductsGallery from '@/components/guest/products/Gallery.vue'
 import GuestProductsShow from '@/components/guest/products/Show.vue'
 
@@ -47,6 +49,7 @@ window.app = createApp({
         AdminProfileEditForm,
         BuyerProfileEditForm,
         BuyerCart,
+        BuyerOrdersTable,
         BuyerCheckoutForm,
         GuestProductsGallery,
         GuestProductsShow
