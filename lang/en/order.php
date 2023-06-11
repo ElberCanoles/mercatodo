@@ -10,4 +10,5 @@ return [
     'in_return' => 'In Return',
     'returned' => 'Returned',
 
+    'description_checkout' => 'Buy of products'
 ];

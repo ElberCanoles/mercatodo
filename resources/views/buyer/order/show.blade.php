@@ -4,7 +4,7 @@
     <div class="album py-5 bg-light">
         <div class="container">
 
-            <h2>Order de compra: #{{ str_pad((string) $order->id, 5, '0', STR_PAD_LEFT) }}</h2>
+            <h2>Orden de compra: #{{ str_pad((string) $order->id, 5, '0', STR_PAD_LEFT) }}</h2>
 
             <h3 class="mt-4">Resumen de la orden:</h3>
             <table class="table">

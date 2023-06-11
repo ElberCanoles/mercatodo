@@ -14,8 +14,7 @@ class CheckoutResultController extends Controller
     public function __invoke(): View
     {
         try {
-            $status = Order::query()->getLatestForUser(request()->user())
-                ->first()
+            $status = Order::findOrFail(request()->input(key: 'order'))
                 ->payments()
                 ->latest()
                 ->first()

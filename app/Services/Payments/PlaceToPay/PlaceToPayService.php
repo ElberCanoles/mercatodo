@@ -6,8 +6,10 @@ namespace App\Services\Payments\PlaceToPay;
 
 use App\Contracts\Payment\PaymentGatewayInterface;
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
+use App\Models\Order;
 use Exception;
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterface
 {
@@ -19,11 +21,11 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
     /**
      * @throws Exception
      */
-    public function getPaymentProcessData(StoreCheckoutData $data, int|string $reference, float $amount, $items = []): array
+    public function getPaymentProcessData(StoreCheckoutData $data, Order $order): array
     {
         $response = Http::post(
             url: $this->baseUrl . '/api/session',
-            data: $this->createSession(data: $data, paymentReference: $reference, amount: $amount)
+            data: $this->createSession(data: $data, order: $order)
         );
 
         if ($response->ok()) {
@@ -43,13 +45,17 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
      */
     public function getSession(int|string $requestId): array
     {
-        $response = Http::post(
-            url: $this->baseUrl . '/api/session/' . $requestId,
-            data: ['auth' => $this->getAuth()]
-        );
+        try {
+            $response = Http::post(
+                url: $this->baseUrl . '/api/session/' . $requestId,
+                data: ['auth' => $this->getAuth()]
+            );
 
-        if ($response->ok()) {
-            return $response->json();
+            if ($response->ok()) {
+                return $response->json();
+            }
+        } catch (Throwable $throwable) {
+            report($throwable);
         }
 
         throw new Exception(trans(key: 'server.unavailable_service'));

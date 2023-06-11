@@ -7,7 +7,11 @@ import InputError from '@/components/common/InputError.vue'
 const props = defineProps({
     user: Object,
     products: Array,
-    total: String
+    total: String,
+    order: {
+        type: String,
+        default: null
+    }
 });
 
 const errors = ref({})
@@ -23,6 +27,7 @@ const form = ref({
     city: '',
     address: '',
     provider: '',
+    order: '',
     processing: false,
 })
 
@@ -68,6 +73,7 @@ onMounted(() => {
     form.value.name = props.user.name
     form.value.last_name = props.user.last_name
     form.value.email = props.user.email
+    form.value.order = props.order
 });
 
 </script>

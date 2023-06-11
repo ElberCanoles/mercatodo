@@ -18,7 +18,8 @@ class StoreCheckoutData
         public string $department,
         public string $city,
         public string $address,
-        public string $paymentMethod
+        public string $paymentMethod,
+        public ?string $orderId
     ) {
     }
 
@@ -34,7 +35,8 @@ class StoreCheckoutData
             department: $request->input(key: 'department'),
             city: $request->input(key: 'city'),
             address: $request->input(key: 'address'),
-            paymentMethod: $request->input(key: 'provider')
+            paymentMethod: $request->input(key: 'provider'),
+            orderId: $request->input(key: 'order')
         );
     }
 }

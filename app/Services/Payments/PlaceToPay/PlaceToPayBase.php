@@ -8,6 +8,7 @@ use App\DataTransferObjects\Checkout\StoreCheckoutData;
 use App\Enums\Payment\PlaceToPay\ApprovedStatuses;
 use App\Enums\Payment\PlaceToPay\PendingStatuses;
 use App\Enums\Payment\PlaceToPay\RejectedStatuses;
+use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -38,7 +39,7 @@ class PlaceToPayBase
         ];
     }
 
-    protected function createSession(StoreCheckoutData $data, string|int $paymentReference, float $amount): array
+    protected function createSession(StoreCheckoutData $data, Order $order): array
     {
         $expirationDate = Carbon::now()
             ->addMinutes(value: config(key: 'placetopay.session_minutes_duration'))
@@ -61,16 +62,16 @@ class PlaceToPayBase
                 ]
             ],
             "payment" => [
-                "reference" => $paymentReference,
-                "description" => "Compra de productos",
+                "reference" => $order->id,
+                "description" => trans(key: 'order.description_checkout'),
                 "amount" => [
                     "currency" => config(key: 'placetopay.currency'),
-                    "total" => $amount,
+                    "total" => $order->amount,
                 ],
             ],
             "expiration" => $expirationDate,
-            "returnUrl" => route(name: 'buyer.placetopay.payment.response'),
-            "cancelUrl" => route(name: 'buyer.placetopay.payment.cancelled'),
+            "returnUrl" => route(name: 'buyer.placetopay.payment.response', parameters: ['order' => $order->id]),
+            "cancelUrl" => route(name: 'buyer.placetopay.payment.cancelled', parameters: ['order' => $order->id]),
             "ipAddress" => $_SERVER['REMOTE_ADDR'],
             "userAgent" => $_SERVER['HTTP_USER_AGENT'],
             "skipResult" => false,

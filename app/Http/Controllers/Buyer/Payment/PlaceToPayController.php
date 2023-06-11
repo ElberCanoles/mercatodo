@@ -19,8 +19,9 @@ class PlaceToPayController extends Controller
 
     public function processResponse(): RedirectResponse
     {
+        $order = Order::findOrFail(request()->input(key: 'order'));
+
         try {
-            $order = Order::query()->getLatestPendingForUser(request()->user())->first();
 
             $status = $this->placeToPayService->getSession($order->payments()->latest()->first()->data_provider['requestId'])['status']['status'];
 
@@ -33,16 +34,16 @@ class PlaceToPayController extends Controller
             report($exception);
         }
 
-        return redirect()->to(path: route(name: 'buyer.checkout.result'));
+        return redirect()->to(path: route(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));
     }
 
     public function abortSession(): RedirectResponse
     {
-        $order = Order::query()->getLatestPendingForUser(request()->user())->first();
+        $order = Order::findOrFail(request()->input(key: 'order'));
 
         $order->cancelled();
         $order->payments()->latest()->first()->rejected();
 
-        return redirect()->to(path: route(name: 'buyer.checkout.result'));
+        return redirect()->to(path: route(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));
     }
 }

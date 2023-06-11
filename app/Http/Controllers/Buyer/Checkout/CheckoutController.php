@@ -28,7 +28,7 @@ class CheckoutController extends Controller
             'name' => $product->name,
             'price' => number_format(num: $product->price, decimal_separator: ',', thousands_separator: '.'),
             'quantity' => $product->pivot->quantity,
-            'sub_total' => number_format(num: $product->total, decimal_separator: ',', thousands_separator: '.')
+            'sub_total' => number_format(num: $product->total, decimal_separator: ',', thousands_separator: '.'),
         ]);
 
         $total = number_format(num: $cart->total, decimal_separator: ',', thousands_separator: '.');
@@ -36,16 +36,18 @@ class CheckoutController extends Controller
         return view(view: 'buyer.checkout.form', data: [
             'user' => request()->user(),
             'products' => $products,
-            'total' => $total
+            'total' => $total,
+            'order' => request()->input(key: 'order')
         ]);
     }
 
     public function store(StoreRequest $request, PaymentFactoryInterface $paymentFactory): JsonResponse
     {
         try {
-            $order = Order::query()->getLatestPendingForUser($request->user())->first();
 
             $data = StoreCheckoutData::fromRequest($request);
+
+            $order = Order::find($data->orderId);
 
             if (!isset($order)) {
                 $order = (new StoreOrderAction())->execute();
@@ -55,8 +57,7 @@ class CheckoutController extends Controller
 
             $response = $paymentProcessor->getPaymentProcessData(
                 data: $data,
-                reference: $order->id,
-                amount: $order->amount
+                order: $order
             );
 
             (new StorePaymentAction())->execute(

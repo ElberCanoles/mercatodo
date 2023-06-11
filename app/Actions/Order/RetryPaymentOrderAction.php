@@ -13,10 +13,11 @@ class RetryPaymentOrderAction
 {
     public function execute(Order $order): RedirectResponse
     {
+
         $lastPayment = $order->payments()?->latest()?->first();
 
         if (isset($lastPayment) && $lastPayment->status === PaymentStatus::PENDING) {
-            if (!$lastPayment->created_at->diffInMinutes(Carbon::now()) < ((int)config(key: 'placetopay.session_minutes_duration'))) {
+            if ($lastPayment->created_at->diffInMinutes(Carbon::now()) < ((int)config(key: 'placetopay.session_minutes_duration'))) {
                 return redirect()->away(path: $lastPayment->data_provider['processUrl']);
             }
         }
@@ -35,6 +36,6 @@ class RetryPaymentOrderAction
             ]);
         }
 
-        return redirect()->to(path: route(name: 'buyer.checkout.create'));
+        return redirect()->to(path: route(name: 'buyer.checkout.create', parameters: ['order' => $order->id]));
     }
 }
