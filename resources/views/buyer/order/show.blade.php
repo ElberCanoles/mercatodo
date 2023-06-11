@@ -43,7 +43,7 @@
             </table>
             <h5>Estado: {{ trans($order->status) }}</h5>
             @if ($order->status != App\Enums\Order\OrderStatus::CONFIRMED)
-            <a class="w-100 btn btn-lg btn-primary">
+            <a class="w-100 btn btn-lg btn-primary" href="{{ route('buyer.orders.retry.payment', ['order' => $order->id]) }}">
                 Reintentar Pago
             </a>
             @endif

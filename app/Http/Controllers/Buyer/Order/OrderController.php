@@ -22,11 +22,11 @@ class OrderController extends Controller
         }
 
         $orders = Order::query()
-            ->select(columns: ['id', 'amount', 'status', 'created_at'])
-            ->where(column: 'user_id', operator: '=', value: auth()->user()->id)
+            ->select(columns: ['id', 'user_id', 'amount', 'status', 'created_at'])
+            ->whereUser(request()->user())
             ->orderBy(column: 'id', direction: 'DESC')
             ->paginate(perPage: SystemParams::LENGTH_PER_PAGE)->through(fn ($order) => [
-                'id' => str_pad((string)$order->id, 5, '0', STR_PAD_LEFT),
+                'id' => str_pad(string: (string)$order->id, length: 5, pad_string: '0', pad_type: STR_PAD_LEFT),
                 'amount' => number_format(num: $order->amount, decimal_separator: ',', thousands_separator: '.'),
                 'status_key' => $order->status,
                 'status_value' => trans($order->status),

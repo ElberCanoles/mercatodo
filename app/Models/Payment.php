@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $order_id
+ * @property string $provider
+ * @property array $data_provider
+ * @property string status
+ * @property Carbon $payed_at
+ */
 class Payment extends Model
 {
     use HasFactory;
@@ -40,7 +47,7 @@ class Payment extends Model
 
     public function order(): BelongsTo
     {
-        return $this->belongsTo(Order::class);
+        return $this->belongsTo(related: Order::class);
     }
 
     public function pending(): void
