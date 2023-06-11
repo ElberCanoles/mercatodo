@@ -17,7 +17,8 @@ class StoreCheckoutData
         public string $cellPhone,
         public string $department,
         public string $city,
-        public string $address
+        public string $address,
+        public string $paymentMethod
     ) {
     }
 
@@ -32,7 +33,8 @@ class StoreCheckoutData
             cellPhone: $request->input(key: 'cell_phone'),
             department: $request->input(key: 'department'),
             city: $request->input(key: 'city'),
-            address: $request->input(key: 'address')
+            address: $request->input(key: 'address'),
+            paymentMethod: $request->input(key: 'provider')
         );
     }
 }

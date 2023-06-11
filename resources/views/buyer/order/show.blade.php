@@ -30,7 +30,16 @@
                             </th>
                         </tr>
                     @endforeach
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <th scope="row" class="text-end">
+                                Total: ${{ number_format(num: $order->amount, decimal_separator: ',', thousands_separator: '.') }}
+                            </th>
+                        </tr>
                 </tbody>
+
             </table>
             <h5>Estado: {{ trans($order->status) }}</h5>
             @if ($order->status != App\Enums\Order\OrderStatus::CONFIRMED)

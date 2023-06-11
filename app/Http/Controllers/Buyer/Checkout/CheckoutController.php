@@ -8,8 +8,6 @@ use App\Actions\Order\StoreOrderAction;
 use App\Actions\Payment\StorePaymentAction;
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
-use App\Enums\Order\OrderStatus;
-use App\Enums\Payment\Provider;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\StoreRequest;
 use App\Models\Order;
@@ -45,26 +43,25 @@ class CheckoutController extends Controller
     public function store(StoreRequest $request, PaymentFactoryInterface $paymentFactory): JsonResponse
     {
         try {
-            $order = Order::query()->where(column: 'user_id', operator: '=', value: auth()->user()->getKey())
-                ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
-                ->latest()
-                ->first();
+            $order = Order::query()->getLatestPendingForUser($request->user())->first();
+
+            $data = StoreCheckoutData::fromRequest($request);
 
             if (!isset($order)) {
                 $order = (new StoreOrderAction())->execute();
             }
 
-            $paymentProcessor = $paymentFactory->buildPaymentGateway(provider: Provider::PLACE_TO_PAY);
+            $paymentProcessor = $paymentFactory->buildPaymentGateway(provider: $data->paymentMethod);
 
             $response = $paymentProcessor->getPaymentProcessData(
-                data: StoreCheckoutData::fromRequest($request),
+                data: $data,
                 reference: $order->id,
                 amount: $order->amount
             );
 
             (new StorePaymentAction())->execute(
                 order: $order,
-                provider: Provider::PLACE_TO_PAY,
+                provider: $data->paymentMethod,
                 dataProvider: $response
             );
 

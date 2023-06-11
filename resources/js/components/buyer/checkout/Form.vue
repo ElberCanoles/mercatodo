@@ -22,6 +22,7 @@ const form = ref({
     department: '',
     city: '',
     address: '',
+    provider: '',
     processing: false,
 })
 
@@ -168,6 +169,15 @@ onMounted(() => {
                                 <label class="form-label">Dirección</label>
                                 <input type="text" class="form-control" v-model="form.address">
                                 <InputError class="mt-2" :message="errors.address"/>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Medio de Pago</label>
+                                <select class="form-control" v-model="form.provider">
+                                    <option value="">Elija una opción...</option>
+                                    <option value="Place To Pay">Place To Pay</option>
+                                </select>
+                                <InputError class="mt-2" :message="errors.provider"/>
                             </div>
 
 

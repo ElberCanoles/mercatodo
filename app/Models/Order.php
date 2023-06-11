@@ -33,19 +33,24 @@ class Order extends Model
         'status'
     ];
 
+    public function newEloquentBuilder($query): OrderQueryBuilder
+    {
+        return new OrderQueryBuilder($query);
+    }
+
     public function payments(): HasMany
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(related: Payment::class);
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(related: User::class);
     }
 
     public function products(): MorphToMany
     {
-        return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
+        return $this->morphToMany(related: Product::class, name: 'productable')->withPivot(columns: 'quantity');
     }
 
     public function pending(): void

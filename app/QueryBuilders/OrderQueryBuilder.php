@@ -15,10 +15,16 @@ class OrderQueryBuilder extends Builder
         return $this->where(column: 'user_id', operator: '=', value: $user->getKey());
     }
 
-    public function whereLatestPendingForUser(User $user): self
+    public function getLatestPendingForUser(User $user): self
     {
         return $this->whereUser(user: $user)
             ->where(column: 'status', operator: '=', value: OrderStatus::PENDING)
+            ->latest();
+    }
+
+    public function getLatestForUser(User $user): self
+    {
+        return $this->whereUser(user: $user)
             ->latest();
     }
 }
