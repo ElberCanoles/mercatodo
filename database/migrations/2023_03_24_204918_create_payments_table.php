@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Payment\PaymentStatus;
+use App\Enums\Payment\Provider;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,7 +15,8 @@ return new class () extends Migration {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
-            $table->unsignedFloat('amount');
+            $table->enum('provider', Provider::asArray());
+            $table->json('data_provider')->nullable();
             $table->enum('status', PaymentStatus::asArray())->default(PaymentStatus::PENDING);
             $table->timestamp('payed_at')->nullable();
             $table->timestamps();

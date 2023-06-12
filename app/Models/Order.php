@@ -2,9 +2,22 @@
 
 namespace App\Models;
 
+use App\Enums\Order\OrderStatus;
+use App\QueryBuilders\OrderQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property float $amount
+ * @property string $status
+ *
+ * @method static OrderQueryBuilder query()
+ */
 class Order extends Model
 {
     use HasFactory;
@@ -15,30 +28,49 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'status',
         'user_id',
+        'amount',
+        'status'
     ];
 
-    public function payments()
+    public function newEloquentBuilder($query): OrderQueryBuilder
     {
-        return $this->hasMany(Payment::class);
+        return new OrderQueryBuilder($query);
     }
 
-    public function user()
+    public function payments(): HasMany
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(related: Payment::class);
     }
 
-    public function products()
+    public function user(): BelongsTo
     {
-        return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
+        return $this->belongsTo(related: User::class);
     }
 
-    public function getTotalAttribute()
+    public function products(): MorphToMany
     {
-        return $this->products()
-            ->get()
-            ->pluck('total')
-            ->sum();
+        return $this->morphToMany(related: Product::class, name: 'productable')->withPivot(columns: 'quantity');
+    }
+
+    public function pending(): void
+    {
+        $this->update([
+            'status' => OrderStatus::PENDING
+        ]);
+    }
+
+    public function confirmed(): void
+    {
+        $this->update([
+            'status' => OrderStatus::CONFIRMED
+        ]);
+    }
+
+    public function cancelled(): void
+    {
+        $this->update([
+            'status' => OrderStatus::CANCELLED
+        ]);
     }
 }

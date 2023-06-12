@@ -1,4 +1,6 @@
 import '@/bootstrap';
+import '@/plugins/toastr';
+
 import { createApp } from 'vue/dist/vue.esm-bundler';
 
 import LoginForm from '@/components/auth/LoginForm.vue';
@@ -17,8 +19,14 @@ import AdminProductsEditForm from '@/components/admin/products/crud/EditForm.vue
 
 import BuyerProfileEditForm from '@/components/buyer/profile/EditForm.vue'
 
-import BuyerProductsGallery from '@/components/buyer/products/Gallery.vue'
-import BuyerProductsShow from '@/components/buyer/products/Show.vue'
+import BuyerCart from '@/components/buyer/cart/Cart.vue'
+
+import BuyerCheckoutForm from '@/components/buyer/checkout/Form.vue'
+
+import BuyerOrdersTable from '@/components/buyer/orders/Table.vue'
+
+import GuestProductsGallery from '@/components/guest/products/Gallery.vue'
+import GuestProductsShow from '@/components/guest/products/Show.vue'
 
 
 window.app = createApp({
@@ -40,7 +48,10 @@ window.app = createApp({
         AdminProductsEditForm,
         AdminProfileEditForm,
         BuyerProfileEditForm,
-        BuyerProductsGallery,
-        BuyerProductsShow
+        BuyerCart,
+        BuyerOrdersTable,
+        BuyerCheckoutForm,
+        GuestProductsGallery,
+        GuestProductsShow
     },
 }).mount('#app');

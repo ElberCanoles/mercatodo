@@ -26,8 +26,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:40'],
-            'last_name' => ['required', 'string', 'regex:/^[a-zA-Z\s]+$/', 'max:40'],
+            'name' => ['required', 'string', 'regex:/^[a-zA-Z\sáÁéÉíÍóÓúÚüÜñÑ]+$/u', 'max:40'],
+            'last_name' => ['required', 'string', 'regex:/^[a-zA-Z\sáÁéÉíÍóÓúÚüÜñÑ]+$/u', 'max:40'],
             'email' => ['required', 'string', 'email', 'max:80', 'unique:users'],
             'password' => ['required', 'confirmed', Password::defaults()],
         ];

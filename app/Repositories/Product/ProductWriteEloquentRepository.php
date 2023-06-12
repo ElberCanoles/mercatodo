@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Repositories\Product;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
+use App\Factories\Product\ProductStoreImagesFactory;
+use App\Factories\Product\ProductUpdateImagesFactory;
 use App\Models\Product;
-use App\Patterns\Factory\Product\ProductStoreImagesFactory;
-use App\Patterns\Factory\Product\ProductUpdateImagesFactory;
 use App\Repositories\Repository;
 use App\Services\Utilities\SlugeableService;
 

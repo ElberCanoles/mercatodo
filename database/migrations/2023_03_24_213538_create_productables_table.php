@@ -13,9 +13,9 @@ return new class () extends Migration {
         Schema::create('productables', function (Blueprint $table) {
             $table->unsignedBigInteger('product_id');
             $table->unsignedInteger('quantity');
+            $table->string('name', 100)->index();
+            $table->unsignedDouble('price');
             $table->morphs('productable');
-
-            $table->timestamps();
         });
     }
 

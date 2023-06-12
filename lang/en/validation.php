@@ -152,8 +152,11 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'product' => [
+            'with_out_stock' => 'The product does not have available quantities',
+        ],
+        'payment' => [
+            'gateway_not_yet_supported' => 'Payment gateway not yet supported',
         ],
     ],
 

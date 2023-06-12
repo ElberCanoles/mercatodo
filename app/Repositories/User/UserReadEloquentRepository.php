@@ -6,8 +6,8 @@ namespace App\Repositories\User;
 
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
 use App\Enums\User\UserStatus;
+use App\Factories\User\UserAllFactory;
 use App\Models\User;
-use App\Patterns\Factory\User\UserAllFactory;
 use App\Repositories\Repository;
 use Illuminate\Pagination\LengthAwarePaginator;
 

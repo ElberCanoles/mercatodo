@@ -23,7 +23,11 @@
 
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('buyer.products.index') ? 'active' : '' }}" href="{{ route('buyer.products.index') }}">Productos</a>
+                            <a class="nav-link {{ request()->routeIs('products.index') ? 'active' : '' }}" href="{{ route('products.index') }}">Productos</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->routeIs('buyer.cart.index') ? 'active' : '' }}" href="{{ route('buyer.cart.index') }}">Ver Carrito</a>
                         </li>
                     </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

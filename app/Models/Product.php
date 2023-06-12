@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
+ * @property int $id
+ * @property int stock
+ * @property string name
  * @property object $pivot
  * @property float $price
  */
