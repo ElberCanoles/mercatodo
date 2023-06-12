@@ -44,7 +44,6 @@ class CheckoutController extends Controller
     public function store(StoreRequest $request, PaymentFactoryInterface $paymentFactory): JsonResponse
     {
         try {
-
             $data = StoreCheckoutData::fromRequest($request);
 
             $order = Order::find($data->orderId);

@@ -13,7 +13,6 @@ class RetryPaymentOrderAction
 {
     public function execute(Order $order): RedirectResponse
     {
-
         $lastPayment = $order->payments()?->latest()?->first();
 
         if (isset($lastPayment) && $lastPayment->status === PaymentStatus::PENDING) {

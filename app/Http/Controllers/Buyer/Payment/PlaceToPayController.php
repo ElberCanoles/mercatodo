@@ -22,7 +22,6 @@ class PlaceToPayController extends Controller
         $order = Order::findOrFail(request()->input(key: 'order'));
 
         try {
-
             $status = $this->placeToPayService->getSession($order->payments()->latest()->first()->data_provider['requestId'])['status']['status'];
 
             $checkPaymentActions = (new PlaceToPayPaymentActionsFactory($this->placeToPayService))->make();
