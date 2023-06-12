@@ -4,8 +4,11 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/debugbar/*
 /vendor
+/tests/coverage
 .env
+.env.testing
 .env.backup
 .env.production
 .phpunit.result.cache
