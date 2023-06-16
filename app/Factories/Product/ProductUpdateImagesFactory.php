@@ -15,7 +15,7 @@ class ProductUpdateImagesFactory
     {
     }
 
-    public function make(Product $product, array $preloadedImages = null, array $newImages = null): void
+    public function create(Product $product, array $preloadedImages = null, array $newImages = null): void
     {
         try {
             $currentImagesPaths = $product->images()->pluck(column: 'path')->toArray();

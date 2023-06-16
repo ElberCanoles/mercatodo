@@ -15,7 +15,7 @@ class ProductStoreImagesFactory
     {
     }
 
-    public function make(Product $product, array $images): void
+    public function create(Product $product, array $images): void
     {
         try {
             $newImagesPaths = $this->fileService->uploadMultipleFiles(
