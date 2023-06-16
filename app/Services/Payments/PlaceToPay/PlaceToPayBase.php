@@ -11,6 +11,7 @@ use App\Enums\Payment\PlaceToPay\RejectedStatuses;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\URL;
 
 class PlaceToPayBase
 {
@@ -39,11 +40,15 @@ class PlaceToPayBase
         ];
     }
 
-    protected function createSession(StoreCheckoutData $data, Order $order): array
+    protected function getExpirationDate(): string
     {
-        $expirationDate = Carbon::now()
+        return Carbon::now()
             ->addMinutes(value: config(key: 'placetopay.session_minutes_duration'))
             ->format(format: 'c');
+    }
+
+    protected function makeSession(StoreCheckoutData $data, Order $order): array
+    {
 
         return [
             "auth" => $this->getAuth(),
@@ -69,9 +74,9 @@ class PlaceToPayBase
                     "total" => $order->amount,
                 ],
             ],
-            "expiration" => $expirationDate,
-            "returnUrl" => route(name: 'buyer.placetopay.payment.response', parameters: ['order' => $order->id]),
-            "cancelUrl" => route(name: 'buyer.placetopay.payment.cancelled', parameters: ['order' => $order->id]),
+            "expiration" => $this->getExpirationDate(),
+            "returnUrl" => URL::signedRoute(name: 'buyer.placetopay.payment.response', parameters: ['order' => $order->id]),
+            "cancelUrl" => URL::signedRoute(name: 'buyer.placetopay.payment.cancelled', parameters: ['order' => $order->id]),
             "ipAddress" => $_SERVER['REMOTE_ADDR'],
             "userAgent" => $_SERVER['HTTP_USER_AGENT'],
             "skipResult" => false,

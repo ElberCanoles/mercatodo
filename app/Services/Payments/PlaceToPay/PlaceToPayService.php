@@ -25,7 +25,7 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
     {
         $response = Http::post(
             url: $this->baseUrl . '/api/session',
-            data: $this->createSession(data: $data, order: $order)
+            data: $this->makeSession(data: $data, order: $order)
         );
 
         if ($response->ok()) {

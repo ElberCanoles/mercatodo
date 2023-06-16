@@ -36,13 +36,13 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']]
 
             Route::post('checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
-            Route::get('checkout/result/transaction', CheckoutResultController::class)->name('checkout.result');
+            Route::get('checkout/result/transaction', CheckoutResultController::class)->name('checkout.result')->middleware('signed');;
 
             Route::get('cart/pay', [CartController::class, 'pay'])->name('cart.pay');
 
-            Route::get('placetopay/payment/response', [PlaceToPayController::class, 'processResponse'])->name('placetopay.payment.response');
+            Route::get('placetopay/payment/response', [PlaceToPayController::class, 'processResponse'])->name('placetopay.payment.response')->middleware('signed');;
 
-            Route::get('placetopay/payment/cancelled', [PlaceToPayController::class, 'abortSession'])->name('placetopay.payment.cancelled');
+            Route::get('placetopay/payment/cancelled', [PlaceToPayController::class, 'abortSession'])->name('placetopay.payment.cancelled')->middleware('signed');;
         });
     });
 });
