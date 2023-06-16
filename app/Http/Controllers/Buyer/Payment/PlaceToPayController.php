@@ -9,10 +9,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\Payments\PlaceToPay\PlaceToPayService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\URL;
 use Throwable;
 
 class PlaceToPayController extends Controller
 {
+
     public function __construct(private readonly PlaceToPayService $placeToPayService)
     {
     }
@@ -33,7 +35,7 @@ class PlaceToPayController extends Controller
             report($exception);
         }
 
-        return redirect()->to(path: route(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));
+        return redirect()->to(path: URL::signedRoute(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));
     }
 
     public function abortSession(): RedirectResponse
@@ -43,6 +45,6 @@ class PlaceToPayController extends Controller
         $order->cancelled();
         $order->payments()->latest()->first()->rejected();
 
-        return redirect()->to(path: route(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));
+        return redirect()->to(path: URL::signedRoute(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));
     }
 }

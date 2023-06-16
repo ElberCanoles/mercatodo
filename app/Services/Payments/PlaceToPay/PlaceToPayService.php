@@ -21,11 +21,11 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
     /**
      * @throws Exception
      */
-    public function getPaymentProcessData(StoreCheckoutData $data, Order $order): array
+    public function makePaymentProcessData(StoreCheckoutData $data, Order $order): array
     {
         $response = Http::post(
             url: $this->baseUrl . '/api/session',
-            data: $this->createSession(data: $data, order: $order)
+            data: $this->makeSession(data: $data, order: $order)
         );
 
         if ($response->ok()) {
@@ -35,7 +35,7 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
         throw new Exception(trans(key: 'server.unavailable_service'));
     }
 
-    public function getProcessUrl(array $paymentProcessData): string
+    public function decodeProcessUrl(array $paymentProcessData): string
     {
         return $paymentProcessData['processUrl'];
     }

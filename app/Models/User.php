@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -12,6 +13,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @method static Model create(array $attributes = [])
+ * @method static Model|null find($id, $columns = ['*'])
+ * @method static Model findOrFail($id, $columns = ['*'])
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;

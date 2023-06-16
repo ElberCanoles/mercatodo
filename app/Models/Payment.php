@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property array $data_provider
  * @property string status
  * @property Carbon $payed_at
+ *
+ * @method static Model create(array $attributes = [])
+ * @method static Model|null find($id, $columns = ['*'])
+ * @method static Model findOrFail($id, $columns = ['*'])
  */
 class Payment extends Model
 {

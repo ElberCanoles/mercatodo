@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
  * @property int $id
+ * @property MorphToMany $products
+ *
+ * @method static Model create(array $attributes = [])
+ * @method static Model|null find($id, $columns = ['*'])
+ * @method static Model findOrFail($id, $columns = ['*'])
  */
 class Cart extends Model
 {

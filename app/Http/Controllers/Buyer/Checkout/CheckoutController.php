@@ -54,7 +54,7 @@ class CheckoutController extends Controller
 
             $paymentProcessor = $paymentFactory->buildPaymentGateway(provider: $data->paymentMethod);
 
-            $response = $paymentProcessor->getPaymentProcessData(
+            $response = $paymentProcessor->makePaymentProcessData(
                 data: $data,
                 order: $order
             );
@@ -66,7 +66,7 @@ class CheckoutController extends Controller
             );
 
             return $this->successResponse(
-                data: ['process_url' => $paymentProcessor->getProcessUrl($response)]
+                data: ['process_url' => $paymentProcessor->decodeProcessUrl($response)]
             );
         } catch (Throwable $exception) {
             report($exception);

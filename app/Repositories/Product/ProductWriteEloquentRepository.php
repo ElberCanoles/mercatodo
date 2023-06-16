@@ -37,7 +37,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
 
-            $this->storeImagesFactory->make($product, $data['images']);
+            $this->storeImagesFactory->create($product, $data['images']);
 
             return $product;
         } catch (\Throwable $throwable) {
@@ -69,7 +69,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
                 $product->slug = $slug;
             }
 
-            $this->updateImagesFactory->make(
+            $this->updateImagesFactory->create(
                 product: $product,
                 preloadedImages: $data['preloaded_images'] ?? null,
                 newImages: $data['images'] ?? null
