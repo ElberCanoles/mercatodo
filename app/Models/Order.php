@@ -16,9 +16,6 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property float $amount
  * @property string $status
  *
- * @method static Model create(array $attributes = [])
- * @method static Model|null find($id, $columns = ['*'])
- * @method static Model findOrFail($id, $columns = ['*'])
  * @method static OrderQueryBuilder query()
  */
 class Order extends Model

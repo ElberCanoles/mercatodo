@@ -14,10 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string name
  * @property object $pivot
  * @property float $price
- *
- * @method static Model create(array $attributes = [])
- * @method static Model|null find($id, $columns = ['*'])
- * @method static Model findOrFail($id, $columns = ['*'])
  */
 class Product extends Model
 {
