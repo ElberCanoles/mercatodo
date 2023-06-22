@@ -54,6 +54,19 @@ const reloadTable = async () => {
     await getData(url.value)
 }
 
+const exportProducts = async (url) => {
+    try {
+        const response = await axios.get(`/admin/products/export`)
+
+        toastr.success(response.data.message, 'Operación exitosa', {
+            timeOut: 5000
+        })
+
+    } catch (error) {
+
+    }
+}
+
 const deleteProduct = async (url) => {
 
     Swal.fire({
@@ -129,9 +142,12 @@ getData(url.value)
                             </option>
                         </select>
                     </th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th scope="col">
+                        <a class="btn btn-outline-primary" href="javascript:">Importar</a>
+                    </th>
+                    <th scope="col">
+                        <a class="btn btn-outline-primary" href="javascript:" @click="exportProducts()">Exportar</a>
+                    </th>
                 </tr>
                 <tr>
                     <th scope="col">Nombre</th>
