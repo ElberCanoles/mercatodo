@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services\Exports;
 
+use App\Actions\Export\StoreExportAction;
 use App\Contracts\Exports\ProductExporter;
+use App\DataTransferObjects\Export\StoreExportData;
+use App\Enums\Export\ExportModules;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use Throwable;
 
 final class ProductCsvExporter implements ProductExporter
 {
-    private const PRODUCTS_EXPORT_PATH = 'exports/products/products.csv';
+    private const PRODUCTS_EXPORT_PATH = 'exports/products/';
 
     private readonly string $diskName;
 
@@ -33,30 +38,47 @@ final class ProductCsvExporter implements ProductExporter
 
     public function export(): void
     {
-        $this->createFile();
+        try {
 
-        $file = fopen(filename: Storage::path(path: $this::PRODUCTS_EXPORT_PATH), mode: 'w');
+            $fileName = $this::PRODUCTS_EXPORT_PATH . Str::uuid()->serialize() . ".csv";
 
-        fputcsv(stream: $file, fields: $this->headings());
+            $this->createFile($fileName);
 
-        Product::query()->chunk(count: 100, callback: function (Collection $products) use ($file) {
-            foreach ($products as $product) {
-                fputcsv(stream: $file, fields: [
-                    $product->name,
-                    $product->price,
-                    $product->stock,
-                    trans(key: $product->status),
-                    $product->description
-                ]);
-            }
-        });
+            $file = fopen(filename: Storage::path(path: $fileName), mode: 'w');
 
-        fclose(stream: $file);
+            fputcsv(stream: $file, fields: $this->headings());
+
+            Product::query()->chunk(count: 100, callback: function (Collection $products) use ($file) {
+                foreach ($products as $product) {
+                    fputcsv(stream: $file, fields: [
+                        $product->name,
+                        $product->price,
+                        $product->stock,
+                        trans(key: $product->status),
+                        $product->description
+                    ]);
+                }
+            });
+
+            $this->storeExport(fileName: $fileName);
+
+            fclose(stream: $file);
+        } catch (Throwable $throwable) {
+            report($throwable);
+        }
     }
 
-    private function createFile(): void
+    private function createFile(string $fileName): void
     {
-        Storage::disk(name: $this->diskName)->put(path: $this::PRODUCTS_EXPORT_PATH, contents: "");
+        Storage::disk(name: $this->diskName)->put(path: $fileName, contents: "");
+    }
+
+    private function storeExport(string $fileName): void
+    {
+        (new StoreExportAction())->execute(data: StoreExportData::fromArray(data: [
+            'module' => ExportModules::PRODUCTS,
+            'path' => Storage::url(path: $fileName)
+        ]));
     }
 
 }

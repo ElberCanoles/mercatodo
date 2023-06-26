@@ -17,6 +17,8 @@ import AdminProductsTable from '@/components/admin/products/Table.vue'
 import AdminProductsCreateForm from '@/components/admin/products/crud/CreateForm.vue'
 import AdminProductsEditForm from '@/components/admin/products/crud/EditForm.vue'
 
+import AdminExportsTable from '@/components/admin/exports/Table.vue'
+
 import BuyerProfileEditForm from '@/components/buyer/profile/EditForm.vue'
 
 import BuyerCart from '@/components/buyer/cart/Cart.vue'
@@ -47,6 +49,7 @@ window.app = createApp({
         AdminProductsCreateForm,
         AdminProductsEditForm,
         AdminProfileEditForm,
+        AdminExportsTable,
         BuyerProfileEditForm,
         BuyerCart,
         BuyerOrdersTable,

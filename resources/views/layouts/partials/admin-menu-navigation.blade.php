@@ -16,4 +16,9 @@
         Productos
     </a>
 </li>
-
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('admin.exports*') ? 'active' : '' }}" href="{{ route('admin.exports.index') }}">
+        <span data-feather="cloud-snow"></span>
+        Exportaciones
+    </a>
+</li>
