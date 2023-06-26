@@ -12,7 +12,7 @@ trait MakeJsonResponse
     /**
      * Get Json success response representation
      */
-    protected function successResponse($data, int $code = Response::HTTP_OK): JsonResponse
+    protected function successResponse(mixed $data, int $code = Response::HTTP_OK): JsonResponse
     {
         return response()->json($data, $code);
     }

@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100'],
+            'name' => ['required', 'string', 'max:100', 'unique:products'],
             'price' => ['required', 'numeric', 'min:1', 'max:99999999'],
             'stock' => ['required', 'integer', 'min:0', 'max:9999999'],
             'status' => ['required', Rule::in(ProductStatus::asArray())],
@@ -47,6 +47,7 @@ class StoreRequest extends FormRequest
             'name.required' => 'El nombre es requerido',
             'name.string' => 'El nombre debe ser una cadena de texto',
             'name.max' => 'El nombre no puede contener más de 100 caracteres',
+            'name.unique' => 'Ya existe un producto registrado con este nombre',
 
             'price.required' => 'El precio es requerido',
             'price.numeric' => 'Debe ingresar un valor númerico',

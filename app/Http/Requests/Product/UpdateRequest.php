@@ -31,7 +31,7 @@ class UpdateRequest extends FormRequest
         $imagesMaxCount = $this::MAX_IMAGES - $preloadedImagesCount;
 
         return [
-            'name' => ['required', 'string', 'max:100'],
+            'name' => ['required', 'string', 'max:100', Rule::unique('products')->ignore(request()->product)],
             'price' => ['required', 'numeric', 'min:1', 'max:99999999'],
             'stock' => ['required', 'integer', 'min:0', 'max:9999999'],
             'status' => ['required', Rule::in(ProductStatus::asArray())],

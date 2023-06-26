@@ -6,6 +6,7 @@ namespace App\Factories\Product;
 
 use App\Models\Product;
 use App\Services\Utilities\FileService;
+use Throwable;
 
 class ProductStoreImagesFactory
 {
@@ -28,7 +29,7 @@ class ProductStoreImagesFactory
                     'path' => $imagePath
                 ]);
             }
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             report(exception: $throwable);
         }
     }

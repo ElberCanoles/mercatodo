@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\Export\ExportController;
 use App\Http\Controllers\Admin\Product\ProductController;
+use App\Http\Controllers\Admin\Product\ProductExportController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
 use App\Http\Controllers\Admin\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +21,11 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.administ
 
             Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
 
+            Route::get('products/export', ProductExportController::class);
+
             Route::resource('products', ProductController::class);
+
+            Route::get('exports', [ExportController::class, 'index'])->name('exports.index');
         });
     });
 });

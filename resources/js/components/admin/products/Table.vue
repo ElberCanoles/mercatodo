@@ -54,6 +54,21 @@ const reloadTable = async () => {
     await getData(url.value)
 }
 
+const exportProducts = async () => {
+    try {
+        const response = await axios.get(`/admin/products/export`)
+
+        toastr.success(response.data.message, 'Operación exitosa', {
+            timeOut: 5000
+        })
+
+    } catch (error) {
+        toastr.error("Servicio no disponible", 'Error!', {
+            timeOut: 5000
+        })
+    }
+}
+
 const deleteProduct = async (url) => {
 
     Swal.fire({
@@ -106,6 +121,18 @@ getData(url.value)
 </script>
 
 <template>
+    <div class="d-flex flex-row">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Gestionar
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/admin/products/create">Crear nuevo</a></li>
+                <li><a class="dropdown-item" href="javascript:" @click="exportProducts()">Exportar</a></li>
+                <li><a class="dropdown-item" href="javascript:">Importar</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
@@ -129,9 +156,6 @@ getData(url.value)
                             </option>
                         </select>
                     </th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
                 </tr>
                 <tr>
                     <th scope="col">Nombre</th>
@@ -148,8 +172,7 @@ getData(url.value)
                     <td>{{ product?.price }}</td>
                     <td>{{ product?.stock }}</td>
                     <td>
-                        <span class="badge rounded-pill" :class="classStatus(product?.status_key)">{{ product?.status_value
-                        }}</span>
+                        <span class="badge rounded-pill" :class="classStatus(product?.status_key)">{{ product?.status_value }}</span>
                     </td>
                     <td>{{ product?.created_at }}</td>
                     <td>

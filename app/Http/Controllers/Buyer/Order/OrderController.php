@@ -34,7 +34,7 @@ class OrderController extends Controller
                 'show_url' => route(name: 'buyer.orders.show', parameters: ['order' => $order->id]),
             ]);
 
-        return $this->successResponse(data: ['orders' => $orders]);
+        return $this->successResponse(data: $orders);
     }
 
     public function show(Order $order): View

@@ -6,6 +6,7 @@ namespace App\Services\Utilities;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Throwable;
 
 class FileService
 {
@@ -22,7 +23,7 @@ class FileService
             Storage::disk(name: $this->diskName)->put($relativePath, $file);
 
             return $this->getFullFilePath($file->hashName(path: $relativePath));
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             report(exception: $throwable);
             return null;
         }

@@ -34,8 +34,8 @@ const getData = async (url) => {
 
     try {
         const { data } = await axios.get(`${url}`)
-        orders.value = data.orders.data
-        links.value = data.orders.links
+        orders.value = data.data
+        links.value = data.links
     } catch (error) {
         console.log(error)
     }

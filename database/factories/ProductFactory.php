@@ -19,7 +19,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->word();
+        $name = Str::random();
 
         $statuses = array_values(ProductStatus::asArray());
 
