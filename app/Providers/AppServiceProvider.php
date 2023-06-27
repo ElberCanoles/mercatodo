@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Contracts\Exports\ProductExporter;
+use App\Contracts\Exports\ProductExporterInterface;
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            abstract: ProductExporter::class,
+            abstract: ProductExporterInterface::class,
             concrete: ProductCsvExporter::class
         );
     }

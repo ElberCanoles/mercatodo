@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Exports;
 
 use App\Actions\Export\StoreExportAction;
-use App\Contracts\Exports\ProductExporter;
+use App\Contracts\Exports\ProductExporterInterface;
 use App\DataTransferObjects\Export\StoreExportData;
 use App\Enums\Export\ExportModules;
 use App\Models\Product;
@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Throwable;
 
-final class ProductCsvExporter implements ProductExporter
+final class ProductCsvExporter implements ProductExporterInterface
 {
     private const PRODUCTS_EXPORT_PATH = 'exports/products/';
 
