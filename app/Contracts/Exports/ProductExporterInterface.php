@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace App\Contracts\Exports;
 
-
-interface ProductExporterInterface
+interface ProductExporterInterface extends ExporterInterface
 {
-    public function headings(): array;
-
-    public function export(): void;
 }
