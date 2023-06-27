@@ -11,5 +11,6 @@ return [
     'export_stock_head' => 'STOCK',
     'export_status_head' => 'STATUS',
     'export_description_head' => 'DESCRIPTION',
-    'export_done' => 'Export in progress'
+    'export_done' => 'Export in progress',
+    'import_done' => 'Import in progress'
 ];

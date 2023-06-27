@@ -2,6 +2,7 @@
 
 import { ref } from 'vue'
 import Swal from 'sweetalert2'
+import ImportModal from "./ImportModal.vue";
 
 const props = defineProps({
     statuses: {},
@@ -129,7 +130,7 @@ getData(url.value)
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="/admin/products/create">Crear nuevo</a></li>
                 <li><a class="dropdown-item" href="javascript:" @click="exportProducts()">Exportar</a></li>
-                <li><a class="dropdown-item" href="javascript:">Importar</a></li>
+                <li><a class="dropdown-item" href="javascript:" data-bs-toggle="modal" data-bs-target="#importModal">Importar</a></li>
             </ul>
         </div>
     </div>
@@ -156,6 +157,8 @@ getData(url.value)
                             </option>
                         </select>
                     </th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 <tr>
                     <th scope="col">Nombre</th>
@@ -194,4 +197,6 @@ getData(url.value)
             </ul>
         </nav>
     </div>
+
+    <ImportModal></ImportModal>
 </template>
