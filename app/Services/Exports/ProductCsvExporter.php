@@ -28,6 +28,7 @@ final class ProductCsvExporter implements ProductExporterInterface
     public function headings(): array
     {
         return [
+            trans(key: 'product.export_id_head'),
             trans(key: 'product.export_name_head'),
             trans(key: 'product.export_price_head'),
             trans(key: 'product.export_stock_head'),
@@ -51,6 +52,7 @@ final class ProductCsvExporter implements ProductExporterInterface
             Product::query()->chunk(count: 100, callback: function (Collection $products) use ($file) {
                 foreach ($products as $product) {
                     fputcsv(stream: $file, fields: [
+                        $product->id,
                         $product->name,
                         $product->price,
                         $product->stock,

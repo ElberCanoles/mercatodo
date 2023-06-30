@@ -60,12 +60,12 @@ class FileService
         }
     }
 
-    private function getFullFilePath(string $fileNameWithRelativePath): string
+    public function getFullFilePath(string $fileNameWithRelativePath): string
     {
         return Storage::url(path: $fileNameWithRelativePath);
     }
 
-    private function getRelativePath(string $fileNameWithFullPath, string $fromThePrefix): string
+    public function getRelativePath(string $fileNameWithFullPath, string $fromThePrefix): string
     {
         $position = strpos($fileNameWithFullPath, $fromThePrefix);
 
