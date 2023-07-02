@@ -8,13 +8,12 @@ use App\Contracts\Imports\ProductImporterInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Enums\Import\ImportModules;
 use App\Enums\Product\ProductStatus;
+use App\Factories\Product\ProductImportValidatorFactory;
 use App\Models\Import;
 use App\Models\Product;
 use App\Services\Utilities\FileService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class ProductCsvImporter implements ProductImporterInterface
 {
@@ -69,7 +68,7 @@ class ProductCsvImporter implements ProductImporterInterface
             $rowPosition++;
         }
 
-        $this->logOutput($filePath);
+        $this->saveImportProcessSummary($filePath);
 
         fclose($file);
     }
@@ -117,34 +116,7 @@ class ProductCsvImporter implements ProductImporterInterface
 
     private function isValidRow(array $row, int $rowPosition): bool
     {
-        $validator = Validator::make($row, [
-            'name' => ['required', 'string', 'max:100', Rule::unique(table: 'products')->ignore($row['id'])],
-            'price' => ['required', 'numeric', 'min:1', 'max:99999999'],
-            'stock' => ['required', 'integer', 'min:0', 'max:9999999'],
-            'status' => ['required', Rule::in(ProductStatus::asArray())],
-            'description' => ['required', 'string', 'max:500'],
-        ], [
-            'name.required' => 'El nombre es requerido',
-            'name.string' => 'El nombre debe ser una cadena de texto',
-            'name.max' => 'El nombre no puede contener más de 100 caracteres',
-            'name.unique' => 'Ya existe un producto registrado con este nombre',
-
-            'price.required' => 'El precio es requerido',
-            'price.numeric' => 'Debe ingresar un valor númerico',
-            'price.min' => 'El precio debe ser al menos 1',
-            'price.max' => 'El precio no debe ser mayor que 99999999',
-
-            'stock.required' => 'El stock es requerido',
-            'stock.integer' => 'Debe ingresar un número entero',
-            'stock.min' => 'El stock debe ser al menos 0',
-            'stock.max' => 'El stock no debe ser mayor que 9999999',
-
-            'status.required' => 'El estado es requerido',
-            'status.in' => 'El estado no es valido',
-
-            'description.required' => 'La descripción es requerida',
-            'description.max' => 'La descripción no puede contener más de 500 caracteres',
-        ]);
+        $validator = (new ProductImportValidatorFactory())->make(data: $row);
 
         if ($validator->fails()) {
             $this->errors[] = [
@@ -168,7 +140,7 @@ class ProductCsvImporter implements ProductImporterInterface
         };
     }
 
-    private function logOutput(string $filePath): void
+    private function saveImportProcessSummary(string $filePath): void
     {
         Import::create([
             'module' => ImportModules::PRODUCTS,

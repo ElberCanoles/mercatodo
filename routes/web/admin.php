@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Export\ExportController;
+use App\Http\Controllers\Admin\Import\ImportController;
 use App\Http\Controllers\Admin\Product\ProductController;
 use App\Http\Controllers\Admin\Product\ProductExportController;
 use App\Http\Controllers\Admin\Product\ProductImportController;
@@ -29,6 +30,8 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.administ
             Route::resource('products', ProductController::class);
 
             Route::get('exports', [ExportController::class, 'index'])->name('exports.index');
+
+            Route::resource('imports', ImportController::class)->only(['index', 'show']);
         });
     });
 });
