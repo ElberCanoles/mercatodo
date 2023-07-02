@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories\Product;
+namespace App\Domain\Products\Repositories;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
-use App\Factories\Product\ProductStoreImagesFactory;
-use App\Factories\Product\ProductUpdateImagesFactory;
-use App\Models\Product;
+use App\Domain\Products\Factories\ProductStoreImagesFactory;
+use App\Domain\Products\Factories\ProductUpdateImagesFactory;
+use App\Domain\Products\Models\Product;
 use App\Repositories\Repository;
 use App\Services\Utilities\SlugeableService;
 

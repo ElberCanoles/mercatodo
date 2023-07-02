@@ -6,11 +6,11 @@ namespace App\Services\Imports;
 
 use App\Contracts\Imports\ProductImporterInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
+use App\Domain\Products\Enums\ProductStatus;
+use App\Domain\Products\Factories\ProductImportValidatorFactory;
+use App\Domain\Products\Models\Product;
 use App\Enums\Import\ImportModules;
-use App\Enums\Product\ProductStatus;
-use App\Factories\Product\ProductImportValidatorFactory;
 use App\Models\Import;
-use App\Models\Product;
 use App\Services\Utilities\FileService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

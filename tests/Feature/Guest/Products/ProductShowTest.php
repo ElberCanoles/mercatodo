@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Guest\Products;
 
-use App\Enums\Product\ProductStatus;
-use App\Models\Product;
+use App\Domain\Products\Enums\ProductStatus;
+use App\Domain\Products\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

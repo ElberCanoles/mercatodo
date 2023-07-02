@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Guest\Product;
+namespace App\Http\Controllers\Web\Guest\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
-use App\Enums\Product\ProductStatus;
+use App\Domain\Products\Enums\ProductStatus;
 use App\Http\Controllers\Controller;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;

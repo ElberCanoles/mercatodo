@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Products\Models\Product;
 use App\Enums\Order\OrderStatus;
 use App\QueryBuilders\OrderQueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

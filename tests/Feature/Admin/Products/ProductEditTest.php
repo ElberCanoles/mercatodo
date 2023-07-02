@@ -3,8 +3,8 @@
 namespace Tests\Feature\Admin\Products;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
+use App\Domain\Products\Models\Product;
 use App\Enums\User\RoleType;
-use App\Models\Product;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

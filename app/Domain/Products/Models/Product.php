@@ -1,7 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Products\Models;
 
+use App\Models\Cart;
+use App\Models\Image;
+use App\Models\Order;
+use Database\Factories\ProductFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
@@ -37,6 +42,11 @@ class Product extends Model
         'stock',
         'status',
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return ProductFactory::new();
+    }
 
     public function carts(): MorphToMany
     {

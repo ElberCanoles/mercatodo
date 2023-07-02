@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Product;
+namespace App\Domain\Products\Factories;
 
-use Illuminate\Validation\Rule;
-use App\Enums\Product\ProductStatus;
+use App\Domain\Products\Enums\ProductStatus;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class ProductImportValidatorFactory
 {

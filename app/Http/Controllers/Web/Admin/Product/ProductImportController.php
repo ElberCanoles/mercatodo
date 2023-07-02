@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Admin\Product;
+namespace App\Http\Controllers\Web\Admin\Product;
 
-use App\Actions\Product\StoreImportFileAction;
+use App\Domain\Products\Actions\StoreImportFileAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\ImportRequest;
 use App\Jobs\Product\ProductImportJob;

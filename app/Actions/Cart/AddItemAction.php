@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Actions\Cart;
 
-use App\Exceptions\ProductExceptions;
+use App\Domain\Products\Exceptions\ProductExceptions;
+use App\Domain\Products\Models\Product;
 use App\Models\Cart;
-use App\Models\Product;
 
 class AddItemAction
 {

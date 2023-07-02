@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Product;
 
-use App\Enums\Product\ProductStatus;
+use App\Domain\Products\Enums\ProductStatus;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 

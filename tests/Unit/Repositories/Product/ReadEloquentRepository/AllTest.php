@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Repositories\Product\ReadEloquentRepository;
 
-use App\Models\Product;
-use App\Repositories\Product\ProductReadEloquentRepository;
+use App\Domain\Products\Models\Product;
+use App\Domain\Products\Repositories\ProductReadEloquentRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Tests\TestCase;

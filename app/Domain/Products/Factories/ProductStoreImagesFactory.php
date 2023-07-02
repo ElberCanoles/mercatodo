@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Product;
+namespace App\Domain\Products\Factories;
 
-use App\Models\Product;
+use App\Domain\Products\Models\Product;
 use App\Services\Utilities\FileService;
 use Throwable;
 
