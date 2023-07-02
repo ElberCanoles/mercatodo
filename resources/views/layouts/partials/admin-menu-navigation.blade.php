@@ -18,7 +18,13 @@
 </li>
 <li class="nav-item">
     <a class="nav-link {{ request()->routeIs('admin.exports*') ? 'active' : '' }}" href="{{ route('admin.exports.index') }}">
-        <span data-feather="cloud-snow"></span>
+        <span data-feather="download-cloud"></span>
         Exportaciones
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link {{ request()->routeIs('admin.imports*') ? 'active' : '' }}" href="{{ route('admin.imports.index') }}">
+        <span data-feather="upload-cloud"></span>
+        Importaciones
     </a>
 </li>

@@ -14,11 +14,12 @@ use App\Services\Utilities\SlugeableService;
 final class ProductWriteEloquentRepository extends Repository implements ProductWriteRepositoryInterface
 {
     public function __construct(
-        private readonly Product $model,
-        private readonly SlugeableService $slugeableService,
-        private readonly ProductStoreImagesFactory $storeImagesFactory,
+        private readonly Product                    $model,
+        private readonly SlugeableService           $slugeableService,
+        private readonly ProductStoreImagesFactory  $storeImagesFactory,
         private readonly ProductUpdateImagesFactory $updateImagesFactory
-    ) {
+    )
+    {
     }
 
     public function store(array $data): ?Product
@@ -37,7 +38,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
                 'description' => $this->normalizeStringUsingUcfirst($data['description']),
             ]);
 
-            $this->storeImagesFactory->create($product, $data['images']);
+            if (isset($data['images'])) $this->storeImagesFactory->create($product, $data['images']);
 
             return $product;
         } catch (\Throwable $throwable) {

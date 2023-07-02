@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace App\Contracts\Exports;
 
-
-interface ProductExporter
+interface ExporterInterface
 {
     public function headings(): array;
 

@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Contracts\Exports\ProductExporter;
+use App\Contracts\Exports\ProductExporterInterface;
+use App\Contracts\Imports\ProductImporterInterface;
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
@@ -14,6 +15,7 @@ use App\Repositories\Product\ProductWriteEloquentRepository;
 use App\Repositories\User\UserReadEloquentRepository;
 use App\Repositories\User\UserWriteEloquentRepository;
 use App\Services\Exports\ProductCsvExporter;
+use App\Services\Imports\ProductCsvImporter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -49,8 +51,13 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            abstract: ProductExporter::class,
+            abstract: ProductExporterInterface::class,
             concrete: ProductCsvExporter::class
+        );
+
+        $this->app->bind(
+            abstract: ProductImporterInterface::class,
+            concrete: ProductCsvImporter::class
         );
     }
 

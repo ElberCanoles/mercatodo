@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Exports;
 
 use App\Actions\Export\StoreExportAction;
-use App\Contracts\Exports\ProductExporter;
+use App\Contracts\Exports\ProductExporterInterface;
 use App\DataTransferObjects\Export\StoreExportData;
 use App\Enums\Export\ExportModules;
 use App\Models\Product;
@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Throwable;
 
-final class ProductCsvExporter implements ProductExporter
+final class ProductCsvExporter implements ProductExporterInterface
 {
     private const PRODUCTS_EXPORT_PATH = 'exports/products/';
 
@@ -28,6 +28,7 @@ final class ProductCsvExporter implements ProductExporter
     public function headings(): array
     {
         return [
+            trans(key: 'product.export_id_head'),
             trans(key: 'product.export_name_head'),
             trans(key: 'product.export_price_head'),
             trans(key: 'product.export_stock_head'),
@@ -51,6 +52,7 @@ final class ProductCsvExporter implements ProductExporter
             Product::query()->chunk(count: 100, callback: function (Collection $products) use ($file) {
                 foreach ($products as $product) {
                     fputcsv(stream: $file, fields: [
+                        $product->id,
                         $product->name,
                         $product->price,
                         $product->stock,
