@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories\User;
+namespace App\Domain\Users\Repositories;
 
+use App\Contracts\Repository\Base\Repository;
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Models\User;
-use App\Repositories\Repository;
+use App\Domain\Users\Models\User;
 
 final class UserWriteEloquentRepository extends Repository implements UserWriteRepositoryInterface
 {

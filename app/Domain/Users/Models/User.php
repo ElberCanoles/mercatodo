@@ -1,7 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Users\Models;
 
+use App\Models\Cart;
+use App\Models\Order;
+use App\Models\Payment;
+use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -50,6 +55,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return UserFactory::new();
+    }
 
     public function cart(): HasOne
     {

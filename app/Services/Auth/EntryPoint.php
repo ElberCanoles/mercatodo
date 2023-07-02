@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Auth;
 
-use App\Enums\User\RoleType;
+use App\Domain\Users\Enums\RoleType;
 
 class EntryPoint
 {

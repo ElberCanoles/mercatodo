@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\User\UserStatus;
+use App\Domain\Users\Enums\UserStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

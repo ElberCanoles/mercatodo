@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Products\Factories;
 
 use App\Domain\Products\Models\Product;
+use App\Domain\Users\Enums\RoleType;
 use App\Enums\General\SystemParams;
-use App\Enums\User\RoleType;
 use App\Traits\Utilities\CheckAttribute;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;

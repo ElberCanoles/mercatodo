@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Repositories\User;
+namespace App\Domain\Users\Repositories;
 
+use App\Contracts\Repository\Base\Repository;
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
-use App\Enums\User\UserStatus;
-use App\Factories\User\UserAllFactory;
-use App\Models\User;
-use App\Repositories\Repository;
+use App\Domain\Users\Enums\UserStatus;
+use App\Domain\Users\Factories\UserAllFactory;
+use App\Domain\Users\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserReadEloquentRepository extends Repository implements UserReadRepositoryInterface

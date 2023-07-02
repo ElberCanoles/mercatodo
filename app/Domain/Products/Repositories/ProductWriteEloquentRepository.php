@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Products\Repositories;
 
+use App\Contracts\Repository\Base\Repository;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Factories\ProductStoreImagesFactory;
 use App\Domain\Products\Factories\ProductUpdateImagesFactory;
 use App\Domain\Products\Models\Product;
-use App\Repositories\Repository;
 use App\Services\Utilities\SlugeableService;
 
 final class ProductWriteEloquentRepository extends Repository implements ProductWriteRepositoryInterface

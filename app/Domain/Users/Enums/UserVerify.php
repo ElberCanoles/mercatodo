@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Enums\User;
+namespace App\Domain\Users\Enums;
 
 use BenSampo\Enum\Enum;
 

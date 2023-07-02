@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Web\Auth;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Enums\User\RoleType;
+use App\Domain\Users\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
 use App\Services\Auth\EntryPoint;

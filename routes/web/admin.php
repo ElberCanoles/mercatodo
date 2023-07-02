@@ -3,10 +3,10 @@
 use App\Http\Controllers\Admin\Export\ExportController;
 use App\Http\Controllers\Admin\Import\ImportController;
 use App\Http\Controllers\Admin\Profile\ProfileController;
-use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Web\Admin\Product\ProductController;
 use App\Http\Controllers\Web\Admin\Product\ProductExportController;
 use App\Http\Controllers\Web\Admin\Product\ProductImportController;
+use App\Http\Controllers\Web\Admin\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.administrator']], function () {

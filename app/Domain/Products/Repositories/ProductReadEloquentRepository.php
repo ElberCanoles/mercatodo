@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Products\Repositories;
 
+use App\Contracts\Repository\Base\Repository;
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Factories\ProductAllFactory;
 use App\Domain\Products\Models\Product;
-use App\Repositories\Repository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductReadEloquentRepository extends Repository implements ProductReadRepositoryInterface

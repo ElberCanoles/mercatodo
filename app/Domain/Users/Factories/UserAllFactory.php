@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\User;
+namespace App\Domain\Users\Factories;
 
+use App\Domain\Users\Enums\UserVerify;
+use App\Domain\Users\Models\User;
 use App\Enums\General\SystemParams;
-use App\Enums\User\UserVerify;
-use App\Models\User;
 use App\Traits\Utilities\CheckAttribute;
 use Illuminate\Pagination\LengthAwarePaginator;
 

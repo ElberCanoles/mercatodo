@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Admin\Users;
 
-use App\Enums\User\RoleType;
-use App\Models\User;
+use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Admin\User;
+namespace App\Http\Controllers\Web\Admin\User;
 
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Enums\User\RoleType;
+use App\Domain\Users\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
 use App\Traits\Responses\MakeJsonResponse;

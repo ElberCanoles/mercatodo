@@ -3,8 +3,8 @@
 namespace Tests\Feature\Buyer\Profile;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Enums\User\RoleType;
-use App\Models\User;
+use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;
