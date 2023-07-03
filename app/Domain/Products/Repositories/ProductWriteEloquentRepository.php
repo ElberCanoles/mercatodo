@@ -9,7 +9,7 @@ use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Factories\ProductStoreImagesFactory;
 use App\Domain\Products\Factories\ProductUpdateImagesFactory;
 use App\Domain\Products\Models\Product;
-use App\Services\Utilities\SlugeableService;
+use App\Domain\Shared\Services\SlugeableService;
 
 final class ProductWriteEloquentRepository extends Repository implements ProductWriteRepositoryInterface
 {

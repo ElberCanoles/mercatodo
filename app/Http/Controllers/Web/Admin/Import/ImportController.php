@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Admin\Import;
 
 use App\Domain\Imports\Models\Import;
-use App\Enums\General\SystemParams;
+use App\Domain\Shared\Enums\SystemParams;
+use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
-use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

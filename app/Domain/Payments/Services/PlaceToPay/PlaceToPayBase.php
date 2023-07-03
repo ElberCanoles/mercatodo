@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Payments\PlaceToPay;
+namespace App\Domain\Payments\Services\PlaceToPay;
 
 use App\Domain\Carts\DataTransferObjects\StoreCheckoutData;
 use App\Domain\Orders\Models\Order;

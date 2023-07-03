@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Auth;
 
+use App\Domain\Users\Services\EntryPoint;
 use App\Http\Controllers\Controller;
-use App\Services\Auth\EntryPoint;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

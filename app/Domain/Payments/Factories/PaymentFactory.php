@@ -7,7 +7,7 @@ namespace App\Domain\Payments\Factories;
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\Contracts\Payment\PaymentGatewayInterface;
 use App\Domain\Payments\Enums\Provider;
-use App\Services\Payments\PlaceToPay\PlaceToPayService;
+use App\Domain\Payments\Services\PlaceToPay\PlaceToPayService;
 use Exception;
 
 class PaymentFactory implements PaymentFactoryInterface

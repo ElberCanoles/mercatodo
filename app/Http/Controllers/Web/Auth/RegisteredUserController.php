@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Auth;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
+use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Services\EntryPoint;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
-use App\Services\Auth\EntryPoint;
-use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

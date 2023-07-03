@@ -6,8 +6,8 @@ namespace App\Http\Controllers\Web\Buyer\Payment;
 
 use App\Domain\Orders\Models\Order;
 use App\Domain\Payments\Factories\PlaceToPay\PlaceToPayPaymentActionsFactory;
+use App\Domain\Payments\Services\PlaceToPay\PlaceToPayService;
 use App\Http\Controllers\Controller;
-use App\Services\Payments\PlaceToPay\PlaceToPayService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\URL;
 use Throwable;

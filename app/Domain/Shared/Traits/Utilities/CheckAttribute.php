@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traits\Utilities;
+namespace App\Domain\Shared\Traits\Utilities;
 
 trait CheckAttribute
 {

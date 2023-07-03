@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Traits\Responses;
+namespace App\Domain\Shared\Traits\Responses;
 
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

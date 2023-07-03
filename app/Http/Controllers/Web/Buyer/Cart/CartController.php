@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Buyer\Cart;
 
+use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
-use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

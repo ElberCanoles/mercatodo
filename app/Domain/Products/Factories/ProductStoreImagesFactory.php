@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Products\Factories;
 
 use App\Domain\Products\Models\Product;
-use App\Services\Utilities\FileService;
+use App\Domain\Shared\Services\FileService;
 use Throwable;
 
 class ProductStoreImagesFactory

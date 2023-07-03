@@ -6,11 +6,11 @@ namespace App\Http\Controllers\Web\Admin\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
+use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Domain\Users\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
-use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

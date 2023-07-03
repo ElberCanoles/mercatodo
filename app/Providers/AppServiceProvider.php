@@ -9,13 +9,13 @@ use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
+use App\Domain\Exports\Services\ProductCsvExporter;
+use App\Domain\Imports\Services\ProductCsvImporter;
 use App\Domain\Payments\Factories\PaymentFactory;
 use App\Domain\Products\Repositories\ProductReadEloquentRepository;
 use App\Domain\Products\Repositories\ProductWriteEloquentRepository;
 use App\Domain\Users\Repositories\UserReadEloquentRepository;
 use App\Domain\Users\Repositories\UserWriteEloquentRepository;
-use App\Services\Exports\ProductCsvExporter;
-use App\Services\Imports\ProductCsvImporter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

@@ -3,7 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Domain\Users\Models\User;
-use App\Services\Auth\EntryPoint;
+use App\Domain\Users\Services\EntryPoint;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;

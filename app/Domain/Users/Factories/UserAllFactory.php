@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Domain\Users\Factories;
 
+use App\Domain\Shared\Enums\SystemParams;
+use App\Domain\Shared\Traits\Utilities\CheckAttribute;
 use App\Domain\Users\Enums\UserVerify;
 use App\Domain\Users\Models\User;
-use App\Enums\General\SystemParams;
-use App\Traits\Utilities\CheckAttribute;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserAllFactory

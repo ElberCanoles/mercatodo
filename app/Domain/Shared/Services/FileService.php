@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Utilities;
+namespace App\Domain\Shared\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;

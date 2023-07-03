@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Imports;
+namespace App\Domain\Imports\Services;
 
 use App\Contracts\Imports\ProductImporterInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
@@ -11,7 +11,7 @@ use App\Domain\Imports\Models\Import;
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Factories\ProductImportValidatorFactory;
 use App\Domain\Products\Models\Product;
-use App\Services\Utilities\FileService;
+use App\Domain\Shared\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 

@@ -2,8 +2,8 @@
 
 namespace App\Contracts\Repository\Base;
 
-use App\Traits\Utilities\CheckAttribute;
-use App\Traits\Utilities\NormalizeData;
+use App\Domain\Shared\Traits\Utilities\CheckAttribute;
+use App\Domain\Shared\Traits\Utilities\NormalizeData;
 
 class Repository
 {

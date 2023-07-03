@@ -9,8 +9,8 @@ use App\Domain\Carts\Actions\DestroyItemAction;
 use App\Domain\Carts\Actions\LessItemAction;
 use App\Domain\Products\Exceptions\ProductExceptions;
 use App\Domain\Products\Models\Product;
+use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
-use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 

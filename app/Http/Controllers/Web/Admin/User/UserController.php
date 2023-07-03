@@ -6,10 +6,10 @@ namespace App\Http\Controllers\Web\Admin\User;
 
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
+use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Domain\Users\Enums\RoleType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
-use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;

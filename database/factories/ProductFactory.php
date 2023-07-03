@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Models\Product;
-use App\Traits\Utilities\NormalizeData;
+use App\Domain\Shared\Traits\Utilities\NormalizeData;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 

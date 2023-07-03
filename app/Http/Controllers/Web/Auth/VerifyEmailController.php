@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Auth;
 
+use App\Domain\Users\Services\EntryPoint;
 use App\Http\Controllers\Controller;
-use App\Services\Auth\EntryPoint;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Exports;
+namespace App\Domain\Exports\Services;
 
 use App\Contracts\Exports\ProductExporterInterface;
 use App\Domain\Exports\Actions\StoreExportAction;

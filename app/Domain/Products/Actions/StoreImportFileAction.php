@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Products\Actions;
 
-use App\Services\Utilities\FileService;
+use App\Domain\Shared\Services\FileService;
 use Illuminate\Http\UploadedFile;
 
 class StoreImportFileAction
