@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\User;
-use App\Services\Auth\EntryPoint;
+use App\Domain\Users\Models\User;
+use App\Domain\Users\Services\EntryPoint;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

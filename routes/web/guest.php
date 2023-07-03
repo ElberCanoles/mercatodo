@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Guest\Product\ProductController;
+use App\Http\Controllers\Web\Guest\Product\ProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('products', [ProductController::class, 'index'])->name('products.index');

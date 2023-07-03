@@ -3,10 +3,10 @@
 namespace Tests\Feature\Admin\Products;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
-use App\Enums\Product\ProductStatus;
-use App\Enums\User\RoleType;
-use App\Models\Product;
-use App\Models\User;
+use App\Domain\Products\Enums\ProductStatus;
+use App\Domain\Products\Models\Product;
+use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;

@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\Buyer\Cart\CartController;
-use App\Http\Controllers\Buyer\Checkout\CheckoutController;
-use App\Http\Controllers\Buyer\Checkout\CheckoutResultController;
-use App\Http\Controllers\Buyer\Order\OrderController;
-use App\Http\Controllers\Buyer\Order\OrderRetryPaymentController;
-use App\Http\Controllers\Buyer\Payment\PlaceToPayController;
-use App\Http\Controllers\Buyer\Product\ProductCartController;
-use App\Http\Controllers\Buyer\Profile\ProfileController;
+use App\Http\Controllers\Web\Buyer\Cart\CartController;
+use App\Http\Controllers\Web\Buyer\Checkout\CheckoutController;
+use App\Http\Controllers\Web\Buyer\Checkout\CheckoutResultController;
+use App\Http\Controllers\Web\Buyer\Order\OrderController;
+use App\Http\Controllers\Web\Buyer\Order\OrderRetryPaymentController;
+use App\Http\Controllers\Web\Buyer\Payment\PlaceToPayController;
+use App\Http\Controllers\Web\Buyer\Product\ProductCartController;
+use App\Http\Controllers\Web\Buyer\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']], function () {

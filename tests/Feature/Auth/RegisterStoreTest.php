@@ -3,7 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Services\Auth\EntryPoint;
+use App\Domain\Users\Services\EntryPoint;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery;

@@ -2,10 +2,10 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Enums\User\RoleType;
-use App\Enums\User\UserStatus;
-use App\Models\User;
-use App\Services\Auth\EntryPoint;
+use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\UserStatus;
+use App\Domain\Users\Models\User;
+use App\Domain\Users\Services\EntryPoint;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

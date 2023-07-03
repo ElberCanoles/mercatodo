@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\Product\ProductStatus;
+use App\Domain\Products\Enums\ProductStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;

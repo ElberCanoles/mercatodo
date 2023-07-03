@@ -12,7 +12,9 @@
 
 <header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="{{ route('home') }}">{{ auth()->user()->name }}</a>
-    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="navbar-nav">
@@ -33,18 +35,19 @@
             <div class="position-sticky pt-3">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('*.dashboard') ? 'active' : '' }}" aria-current="page" href="{{ App\Services\Auth\EntryPoint::resolveRedirectRoute() }}">
+                        <a class="nav-link {{ request()->routeIs('*.dashboard') ? 'active' : '' }}" aria-current="page"
+                           href="{{ \App\Domain\Users\Services\EntryPoint::resolveRedirectRoute() }}">
                             <span data-feather="home"></span>
                             Dashboard
                         </a>
                     </li>
 
-                    @role(App\Enums\User\RoleType::ADMINISTRATOR)
+                    @role(App\Domain\Users\Enums\RoleType::ADMINISTRATOR)
                         @include('layouts.partials.admin-menu-navigation')
                     @endrole
 
-                    @role(App\Enums\User\RoleType::BUYER)
-                       @include('layouts.partials.buyer-menu-navigation')
+                    @role(App\Domain\Users\Enums\RoleType::BUYER)
+                        @include('layouts.partials.buyer-menu-navigation')
                     @endrole
 
                 </ul>

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Enums\Product\ProductStatus;
-use App\Models\Product;
-use App\Traits\Utilities\NormalizeData;
+use App\Domain\Products\Enums\ProductStatus;
+use App\Domain\Products\Models\Product;
+use App\Domain\Shared\Traits\Utilities\NormalizeData;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 class ProductFactory extends Factory
 {
     use NormalizeData;
+
+    protected $model = Product::class;
 
     /**
      * Define the model's default state.
@@ -28,7 +30,7 @@ class ProductFactory extends Factory
 
         return [
             'name' => $this->normalizeStringUsingUcfirst($name),
-            'slug' => Str::slug(Str::random(6).' '.$name.' '.Str::random(4)),
+            'slug' => Str::slug(title: Str::random(length: 6).' '.$name.' '.Str::random(length: 4)),
             'description' => $this->normalizeStringUsingUcfirst(fake()->sentence()),
             'price' => rand(1000, 500000),
             'stock' => rand(10, 100),

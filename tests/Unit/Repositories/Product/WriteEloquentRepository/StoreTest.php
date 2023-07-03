@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Repositories\Product\WriteEloquentRepository;
 
-use App\Models\Product;
-use App\Repositories\Product\ProductWriteEloquentRepository;
+use App\Domain\Products\Models\Product;
+use App\Domain\Products\Repositories\ProductWriteEloquentRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
