@@ -3,8 +3,8 @@
 namespace App\Domain\Products\Models;
 
 use App\Domain\Carts\Models\Cart;
+use App\Domain\Images\Models\Image;
 use App\Domain\Orders\Models\Order;
-use App\Models\Image;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
