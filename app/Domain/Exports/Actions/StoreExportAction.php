@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Export;
+namespace App\Domain\Exports\Actions;
 
-use App\DataTransferObjects\Export\StoreExportData;
-use App\Models\Export;
+use App\Domain\Exports\DataTransferObjects\StoreExportData;
+use App\Domain\Exports\Models\Export;
 
 class StoreExportAction
 {

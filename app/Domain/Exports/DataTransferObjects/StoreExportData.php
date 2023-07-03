@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DataTransferObjects\Export;
+namespace App\Domain\Exports\DataTransferObjects;
 
 class StoreExportData
 {

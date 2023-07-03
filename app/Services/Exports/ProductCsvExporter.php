@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Services\Exports;
 
-use App\Actions\Export\StoreExportAction;
 use App\Contracts\Exports\ProductExporterInterface;
-use App\DataTransferObjects\Export\StoreExportData;
+use App\Domain\Exports\Actions\StoreExportAction;
+use App\Domain\Exports\DataTransferObjects\StoreExportData;
+use App\Domain\Exports\Enums\ExportModules;
 use App\Domain\Products\Models\Product;
-use App\Enums\Export\ExportModules;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;

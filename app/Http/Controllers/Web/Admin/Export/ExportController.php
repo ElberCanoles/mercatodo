@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Admin\Export;
 
+use App\Domain\Exports\Models\Export;
 use App\Enums\General\SystemParams;
 use App\Http\Controllers\Controller;
-use App\Models\Export;
 use App\Traits\Responses\MakeJsonResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
