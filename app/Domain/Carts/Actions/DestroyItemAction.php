@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Cart;
+namespace App\Domain\Carts\Actions;
 
+use App\Domain\Carts\Models\Cart;
 use App\Domain\Products\Models\Product;
-use App\Models\Cart;
 
 class DestroyItemAction
 {

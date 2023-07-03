@@ -2,8 +2,8 @@
 
 namespace App\Domain\Users\Models;
 
+use App\Domain\Carts\Models\Cart;
 use App\Domain\Orders\Models\Order;
-use App\Models\Cart;
 use App\Models\Payment;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;

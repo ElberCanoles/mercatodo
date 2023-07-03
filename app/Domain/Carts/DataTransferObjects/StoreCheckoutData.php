@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DataTransferObjects\Checkout;
+namespace App\Domain\Carts\DataTransferObjects;
 
 use Illuminate\Foundation\Http\FormRequest;
 

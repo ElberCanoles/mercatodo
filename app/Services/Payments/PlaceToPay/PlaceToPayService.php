@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Payments\PlaceToPay;
 
 use App\Contracts\Payment\PaymentGatewayInterface;
-use App\DataTransferObjects\Checkout\StoreCheckoutData;
+use App\Domain\Carts\DataTransferObjects\StoreCheckoutData;
 use App\Domain\Orders\Models\Order;
 use Exception;
 use Illuminate\Support\Facades\Http;

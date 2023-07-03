@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Buyer\Product;
 
-use App\Actions\Cart\AddItemAction;
-use App\Actions\Cart\DestroyItemAction;
-use App\Actions\Cart\LessItemAction;
+use App\Domain\Carts\Actions\AddItemAction;
+use App\Domain\Carts\Actions\DestroyItemAction;
+use App\Domain\Carts\Actions\LessItemAction;
 use App\Domain\Products\Exceptions\ProductExceptions;
 use App\Domain\Products\Models\Product;
 use App\Http\Controllers\Controller;

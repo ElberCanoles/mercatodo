@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Payments\PlaceToPay;
 
-use App\DataTransferObjects\Checkout\StoreCheckoutData;
+use App\Domain\Carts\DataTransferObjects\StoreCheckoutData;
 use App\Domain\Orders\Models\Order;
 use App\Enums\Payment\PlaceToPay\ApprovedStatuses;
 use App\Enums\Payment\PlaceToPay\PendingStatuses;
