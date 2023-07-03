@@ -2,12 +2,12 @@
 
 namespace App\Domain\Users\Models;
 
+use App\Domain\Orders\Models\Order;
 use App\Models\Cart;
-use App\Models\Order;
 use App\Models\Payment;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;

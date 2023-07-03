@@ -2,9 +2,9 @@
 
 namespace App\Domain\Products\Models;
 
+use App\Domain\Orders\Models\Order;
 use App\Models\Cart;
 use App\Models\Image;
-use App\Models\Order;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

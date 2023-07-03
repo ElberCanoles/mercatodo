@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Services\Payments\PlaceToPay;
 
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
+use App\Domain\Orders\Models\Order;
 use App\Enums\Payment\PlaceToPay\ApprovedStatuses;
 use App\Enums\Payment\PlaceToPay\PendingStatuses;
 use App\Enums\Payment\PlaceToPay\RejectedStatuses;
-use App\Models\Order;
 use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class PlaceToPayBase
 {

@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
+use App\Domain\Orders\Models\Order;
+use App\Domain\Orders\Observers\OrderObserver;
 use App\Domain\Users\Models\User;
 use App\Domain\Users\Observers\UserObserver;
-use App\Models\Order;
-use App\Observers\OrderObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

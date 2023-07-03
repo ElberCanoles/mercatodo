@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Contracts\Payment;
 
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
-use App\Models\Order;
+use App\Domain\Orders\Models\Order;
 
 interface PaymentGatewayInterface
 {

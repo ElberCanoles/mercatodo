@@ -6,7 +6,7 @@ namespace App\Services\Payments\PlaceToPay;
 
 use App\Contracts\Payment\PaymentGatewayInterface;
 use App\DataTransferObjects\Checkout\StoreCheckoutData;
-use App\Models\Order;
+use App\Domain\Orders\Models\Order;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Throwable;

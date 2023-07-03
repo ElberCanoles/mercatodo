@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Admin\Export\ExportController;
-use App\Http\Controllers\Admin\Import\ImportController;
-use App\Http\Controllers\Admin\Profile\ProfileController;
+use App\Http\Controllers\Web\Admin\Export\ExportController;
+use App\Http\Controllers\Web\Admin\Import\ImportController;
 use App\Http\Controllers\Web\Admin\Product\ProductController;
 use App\Http\Controllers\Web\Admin\Product\ProductExportController;
 use App\Http\Controllers\Web\Admin\Product\ProductImportController;
+use App\Http\Controllers\Web\Admin\Profile\ProfileController;
 use App\Http\Controllers\Web\Admin\User\UserController;
 use Illuminate\Support\Facades\Route;
 

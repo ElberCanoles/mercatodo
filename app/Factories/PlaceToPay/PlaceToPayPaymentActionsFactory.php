@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Factories\PlaceToPay;
 
-use App\Models\Order;
+use App\Domain\Orders\Models\Order;
 use App\Services\Payments\PlaceToPay\PlaceToPayService;
 
 class PlaceToPayPaymentActionsFactory

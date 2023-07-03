@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Domain\Orders\Models\Order;
 use App\Enums\Payment\PaymentStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
