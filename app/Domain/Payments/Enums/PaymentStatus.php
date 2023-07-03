@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Enums\Payment;
+namespace App\Domain\Payments\Enums;
 
 use BenSampo\Enum\Enum;
 

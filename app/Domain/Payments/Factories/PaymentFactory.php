@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\Payment;
+namespace App\Domain\Payments\Factories;
 
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\Contracts\Payment\PaymentGatewayInterface;
-use App\Enums\Payment\Provider;
+use App\Domain\Payments\Enums\Provider;
 use App\Services\Payments\PlaceToPay\PlaceToPayService;
 use Exception;
 

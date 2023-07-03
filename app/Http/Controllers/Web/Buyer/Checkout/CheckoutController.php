@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Buyer\Checkout;
 
-use App\Actions\Payment\StorePaymentAction;
 use App\Contracts\Payment\PaymentFactoryInterface;
 use App\Domain\Carts\DataTransferObjects\StoreCheckoutData;
 use App\Domain\Orders\Actions\StoreOrderAction;
 use App\Domain\Orders\Models\Order;
+use App\Domain\Payments\Actions\StorePaymentAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\StoreRequest;
 use App\Traits\Responses\MakeJsonResponse;

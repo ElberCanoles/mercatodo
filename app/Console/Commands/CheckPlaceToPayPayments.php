@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\Payment\PaymentStatus;
-use App\Enums\Payment\Provider;
-use App\Factories\PlaceToPay\PlaceToPayPaymentActionsFactory;
-use App\Models\Payment;
+use App\Domain\Payments\Enums\PaymentStatus;
+use App\Domain\Payments\Enums\Provider;
+use App\Domain\Payments\Factories\PlaceToPay\PlaceToPayPaymentActionsFactory;
+use App\Domain\Payments\Models\Payment;
 use App\Services\Payments\PlaceToPay\PlaceToPayService;
 use Illuminate\Console\Command;
 use Throwable;

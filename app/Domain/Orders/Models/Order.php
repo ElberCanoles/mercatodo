@@ -4,9 +4,9 @@ namespace App\Domain\Orders\Models;
 
 use App\Domain\Orders\Enums\OrderStatus;
 use App\Domain\Orders\QueryBuilders\OrderQueryBuilder;
+use App\Domain\Payments\Models\Payment;
 use App\Domain\Products\Models\Product;
 use App\Domain\Users\Models\User;
-use App\Models\Payment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

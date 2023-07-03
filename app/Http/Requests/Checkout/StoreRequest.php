@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Checkout;
 
-use App\Enums\Payment\Provider;
-use Illuminate\Validation\Rule;
+use App\Domain\Payments\Enums\Provider;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {

@@ -6,9 +6,9 @@ namespace App\Services\Payments\PlaceToPay;
 
 use App\Domain\Carts\DataTransferObjects\StoreCheckoutData;
 use App\Domain\Orders\Models\Order;
-use App\Enums\Payment\PlaceToPay\ApprovedStatuses;
-use App\Enums\Payment\PlaceToPay\PendingStatuses;
-use App\Enums\Payment\PlaceToPay\RejectedStatuses;
+use App\Domain\Payments\Enums\PlaceToPay\ApprovedStatuses;
+use App\Domain\Payments\Enums\PlaceToPay\PendingStatuses;
+use App\Domain\Payments\Enums\PlaceToPay\RejectedStatuses;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;

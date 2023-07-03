@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\Payments\Models;
 
 use App\Domain\Orders\Models\Order;
-use App\Enums\Payment\PaymentStatus;
+use App\Domain\Payments\Enums\PaymentStatus;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Orders\Actions;
 
 use App\Domain\Orders\Models\Order;
-use App\Enums\Payment\PaymentStatus;
+use App\Domain\Payments\Enums\PaymentStatus;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 

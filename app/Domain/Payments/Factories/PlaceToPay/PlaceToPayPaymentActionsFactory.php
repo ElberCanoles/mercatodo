@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Factories\PlaceToPay;
+namespace App\Domain\Payments\Factories\PlaceToPay;
 
 use App\Domain\Orders\Models\Order;
 use App\Services\Payments\PlaceToPay\PlaceToPayService;

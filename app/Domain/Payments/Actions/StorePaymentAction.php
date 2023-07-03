@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Actions\Payment;
+namespace App\Domain\Payments\Actions;
 
 use App\Domain\Orders\Models\Order;
-use App\Models\Payment;
+use App\Domain\Payments\Models\Payment;
 
 class StorePaymentAction
 {
