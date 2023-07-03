@@ -42,12 +42,12 @@
                         </a>
                     </li>
 
-                    @role(App\Enums\User\RoleType::ADMINISTRATOR)
-                    @include('layouts.partials.admin-menu-navigation')
+                    @role(App\Domain\Users\Enums\RoleType::ADMINISTRATOR)
+                        @include('layouts.partials.admin-menu-navigation')
                     @endrole
 
-                    @role(App\Enums\User\RoleType::BUYER)
-                    @include('layouts.partials.buyer-menu-navigation')
+                    @role(App\Domain\Users\Enums\RoleType::BUYER)
+                        @include('layouts.partials.buyer-menu-navigation')
                     @endrole
 
                 </ul>
