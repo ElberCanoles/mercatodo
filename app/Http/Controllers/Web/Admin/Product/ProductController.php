@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Web\Admin\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
+use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Domain\Users\Enums\RoleType;
 use App\Http\Controllers\Controller;
@@ -59,17 +60,17 @@ final class ProductController extends Controller
         return $this->showMessage(message: trans(key: 'server.record_created'));
     }
 
-    public function edit(int $id): View
+    public function edit(Product $product): View
     {
         return view(view: 'admin.products.crud.edit', data: [
-            'product' => $this->readRepository->find(key: 'id', value: $id),
+            'product' => $this->readRepository->find(key: 'id', value: $product->id),
             'statuses' => $this->readRepository->allStatuses(),
         ]);
     }
 
-    public function update(UpdateRequest $request, int $id): JsonResponse
+    public function update(UpdateRequest $request, Product $product): JsonResponse
     {
-        if (!$this->writeRepository->update(data: $request->validated(), id: $id)) {
+        if (!$this->writeRepository->update(data: $request->validated(), id: $product->id)) {
             return $this->errorResponseWithBag(
                 collection: ['server' => [trans(key: 'server.internal_error')]]
             );
@@ -78,9 +79,9 @@ final class ProductController extends Controller
         return $this->showMessage(message: trans(key: 'server.record_updated'));
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(Product $product): JsonResponse
     {
-        if (!$this->writeRepository->delete(id: $id)) {
+        if (!$this->writeRepository->delete(id: $product->id)) {
             return $this->errorResponse(
                 message: trans(key: 'server.internal_error')
             );
