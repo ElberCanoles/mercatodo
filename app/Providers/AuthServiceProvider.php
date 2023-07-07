@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Domain\Orders\Models\Order;
+use App\Domain\Orders\Policies\OrderPolicy;
 use App\Domain\Products\Models\Product;
 use App\Domain\Products\Policies\ProductPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -17,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Product::class => ProductPolicy::class
+        Product::class => ProductPolicy::class,
+        Order::class => OrderPolicy::class
     ];
 
     /**

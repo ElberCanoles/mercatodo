@@ -4,7 +4,9 @@ namespace Tests\Feature\Admin\Products;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Models\Product;
+use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
+use App\Domain\Users\Models\Permission;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,6 +26,7 @@ class ProductDeleteTest extends TestCase
         $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create();
         $this->admin->assignRole(role: Roles::ADMINISTRATOR);
+        $this->admin->givePermissionTo(permission: Permission::create(['name' => Permissions::PRODUCTS_DELETE]));
         $this->product = Product::factory()->create();
     }
 

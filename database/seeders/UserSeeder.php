@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\Permission;
 use App\Domain\Users\Models\User;
@@ -29,6 +30,8 @@ class UserSeeder extends Seeder
 
         User::factory()->count(count: 1000)->create()->each(function ($user) {
             $user->assignRole(Roles::BUYER);
+            $user->givePermissionTo(Permissions::ORDERS_INDEX);
+            $user->givePermissionTo(Permissions::ORDERS_SHOW);
         });
     }
 }
