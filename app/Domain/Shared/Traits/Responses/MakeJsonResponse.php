@@ -14,7 +14,7 @@ trait MakeJsonResponse
      */
     protected function successResponse(mixed $data, int $code = Response::HTTP_OK): JsonResponse
     {
-        return response()->json($data, $code);
+        return response()->json(data: $data, status: $code);
     }
 
     /**
@@ -22,7 +22,7 @@ trait MakeJsonResponse
      */
     protected function errorResponse(string $message, int $code = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
     {
-        return response()->json(['error' => $message, 'code' => $code], $code);
+        return response()->json(data: ['message' => $message], status: $code);
     }
 
     /**
@@ -30,7 +30,7 @@ trait MakeJsonResponse
      */
     protected function errorResponseWithBag(array $collection, int $code = Response::HTTP_INTERNAL_SERVER_ERROR): JsonResponse
     {
-        return response()->json(['errors' => $collection, 'code' => $code], $code);
+        return response()->json(data: ['errors' => $collection], status: $code);
     }
 
     /**

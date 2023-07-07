@@ -43,9 +43,7 @@ class ProductController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         if (!$this->writeRepository->store($request->validated())) {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.internal_error')]]
-            );
+            return $this->errorResponse(message: trans(key: 'server.internal_error'));
         }
 
         return $this->showMessage(message: trans(key: 'server.record_created'), code: Response::HTTP_CREATED);
@@ -59,9 +57,7 @@ class ProductController extends Controller
     public function update(UpdateRequest $request, Product $product): JsonResponse
     {
         if (!$this->writeRepository->update(data: $request->validated(), id: $product->id)) {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.internal_error')]]
-            );
+            return $this->errorResponse(message: trans(key: 'server.internal_error'));
         }
 
         return $this->showMessage(message: trans(key: 'server.record_updated'));
@@ -70,9 +66,7 @@ class ProductController extends Controller
     public function destroy(Product $product): JsonResponse
     {
         if (!$this->writeRepository->delete(id: $product->id)) {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.internal_error')]]
-            );
+            return $this->errorResponse(message: trans(key: 'server.internal_error'));
         }
 
         return $this->showMessage(message: trans(key: 'server.record_deleted'));
