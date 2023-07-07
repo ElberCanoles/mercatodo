@@ -5,7 +5,7 @@ namespace Tests\Feature\Admin\Products;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Models\Product;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,7 +25,8 @@ class ProductUpdateTest extends TestCase
     {
         parent::setUp();
         $this->seed(class: RoleSeeder::class);
-        $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
+        $this->admin = User::factory()->create();
+        $this->admin->assignRole(role: Roles::ADMINISTRATOR);
         $this->product = Product::factory()->create(['price' => 10, 'stock' => 10, 'status' => ProductStatus::AVAILABLE]);
 
         $imagePath = tempnam(sys_get_temp_dir(), prefix: 'images');

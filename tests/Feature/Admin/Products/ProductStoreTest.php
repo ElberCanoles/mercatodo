@@ -4,7 +4,7 @@ namespace Tests\Feature\Admin\Products;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Models\Product;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -23,7 +23,8 @@ class ProductStoreTest extends TestCase
     {
         parent::setUp();
         $this->seed(class: RoleSeeder::class);
-        $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
+        $this->admin = User::factory()->create();
+        $this->admin->assignRole(role: Roles::ADMINISTRATOR);
 
         $imagePath = tempnam(directory: sys_get_temp_dir(), prefix: 'images');
         $imageContent = file_get_contents(filename: 'https://via.placeholder.com/150');

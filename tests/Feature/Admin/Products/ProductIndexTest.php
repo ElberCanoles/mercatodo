@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin\Products;
 
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,9 +18,9 @@ class ProductIndexTest extends TestCase
     {
         parent::setUp();
         $this->seed(class: RoleSeeder::class);
-        $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
+        $this->admin = User::factory()->create();
+        $this->admin->assignRole(role: Roles::ADMINISTRATOR);
     }
-
 
     public function test_admin_can_access_to_products_list_screen(): void
     {

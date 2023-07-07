@@ -3,7 +3,7 @@
 namespace Tests\Feature\Admin\Users;
 
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,8 +20,10 @@ class UserEditTest extends TestCase
     {
         parent::setUp();
         $this->seed(class: RoleSeeder::class);
-        $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
-        $this->buyer = User::factory()->create()->assignRole(RoleType::BUYER);
+        $this->admin = User::factory()->create();
+        $this->admin->assignRole(role: Roles::ADMINISTRATOR);
+        $this->buyer = User::factory()->create();
+        $this->buyer->assignRole(role: Roles::BUYER);
     }
 
     public function test_admin_can_access_to_users_edit_screen(): void

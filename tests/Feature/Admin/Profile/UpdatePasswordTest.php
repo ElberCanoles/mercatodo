@@ -3,7 +3,7 @@
 namespace Tests\Feature\Admin\Profile;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -22,7 +22,8 @@ class UpdatePasswordTest extends TestCase
 
     public function test_admin_password_can_be_updated(): void
     {
-        $user = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
+        $user = User::factory()->create();
+        $user->assignRole(role: Roles::ADMINISTRATOR);
 
         $response = $this
             ->actingAs($user)
@@ -38,7 +39,8 @@ class UpdatePasswordTest extends TestCase
 
     public function test_admin_password_can_not_be_updated_when_internal_error(): void
     {
-        $user = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
+        $user = User::factory()->create();
+        $user->assignRole(role: Roles::ADMINISTRATOR);
 
         $this->mock(abstract: UserWriteRepositoryInterface::class, mock: function ($mock) {
             $mock->shouldReceive('updatePassword')->andReturn(false);

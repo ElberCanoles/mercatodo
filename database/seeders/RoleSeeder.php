@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
+use App\Domain\Users\Models\Role;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -13,7 +13,7 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        Role::create(['name' => RoleType::ADMINISTRATOR]);
-        Role::create(['name' => RoleType::BUYER]);
+        Role::create(['name' => Roles::ADMINISTRATOR]);
+        Role::create(['name' => Roles::BUYER]);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -21,7 +21,8 @@ class LogoutTest extends TestCase
 
     public function test_authenticated_admin_users_can_logout(): void
     {
-        $user = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
+        $user = User::factory()->create();
+        $user->assignRole(role: Roles::ADMINISTRATOR);
 
         Auth::login($user);
 
@@ -34,7 +35,8 @@ class LogoutTest extends TestCase
 
     public function test_authenticated_buyer_users_can_logout(): void
     {
-        $user = User::factory()->create()->assignRole(RoleType::BUYER);
+        $user = User::factory()->create();
+        $user->assignRole(role: Roles::BUYER);
 
         Auth::login($user);
 

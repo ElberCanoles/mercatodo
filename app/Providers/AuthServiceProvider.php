@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Domain\Products\Models\Product;
+use App\Domain\Products\Policies\ProductPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -15,7 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Product::class => ProductPolicy::class
     ];
 
     /**
@@ -23,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerPolicies();
+
         VerifyEmail::toMailUsing(function ($notifiable, $verificationUrl) {
             return (new MailMessage())
                 ->subject('Verifición de cuenta')

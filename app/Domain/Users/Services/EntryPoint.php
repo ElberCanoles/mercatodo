@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Users\Services;
 
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 
 class EntryPoint
 {
@@ -13,15 +13,15 @@ class EntryPoint
      */
     public static function resolveRedirectRoute(): string
     {
-        $response = route('login');
+        $response = route(name: 'login');
 
         if (auth()->check()) {
-            if (request()->user()->hasRole(RoleType::ADMINISTRATOR)) {
-                $response = route('admin.dashboard');
+            if (request()->user()->roles->contains(key: 'name', operator: '=', value: Roles::ADMINISTRATOR->value)) {
+                $response = route(name: 'admin.dashboard');
             }
 
-            if (request()->user()->hasRole(RoleType::BUYER)) {
-                $response = route('buyer.dashboard');
+            if (request()->user()->roles->contains(key: 'name', operator: '=', value: Roles::BUYER->value)) {
+                $response = route(name: 'buyer.dashboard');
             }
         }
 

@@ -42,6 +42,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -79,7 +83,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | You may specify multiple password reset configurations if you have more
-    | than one user table or model in the application and you want to have
+    | than one user table or model in the application you want to have
     | separate password reset settings based on the specific user types.
     |
     | The expiry time is the number of minutes that each reset token will be
