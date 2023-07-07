@@ -60,7 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return UserFactory::new();
     }
 
-    public function roles():BelongsToMany
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(related: Role::class);
     }
@@ -73,7 +73,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function assignRole(Role|Roles $role): void
     {
         if (!$role instanceof Role) {
-            $role = Role::where('name', $role->value)->first(['id']);
+            $role = Role::query()->where(column: 'name', operator: '=', value: $role->value)->first(['id']);
         }
 
         $this->roles()->attach($role);
@@ -82,7 +82,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function givePermissionTo(Permission|Permissions $permission): void
     {
         if (!$permission instanceof Permission) {
-            $permission = Permission::where('name', $permission->value)->first(['id']);
+            $permission = Permission::query()->where(column: 'name', operator: '=', value: $permission->value)->first(['id']);
         }
 
         $this->permissions()->attach($permission);

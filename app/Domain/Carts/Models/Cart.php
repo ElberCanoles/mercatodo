@@ -4,6 +4,9 @@ namespace App\Domain\Carts\Models;
 
 use App\Domain\Products\Models\Product;
 use App\Domain\Users\Models\User;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +14,10 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
  * @property int $id
+ * @property int $user_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property-read Collection|Builder|Product[]|null $products
  */
 class Cart extends Model
 {
@@ -20,7 +27,7 @@ class Cart extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(related: User::class);
     }
 
     public function products(): MorphToMany

@@ -46,7 +46,7 @@ class CheckoutController extends Controller
         try {
             $data = StoreCheckoutData::fromRequest($request);
 
-            $order = Order::find($data->orderId);
+            $order = Order::query()->find($data->orderId);
 
             if (!isset($order)) {
                 $order = (new StoreOrderAction())->execute();

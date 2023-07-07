@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property array $data_provider
  * @property string status
  * @property Carbon $payed_at
+ *
+ * @method static Payment create(array $attributes = [])
  */
 class Payment extends Model
 {

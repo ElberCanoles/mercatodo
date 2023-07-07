@@ -21,7 +21,7 @@ class PlaceToPayController extends Controller
 
     public function processResponse(): RedirectResponse
     {
-        $order = Order::findOrFail(request()->input(key: 'order'));
+        $order = Order::query()->findOrFail(request()->input(key: 'order'));
 
         try {
             $status = $this->placeToPayService->getSession($order->payments()->latest()->first()->data_provider['requestId'])['status']['status'];
@@ -40,7 +40,7 @@ class PlaceToPayController extends Controller
 
     public function abortSession(): RedirectResponse
     {
-        $order = Order::findOrFail(request()->input(key: 'order'));
+        $order = Order::query()->findOrFail(request()->input(key: 'order'));
 
         $order->cancelled();
         $order->payments()->latest()->first()->rejected();

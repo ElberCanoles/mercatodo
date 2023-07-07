@@ -7,6 +7,8 @@ use App\Domain\Orders\QueryBuilders\OrderQueryBuilder;
 use App\Domain\Payments\Models\Payment;
 use App\Domain\Products\Models\Product;
 use App\Domain\Users\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +20,9 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property int $user_id
  * @property float $amount
  * @property string $status
+ * @property-read Collection|Builder|Product[]|null $products
+ * @property-read Collection|Builder|Payment[]|null $payments
+ *
  *
  * @method static OrderQueryBuilder query()
  */
