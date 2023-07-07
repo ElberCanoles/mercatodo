@@ -1,9 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-declare(strict_types=1);
-
-namespace App\Jobs\Product;
-
+namespace App\Domain\Products\Jobs;
 
 use App\Contracts\Exports\ProductExporterInterface;
 use Illuminate\Bus\Queueable;

@@ -42,13 +42,13 @@
                         </a>
                     </li>
 
-                    @role(App\Domain\Users\Enums\RoleType::ADMINISTRATOR)
+                    @if(auth()->user()->roles->contains('name', App\Domain\Users\Enums\Roles::ADMINISTRATOR->value))
                         @include('layouts.partials.admin-menu-navigation')
-                    @endrole
+                    @endif
 
-                    @role(App\Domain\Users\Enums\RoleType::BUYER)
+                    @if(auth()->user()->roles->contains('name', App\Domain\Users\Enums\Roles::BUYER->value))
                         @include('layouts.partials.buyer-menu-navigation')
-                    @endrole
+                    @endif
 
                 </ul>
             </div>

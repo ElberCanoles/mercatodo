@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Users\Enums\Roles;
 use App\Http\Controllers\Web\Admin\Export\ExportController;
 use App\Http\Controllers\Web\Admin\Import\ImportController;
 use App\Http\Controllers\Web\Admin\Product\ProductController;
@@ -9,7 +10,7 @@ use App\Http\Controllers\Web\Admin\Profile\ProfileController;
 use App\Http\Controllers\Web\Admin\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.administrator']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'active', 'role:' . Roles::ADMINISTRATOR->value]], function () {
     Route::prefix('admin')->group(function () {
         Route::name('admin.')->group(function () {
 

@@ -6,7 +6,8 @@ namespace App\Http\Controllers\Web\Auth;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Permissions;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Services\EntryPoint;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
@@ -29,7 +30,7 @@ final class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        return view(view: 'auth.register');
     }
 
     /**
@@ -38,7 +39,9 @@ final class RegisteredUserController extends Controller
     public function store(StoreRequest $request): RedirectResponse|JsonResponse
     {
         if ($user = $this->writeRepository->store($request->validated())) {
-            $user->assignRole(RoleType::BUYER);
+            $user->assignRole(Roles::BUYER);
+            $user->givePermissionTo(Permissions::ORDERS_INDEX);
+            $user->givePermissionTo(Permissions::ORDERS_SHOW);
 
             event(new Registered($user));
 
@@ -46,7 +49,7 @@ final class RegisteredUserController extends Controller
 
             return redirect(EntryPoint::resolveRedirectRoute());
         } else {
-            return $this->errorResponseWithBag(collection: ['server' => [trans('server.internal_error')]]);
+            return $this->errorResponseWithBag(collection: ['server' => [trans(key: 'server.internal_error')]]);
         }
     }
 }

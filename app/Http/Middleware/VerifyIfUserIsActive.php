@@ -13,14 +13,16 @@ class VerifyIfUserIsActive
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Request $request
+     * @param Closure(Request): (Response) $next
+     * @return Response
      */
     public function handle(Request $request, Closure $next): Response
     {
         $user = Auth::user();
 
         if ($user->status === UserStatus::INACTIVE) {
-            abort(Response::HTTP_FORBIDDEN);
+            abort(code: Response::HTTP_FORBIDDEN);
         }
 
         return $next($request);

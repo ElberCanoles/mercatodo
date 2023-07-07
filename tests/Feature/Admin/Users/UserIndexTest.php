@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin\Users;
 
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,7 +18,8 @@ class UserIndexTest extends TestCase
     {
         parent::setUp();
         $this->seed(class: RoleSeeder::class);
-        $this->user = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
+        $this->user = User::factory()->create();
+        $this->user->assignRole(role: Roles::ADMINISTRATOR);
     }
 
 

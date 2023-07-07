@@ -3,10 +3,11 @@
 namespace Tests\Feature\Buyer\Profile;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use JsonException;
 use Mockery;
 use Tests\TestCase;
 
@@ -23,8 +24,9 @@ class UpdateTest extends TestCase
     public function test_buyer_profile_page_is_displayed(): void
     {
         $user = User::factory()
-            ->create()
-            ->assignRole(RoleType::BUYER);
+            ->create();
+
+        $user->assignRole(role: Roles::BUYER);
 
         $response = $this
             ->actingAs($user)
@@ -36,8 +38,9 @@ class UpdateTest extends TestCase
     public function test_buyer_profile_information_can_be_updated(): void
     {
         $user = User::factory()
-            ->create()
-            ->assignRole(RoleType::BUYER);
+            ->create();
+
+        $user->assignRole(role: Roles::BUYER);
 
         $response = $this
             ->actingAs($user)
@@ -61,8 +64,9 @@ class UpdateTest extends TestCase
     public function test_buyer_profile_can_not_update_when_internal_error(): void
     {
         $user = User::factory()
-            ->create()
-            ->assignRole(RoleType::BUYER);
+            ->create();
+
+        $user->assignRole(role: Roles::BUYER);
 
         $this->mock(abstract: UserWriteRepositoryInterface::class, mock: function ($mock) {
             $mock->shouldReceive('update')->andReturn(false);
@@ -84,8 +88,9 @@ class UpdateTest extends TestCase
     public function test_buyer_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
     {
         $user = User::factory()
-            ->create()
-            ->assignRole(RoleType::BUYER);
+            ->create();
+
+        $user->assignRole(role: Roles::BUYER);
 
         $response = $this
             ->actingAs($user)

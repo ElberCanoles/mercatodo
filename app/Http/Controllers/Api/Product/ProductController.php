@@ -6,12 +6,12 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Models\Product;
+use App\Domain\Products\Resources\ProductResource;
 use App\Domain\Shared\Enums\SystemParams;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
-use App\Http\Resources\Api\ProductResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -25,6 +25,7 @@ class ProductController extends Controller
         private readonly ProductWriteRepositoryInterface $writeRepository
     )
     {
+        $this->authorizeResource(model: Product::class, parameter: 'product');
     }
 
     public function index(): AnonymousResourceCollection
@@ -42,63 +43,30 @@ class ProductController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         if (!$this->writeRepository->store($request->validated())) {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.internal_error')]]
-            );
+            return $this->errorResponse(message: trans(key: 'server.internal_error'));
         }
 
         return $this->showMessage(message: trans(key: 'server.record_created'), code: Response::HTTP_CREATED);
     }
 
-    public function show(int $id): ProductResource|JsonResponse
+    public function show(Product $product): ProductResource|JsonResponse
     {
-        $product = Product::find($id);
-
-        if ($product) {
-            return ProductResource::make($product);
-        }
-
-        return $this->errorResponseWithBag(
-            collection: ['server' => [trans(key: 'server.not_found')]],
-            code: Response::HTTP_NOT_FOUND
-        );
+        return ProductResource::make($product);
     }
 
-    public function update(UpdateRequest $request, int $id): JsonResponse
+    public function update(UpdateRequest $request, Product $product): JsonResponse
     {
-        $product = Product::find($id);
-
-        if ($product) {
-            if (!$this->writeRepository->update(data: $request->validated(), id: $id)) {
-                return $this->errorResponseWithBag(
-                    collection: ['server' => [trans(key: 'server.internal_error')]]
-                );
-            }
-        } else {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.not_found')]],
-                code: Response::HTTP_NOT_FOUND
-            );
+        if (!$this->writeRepository->update(data: $request->validated(), id: $product->id)) {
+            return $this->errorResponse(message: trans(key: 'server.internal_error'));
         }
 
         return $this->showMessage(message: trans(key: 'server.record_updated'));
     }
 
-    public function destroy(int $id): JsonResponse
+    public function destroy(Product $product): JsonResponse
     {
-        $product = Product::find($id);
-
-        if ($product) {
-            if (!$this->writeRepository->delete(id: $id)) {
-                return $this->errorResponseWithBag(
-                    collection: ['server' => [trans(key: 'server.internal_error')]]
-                );
-            }
-        } else {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.not_found')]],
-                code: Response::HTTP_NOT_FOUND
-            );
+        if (!$this->writeRepository->delete(id: $product->id)) {
+            return $this->errorResponse(message: trans(key: 'server.internal_error'));
         }
 
         return $this->showMessage(message: trans(key: 'server.record_deleted'));

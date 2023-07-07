@@ -8,7 +8,7 @@ use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
@@ -24,6 +24,7 @@ final class ProductController extends Controller
         private readonly ProductWriteRepositoryInterface $writeRepository,
         private readonly ProductReadRepositoryInterface  $readRepository
     ) {
+        $this->authorizeResource(model: Product::class, parameter: 'product');
     }
 
     public function index(Request $request): JsonResponse|View
@@ -37,7 +38,7 @@ final class ProductController extends Controller
         return $this->successResponse(
             data: $this->readRepository->all(
                 queryParams: $request->all(),
-                roleTarget: RoleType::ADMINISTRATOR
+                roleTarget: Roles::ADMINISTRATOR
             )
         );
     }

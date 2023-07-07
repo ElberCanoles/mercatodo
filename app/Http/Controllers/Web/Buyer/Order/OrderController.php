@@ -15,6 +15,11 @@ class OrderController extends Controller
 {
     use MakeJsonResponse;
 
+    public function __construct()
+    {
+        $this->authorizeResource(model: Order::class, parameter: 'order');
+    }
+
     public function index(): View|JsonResponse
     {
         if (!request()->wantsJson()) {

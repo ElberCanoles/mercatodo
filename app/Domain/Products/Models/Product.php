@@ -28,6 +28,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property-read Collection|Builder|Image[]|null $images
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ *
+ * @method static Product|null find($id, $columns = ['*'])
  */
 class Product extends Model
 {

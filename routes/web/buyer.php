@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Users\Enums\Roles;
 use App\Http\Controllers\Web\Buyer\Cart\CartController;
 use App\Http\Controllers\Web\Buyer\Checkout\CheckoutController;
 use App\Http\Controllers\Web\Buyer\Checkout\CheckoutResultController;
@@ -10,7 +11,7 @@ use App\Http\Controllers\Web\Buyer\Product\ProductCartController;
 use App\Http\Controllers\Web\Buyer\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['auth', 'verified', 'active', 'role:role.buyer']], function () {
+Route::group(['middleware' => ['auth', 'verified', 'active', 'role:' . Roles::BUYER->value]], function () {
     Route::prefix('buyer')->group(function () {
         Route::name('buyer.')->group(function () {
 

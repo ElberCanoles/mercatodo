@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Web\Admin\User;
 use App\Contracts\Repository\User\UserReadRepositoryInterface;
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
 use Illuminate\Http\JsonResponse;
@@ -33,7 +33,7 @@ final class UserController extends Controller
         return $this->successResponse(
             data: $this->readRepository->all(
                 queryParams: $request->all(),
-                role: RoleType::BUYER
+                role: Roles::BUYER->value
             )
         );
     }

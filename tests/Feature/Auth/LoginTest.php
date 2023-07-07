@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Enums\UserStatus;
 use App\Domain\Users\Models\User;
 use App\Domain\Users\Services\EntryPoint;
@@ -22,7 +22,8 @@ class LoginTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create()->assignRole(RoleType::BUYER);
+        $user = User::factory()->create();
+        $user->assignRole(role: Roles::BUYER);
 
         $response = $this->post('/login', [
             'email' => $user->email,

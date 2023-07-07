@@ -7,7 +7,7 @@ namespace App\Domain\Products\Factories;
 use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Enums\SystemParams;
 use App\Domain\Shared\Traits\Utilities\CheckAttribute;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -32,7 +32,7 @@ final class ProductAllFactory
     public function make(): LengthAwarePaginator
     {
         return match ($this->arguments['roleTarget'] ?? null) {
-            RoleType::ADMINISTRATOR => $this->buildQueryForAdmin(),
+            Roles::ADMINISTRATOR => $this->buildQueryForAdmin(),
             default => $this->buildQueryForBuyer()
         };
     }

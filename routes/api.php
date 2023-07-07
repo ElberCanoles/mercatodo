@@ -10,6 +10,12 @@ Route::name('api.')->group(function () {
 
     Route::middleware('auth:sanctum')->prefix('v1')->group(function (){
 
-        Route::resource('products', ProductController::class)->except(['create', 'edit']);
+        Route::get('user', function (){
+            return response()->json([
+                'user' => request()->user()
+            ]);
+        });
+
+        Route::apiResource('products', ProductController::class);
     });
 });

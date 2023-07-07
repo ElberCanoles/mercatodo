@@ -3,7 +3,7 @@
 namespace Tests\Feature\Admin\Users;
 
 use App\Contracts\Repository\User\UserWriteRepositoryInterface;
-use App\Domain\Users\Enums\RoleType;
+use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Enums\UserStatus;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
@@ -22,8 +22,10 @@ class UserUpdateTest extends TestCase
     {
         parent::setUp();
         $this->seed(RoleSeeder::class);
-        $this->admin = User::factory()->create()->assignRole(RoleType::ADMINISTRATOR);
-        $this->buyer = User::factory()->create()->assignRole(RoleType::BUYER);
+        $this->admin = User::factory()->create();
+        $this->admin->assignRole(role: Roles::ADMINISTRATOR);
+        $this->buyer = User::factory()->create();
+        $this->buyer->assignRole(role: Roles::BUYER);
     }
 
     public function test_admin_can_update_users(): void
