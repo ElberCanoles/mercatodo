@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Repositories\Product\WriteEloquentRepository;
 
+use App\Domain\Products\Actions\DestroyProductAction;
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Models\Product;
-use App\Domain\Products\Repositories\ProductWriteEloquentRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
@@ -26,21 +26,8 @@ class DeleteTest extends TestCase
 
         $product = Product::create($data);
 
-        $repository = resolve(name: ProductWriteEloquentRepository::class);
-
-        $response = $repository->delete($product->id);
-
-        $this->assertTrue($response);
+        (new DestroyProductAction())->execute($product);
 
         $this->assertSoftDeleted(table: 'products', data: $data);
-    }
-
-    public function test_delete_product_returns_false_on_exception(): void
-    {
-        $repository = resolve(name: ProductWriteEloquentRepository::class);
-
-        $response = $repository->delete(0);
-
-        $this->assertFalse($response);
     }
 }

@@ -2,9 +2,10 @@
 
 namespace Tests\Unit\Repositories\Product\WriteEloquentRepository;
 
+use App\Domain\Products\Actions\UpdateProductAction;
+use App\Domain\Products\DataTransferObjects\UpdateProductData;
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Models\Product;
-use App\Domain\Products\Repositories\ProductWriteEloquentRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -21,15 +22,15 @@ class UpdateTest extends TestCase
             'status' => ProductStatus::UNAVAILABLE,
             'description' => 'Description'
         ]);
-        $repository = resolve(name: ProductWriteEloquentRepository::class);
+        $action = resolve(name: UpdateProductAction::class);
 
-        $repository->update(data: [
+        $action->execute(UpdateProductData::fromArray([
             'name' => 'New name',
             'price' => '100',
             'stock' => '100',
             'status' => ProductStatus::AVAILABLE,
             'description' => 'New description'
-        ], id: $product->id);
+        ]), $product);
 
         $this->assertDatabaseCount(table: 'products', count: 1);
 
@@ -40,20 +41,5 @@ class UpdateTest extends TestCase
             'status' => ProductStatus::AVAILABLE,
             'description' => 'New description'
         ]);
-    }
-
-    public function test_update_product_returns_false_on_exception(): void
-    {
-        $repository = resolve(name: ProductWriteEloquentRepository::class);
-
-        $response = $repository->update(data: [
-            'name' => 'New name',
-            'price' => '100',
-            'stock' => '100',
-            'status' => ProductStatus::AVAILABLE,
-            'description' => 'New description'
-        ], id: 0);
-
-        $this->assertFalse($response);
     }
 }

@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace App\Domain\Imports\Services;
 
 use App\Contracts\Imports\ProductImporterInterface;
-use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Imports\Enums\ImportModules;
 use App\Domain\Imports\Models\Import;
+use App\Domain\Products\Actions\StoreProductAction;
+use App\Domain\Products\Actions\UpdateProductAction;
+use App\Domain\Products\DataTransferObjects\StoreProductData;
+use App\Domain\Products\DataTransferObjects\UpdateProductData;
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Factories\ProductImportValidatorFactory;
 use App\Domain\Products\Models\Product;
@@ -27,8 +30,9 @@ class ProductCsvImporter implements ProductImporterInterface
     private int $failedRecords = 0;
 
     public function __construct(
-        private readonly FileService $fileService,
-        private readonly ProductWriteRepositoryInterface $writeRepository)
+        private readonly FileService         $fileService,
+        private readonly StoreProductAction  $storeProductAction,
+        private readonly UpdateProductAction $updateProductAction)
     {
     }
 
@@ -93,7 +97,7 @@ class ProductCsvImporter implements ProductImporterInterface
 
     private function createProduct(array $data): void
     {
-        $this->writeRepository->store($data);
+        $this->storeProductAction->execute(StoreProductData::fromArray($data));
         $this->createdRecords++;
     }
 
@@ -109,7 +113,8 @@ class ProductCsvImporter implements ProductImporterInterface
         ]);
 
         if ($product->isDirty()) {
-            $this->writeRepository->update($data, $data['id']);
+            $data['preloaded_images'] = $product->images->toArray();
+            $this->updateProductAction->execute(UpdateProductData::fromArray($data), $product);
             $this->updatedRecords++;
         }
     }

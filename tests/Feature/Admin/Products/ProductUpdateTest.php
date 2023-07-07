@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Admin\Products;
 
-use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Models\Product;
 use App\Domain\Users\Enums\Permissions;
@@ -12,7 +11,6 @@ use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Mockery;
 use Tests\TestCase;
 
 class ProductUpdateTest extends TestCase
@@ -62,27 +60,5 @@ class ProductUpdateTest extends TestCase
         $this->assertSame(expected: 20.0, actual: $this->product->price);
         $this->assertSame(expected: 0, actual: $this->product->stock);
         $this->assertSame(expected: ProductStatus::UNAVAILABLE, actual: $this->product->status);
-    }
-
-    public function test_admin_can_not_update_products_when_internal_error(): void
-    {
-        $this->mock(abstract: ProductWriteRepositoryInterface::class, mock: function ($mock) {
-            $mock->shouldReceive('update')->andReturn(false);
-        });
-
-        $response = $this
-            ->actingAs($this->admin)
-            ->put(route(name: 'admin.products.update', parameters: ['product' => $this->product->id]), [
-                'name' => 'New name',
-                'description' => 'New description',
-                'price' => 20,
-                'stock' => 0,
-                'status' => ProductStatus::UNAVAILABLE,
-                'images' => [$this->image]
-            ]);
-
-        $response->assertStatus(status: 500);
-
-        Mockery::close();
     }
 }

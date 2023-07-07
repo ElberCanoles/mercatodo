@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Admin\Product;
 
 use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
-use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
+use App\Domain\Products\Actions\DestroyProductAction;
+use App\Domain\Products\Actions\StoreProductAction;
+use App\Domain\Products\Actions\UpdateProductAction;
+use App\Domain\Products\DataTransferObjects\StoreProductData;
+use App\Domain\Products\DataTransferObjects\UpdateProductData;
 use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Domain\Users\Enums\Roles;
@@ -21,9 +25,9 @@ final class ProductController extends Controller
     use MakeJsonResponse;
 
     public function __construct(
-        private readonly ProductWriteRepositoryInterface $writeRepository,
         private readonly ProductReadRepositoryInterface  $readRepository
-    ) {
+    )
+    {
         $this->authorizeResource(model: Product::class, parameter: 'product');
     }
 
@@ -50,14 +54,9 @@ final class ProductController extends Controller
         ]);
     }
 
-    public function store(StoreRequest $request): JsonResponse
+    public function store(StoreRequest $request, StoreProductAction $action): JsonResponse
     {
-        if (!$this->writeRepository->store($request->validated())) {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.internal_error')]]
-            );
-        }
-
+        $action->execute(StoreProductData::fromRequest($request));
         return $this->showMessage(message: trans(key: 'server.record_created'));
     }
 
@@ -69,25 +68,15 @@ final class ProductController extends Controller
         ]);
     }
 
-    public function update(UpdateRequest $request, Product $product): JsonResponse
+    public function update(UpdateRequest $request, Product $product, UpdateProductAction $action): JsonResponse
     {
-        if (!$this->writeRepository->update(data: $request->validated(), id: $product->id)) {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.internal_error')]]
-            );
-        }
-
+        $action->execute(UpdateProductData::fromRequest($request), $product);
         return $this->showMessage(message: trans(key: 'server.record_updated'));
     }
 
-    public function destroy(Product $product): JsonResponse
+    public function destroy(Product $product, DestroyProductAction $action): JsonResponse
     {
-        if (!$this->writeRepository->delete(id: $product->id)) {
-            return $this->errorResponse(
-                message: trans(key: 'server.internal_error')
-            );
-        }
-
+        $action->execute($product);
         return $this->showMessage(message: trans(key: 'server.record_deleted'));
     }
 }
