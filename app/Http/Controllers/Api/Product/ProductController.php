@@ -6,12 +6,12 @@ namespace App\Http\Controllers\Api\Product;
 
 use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Models\Product;
+use App\Domain\Products\Resources\ProductResource;
 use App\Domain\Shared\Enums\SystemParams;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
-use App\Http\Resources\Api\ProductResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\QueryBuilder\QueryBuilder;

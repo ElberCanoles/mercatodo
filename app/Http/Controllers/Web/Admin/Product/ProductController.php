@@ -24,6 +24,7 @@ final class ProductController extends Controller
         private readonly ProductWriteRepositoryInterface $writeRepository,
         private readonly ProductReadRepositoryInterface  $readRepository
     ) {
+        $this->authorizeResource(model: Product::class, parameter: 'product');
     }
 
     public function index(Request $request): JsonResponse|View
