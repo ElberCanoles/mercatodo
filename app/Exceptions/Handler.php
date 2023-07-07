@@ -54,12 +54,6 @@ class Handler extends ExceptionHandler
                 return (new ApiHandler())->handle($exception->getStatusCode());
             }
         });
-
-        $this->renderable(function (Exception $exception, Request $request) {
-            if ($request->is('api/*')) {
-                return (new ApiHandler())->handle(code: Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-        });
     }
 
 

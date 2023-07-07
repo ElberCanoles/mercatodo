@@ -10,6 +10,7 @@ use App\Domain\Products\Factories\ProductStoreImagesFactory;
 use App\Domain\Products\Factories\ProductUpdateImagesFactory;
 use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Services\SlugeableService;
+use Throwable;
 
 final class ProductWriteEloquentRepository extends Repository implements ProductWriteRepositoryInterface
 {
@@ -41,7 +42,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
             if (isset($data['images'])) $this->storeImagesFactory->create($product, $data['images']);
 
             return $product;
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             report(exception: $throwable);
             return null;
         }
@@ -77,7 +78,7 @@ final class ProductWriteEloquentRepository extends Repository implements Product
             );
 
             return $product->save();
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             report(exception: $throwable);
             return false;
         }
@@ -86,12 +87,12 @@ final class ProductWriteEloquentRepository extends Repository implements Product
     public function delete(int $id): bool
     {
         try {
-            $product = $this->model::findOrFail($id);
+            $product = $this->model::find($id);
 
             $product->delete();
 
             return true;
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             report(exception: $throwable);
             return false;
         }

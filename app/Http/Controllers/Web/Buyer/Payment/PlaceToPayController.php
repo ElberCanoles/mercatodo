@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Buyer\Payment;
 
 use App\Domain\Orders\Models\Order;
+use App\Domain\Payments\Enums\Provider;
 use App\Domain\Payments\Factories\PlaceToPay\PlaceToPayPaymentActionsFactory;
+use App\Domain\Payments\Models\Payment;
 use App\Domain\Payments\Services\PlaceToPay\PlaceToPayService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
@@ -24,7 +26,12 @@ class PlaceToPayController extends Controller
         $order = Order::query()->findOrFail(request()->input(key: 'order'));
 
         try {
-            $status = $this->placeToPayService->getSession($order->payments()->latest()->first()->data_provider['requestId'])['status']['status'];
+            $lastPayment = Payment::query()->whereOrder(order: $order)
+                ->whereProvider(provider: Provider::PLACE_TO_PAY)
+                ->orderByDesc(column: 'created_at')
+                ->first();
+
+            $status = $this->placeToPayService->getSession($lastPayment->data_provider['requestId'])['status']['status'];
 
             $checkPaymentActions = (new PlaceToPayPaymentActionsFactory($this->placeToPayService))->make();
 
@@ -43,7 +50,12 @@ class PlaceToPayController extends Controller
         $order = Order::query()->findOrFail(request()->input(key: 'order'));
 
         $order->cancelled();
-        $order->payments()->latest()->first()->rejected();
+
+        Payment::query()->whereOrder(order: $order)
+            ->whereProvider(provider: Provider::PLACE_TO_PAY)
+            ->orderByDesc(column: 'created_at')
+            ->first()
+            ->rejected();
 
         return redirect()->to(path: URL::signedRoute(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));
     }

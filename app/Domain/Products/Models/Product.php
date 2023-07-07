@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property Carbon $updated_at
  *
  * @method static Product|null find($id, $columns = ['*'])
+ * @method static Product|null first()
+ * @method static Product create(array $attributes = [])
  */
 class Product extends Model
 {

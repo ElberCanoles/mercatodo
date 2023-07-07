@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
             'department' => ['required', 'string', 'max:40'],
             'city' => ['required', 'string', 'max:40'],
             'address' => ['required', 'string', 'max:100'],
-            'provider' => ['required', Rule::in(Provider::asArray())]
+            'provider' => ['required', Rule::in(Provider::toArray())]
         ];
     }
 

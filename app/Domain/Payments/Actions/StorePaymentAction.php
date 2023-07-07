@@ -11,7 +11,7 @@ class StorePaymentAction
 {
     public function execute(Order $order, string $provider, mixed $dataProvider): Payment
     {
-        return Payment::create([
+        return Payment::query()->create([
             'order_id' => $order->id,
             'provider' => $provider,
             'data_provider' => $dataProvider

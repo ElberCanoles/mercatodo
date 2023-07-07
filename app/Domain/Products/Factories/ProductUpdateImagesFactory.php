@@ -6,6 +6,7 @@ namespace App\Domain\Products\Factories;
 
 use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Services\FileService;
+use Throwable;
 
 class ProductUpdateImagesFactory
 {
@@ -18,7 +19,7 @@ class ProductUpdateImagesFactory
     public function create(Product $product, array $preloadedImages = null, array $newImages = null): void
     {
         try {
-            $currentImagesPaths = $product->images()->pluck(column: 'path')->toArray();
+            $currentImagesPaths = $product->images()->get()->pluck(value: 'path')->toArray();
 
             $newImagesPaths = [];
 
@@ -51,7 +52,7 @@ class ProductUpdateImagesFactory
                     'path' => $imagePath
                 ]);
             }
-        } catch (\Throwable $throwable) {
+        } catch (Throwable $throwable) {
             report(exception: $throwable);
         }
     }

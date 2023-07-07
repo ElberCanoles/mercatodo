@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
  * @property int $user_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property float $total
  * @property-read Collection|Builder|Product[]|null $products
  */
 class Cart extends Model

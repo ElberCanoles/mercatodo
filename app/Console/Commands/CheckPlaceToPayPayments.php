@@ -34,10 +34,10 @@ class CheckPlaceToPayPayments extends Command
         $placeToPayService = resolve(name: PlaceToPayService::class);
 
         $payments = Payment::query()
-            ->select(columns: ['id', 'order_id', 'provider', 'data_provider', 'status'])
             ->with(relations: ['order'])
-            ->where(column: 'provider', operator: '=', value: Provider::PLACE_TO_PAY)
-            ->where(column: 'status', operator: '=', value: PaymentStatus::PENDING)
+            ->whereProvider(provider: Provider::PLACE_TO_PAY)
+            ->whereStatus(status: PaymentStatus::PENDING)
+            ->select(columns: ['id', 'order_id', 'provider', 'data_provider', 'status'])
             ->get();
 
         try {

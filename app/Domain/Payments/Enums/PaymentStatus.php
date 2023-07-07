@@ -1,18 +1,19 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Domain\Payments\Enums;
 
-use BenSampo\Enum\Enum;
-
-final class PaymentStatus extends Enum
+enum PaymentStatus: string
 {
-    public const PENDING = 'payment.pending';
+    case PENDING = 'payment.pending';
 
-    public const PAID = 'payment.paid';
+    case PAID = 'payment.paid';
 
-    public const REJECTED = 'payment.rejected';
+    case REJECTED = 'payment.rejected';
 
-    public const REFUNDED = 'payment.refunded';
+    case REFUNDED = 'payment.refunded';
+
+    public static function toArray(): array
+    {
+        return array_column(array: self::cases(), column_key: 'value');
+    }
 }

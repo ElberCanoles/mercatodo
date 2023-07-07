@@ -4,6 +4,7 @@ namespace App\Domain\Payments\Models;
 
 use App\Domain\Orders\Models\Order;
 use App\Domain\Payments\Enums\PaymentStatus;
+use App\Domain\Payments\QueryBuilders\PaymentQueryBuilder;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -13,10 +14,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $order_id
  * @property string $provider
  * @property array $data_provider
- * @property string status
+ * @property string $status
  * @property Carbon $payed_at
+ * @property Carbon $created_at
  *
- * @method static Payment create(array $attributes = [])
+ * @method static PaymentQueryBuilder query()
  */
 class Payment extends Model
 {
@@ -48,6 +50,11 @@ class Payment extends Model
         'data_provider' => 'array'
     ];
 
+    public function newEloquentBuilder($query): PaymentQueryBuilder
+    {
+        return new PaymentQueryBuilder($query);
+    }
+
     public function order(): BelongsTo
     {
         return $this->belongsTo(related: Order::class);
@@ -56,14 +63,14 @@ class Payment extends Model
     public function pending(): void
     {
         $this->update([
-            'status' => PaymentStatus::PENDING
+            'status' => PaymentStatus::PENDING->value
         ]);
     }
 
     public function paid(): void
     {
         $this->update([
-            'status' => PaymentStatus::PAID,
+            'status' => PaymentStatus::PAID->value,
             'payed_at' => Carbon::now()
         ]);
     }
@@ -71,7 +78,7 @@ class Payment extends Model
     public function rejected(): void
     {
         $this->update([
-            'status' => PaymentStatus::REJECTED
+            'status' => PaymentStatus::REJECTED->value
         ]);
     }
 }

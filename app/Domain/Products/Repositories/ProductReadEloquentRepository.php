@@ -25,7 +25,7 @@ class ProductReadEloquentRepository extends Repository implements ProductReadRep
 
     public function allStatuses(): array
     {
-        return collect(ProductStatus::asArray())->map(fn ($status) => [
+        return collect(ProductStatus::asArray())->map(fn($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

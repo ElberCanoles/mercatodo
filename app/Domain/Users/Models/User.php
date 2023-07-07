@@ -7,6 +7,7 @@ use App\Domain\Orders\Models\Order;
 use App\Domain\Payments\Models\Payment;
 use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
+use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,10 +23,19 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $status
+ * @property Carbon $email_verified_at
+ * @property string $password
  * @property-read Collection|Builder|Role[]|null $roles
  * @property-read Collection|Builder|Permission[]|null $permissions
+ * @property-read Collection|Builder|Order[]|null $orders
+ * @property-read Collection|Builder|Cart $cart
  *
  * @method static User create(array $attributes = [])
+ * @method static User|null find($id, $columns = ['*'])
  */
 class User extends Authenticatable implements MustVerifyEmail
 {

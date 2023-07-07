@@ -12,7 +12,7 @@ const getData = async (url) => {
         const { data } = await axios.get(`${url}`)
 
         exports.value = data.data
-        links.value = data.links
+        links.value = data.meta.links
 
     } catch (error) {
         console.log(error)
