@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Admin\Products;
 
-use App\Contracts\Repository\Product\ProductReadRepositoryInterface;
+use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\Permission;
@@ -28,14 +28,17 @@ class ProductCreateTest extends TestCase
 
     public function test_admin_can_access_to_products_create_screen(): void
     {
-        $readRepository = resolve(name: ProductReadRepositoryInterface::class);
-
         $response = $this
             ->actingAs($this->admin)
             ->get(route(name: 'admin.products.create'));
 
+        $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
+            'key' => $status,
+            'value' => trans($status),
+        ])->toArray();
+
         $response->assertOk()
             ->assertViewIs(value: 'admin.products.crud.create')
-            ->assertViewHas('statuses', $readRepository->allStatuses());
+            ->assertViewHas('statuses', $statuses);
     }
 }

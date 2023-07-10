@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 namespace App\Domain\Products\Resources;
 
@@ -8,10 +6,11 @@ use App\Domain\Products\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+
 /**
  * @mixin Product
  */
-class ProductResource extends JsonResource
+class ProductAdminResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
@@ -22,12 +21,9 @@ class ProductResource extends JsonResource
             'stock' => number_format(num: $this->stock, decimal_separator: ',', thousands_separator: '.'),
             'status_key' => $this->status,
             'status_value' => trans($this->status),
-            'description' => $this->description,
-            'images' => $this->images,
             'created_at' => $this->created_at->format(format: 'd-m-Y'),
-            'show_url' => route(name: 'api.products.show', parameters: ['product' => $this->id]),
-            'update_url' => route(name: 'api.products.update', parameters: ['product' => $this->id]),
-            'delete_url' => route(name: 'api.products.destroy', parameters: ['product' => $this->id])
+            'edit_url' => route(name: 'admin.products.edit', parameters: ['product' => $this->id]),
+            'delete_url' => route(name: 'admin.products.destroy', parameters: ['product' => $this->id]),
         ];
     }
 }

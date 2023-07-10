@@ -10,7 +10,7 @@ use App\Domain\Products\Actions\UpdateProductAction;
 use App\Domain\Products\DataTransferObjects\StoreProductData;
 use App\Domain\Products\DataTransferObjects\UpdateProductData;
 use App\Domain\Products\Models\Product;
-use App\Domain\Products\Resources\ProductResource;
+use App\Domain\Products\Resources\ProductApiResource;
 use App\Domain\Shared\Enums\SystemParams;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
@@ -33,13 +33,13 @@ class ProductController extends Controller
     public function index(): AnonymousResourceCollection
     {
         $products = QueryBuilder::for(subject: Product::class)
-            ->select(columns: ['id', 'name', 'price', 'stock', 'status', 'description', 'created_at'])
-            ->with(relations: ['images'])
             ->allowedFilters(filters: ['name', 'price', 'stock', 'status'])
+            ->with(relations: ['images'])
+            ->select(columns: ['id', 'name', 'price', 'stock', 'status', 'description', 'created_at'])
             ->latest()
             ->paginate(perPage: SystemParams::LENGTH_PER_PAGE);
 
-        return ProductResource::collection($products);
+        return ProductApiResource::collection($products);
     }
 
     public function store(StoreRequest $request, StoreProductAction $action): JsonResponse
@@ -48,9 +48,9 @@ class ProductController extends Controller
         return $this->showMessage(message: trans(key: 'server.record_created'), code: Response::HTTP_CREATED);
     }
 
-    public function show(Product $product): ProductResource|JsonResponse
+    public function show(Product $product): ProductApiResource
     {
-        return ProductResource::make($product);
+        return ProductApiResource::make($product);
     }
 
     public function update(UpdateRequest $request, Product $product, UpdateProductAction $action): JsonResponse

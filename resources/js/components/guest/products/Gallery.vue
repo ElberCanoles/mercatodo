@@ -22,7 +22,7 @@ const getData = async (url) => {
             `&minimum_price=${search.value.minimum_price}&maximum_price=${search.value.maximum_price}`)
 
         products.value = data.data
-        links.value = data.links
+        links.value = data.meta.links
 
     } catch (error) {
 
