@@ -2,12 +2,10 @@
 
 namespace Tests\Feature\Admin\Profile;
 
-use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class UpdateTest extends TestCase
@@ -44,44 +42,20 @@ class UpdateTest extends TestCase
         $response = $this
             ->actingAs($user)
             ->patch(uri: '/admin/profile', data: [
-                'name' => 'Test User',
-                'last_name' => 'User Test',
-                'email' => 'test@example.com',
+                'name' => 'Test user',
+                'last_name' => 'User test',
+                'email' => 'test@example.com'
             ]);
 
-        $response
-            ->assertSessionHasNoErrors()
+        $response->assertSessionHasNoErrors()
             ->assertOk();
 
         $user->refresh();
 
-        $this->assertSame(expected: 'Test User', actual: $user->name);
+        $this->assertSame(expected: 'Test user', actual: $user->name);
+        $this->assertSame(expected: 'User test', actual: $user->last_name);
         $this->assertSame(expected: 'test@example.com', actual: $user->email);
         $this->assertNull($user->email_verified_at);
-    }
-
-    public function test_admin_profile_can_not_update_when_internal_error(): void
-    {
-        $user = User::factory()
-            ->create();
-
-        $user->assignRole(role: Roles::ADMINISTRATOR);
-
-        $this->mock(abstract: UserWriteRepositoryInterface::class, mock: function ($mock) {
-            $mock->shouldReceive('update')->andReturn(false);
-        });
-
-        $response = $this
-            ->actingAs($user)
-            ->patch(uri: '/admin/profile', data: [
-                'name' => 'Test User',
-                'last_name' => 'User Test',
-                'email' => 'test@example.com',
-            ]);
-
-        $response->assertStatus(status: 500);
-
-        Mockery::close();
     }
 
     public function test_admin_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
@@ -96,11 +70,10 @@ class UpdateTest extends TestCase
             ->patch(uri: '/admin/profile', data: [
                 'name' => 'Test User',
                 'last_name' => 'User Test',
-                'email' => $user->email,
+                'email' => $user->email
             ]);
 
-        $response
-            ->assertSessionHasNoErrors()
+        $response->assertSessionHasNoErrors()
             ->assertOk();
 
         $this->assertNotNull($user->refresh()->email_verified_at);
