@@ -40,7 +40,6 @@ final class ProductCsvExporter implements ProductExporterInterface
     public function export(): void
     {
         try {
-
             $fileName = $this::PRODUCTS_EXPORT_PATH . Str::uuid()->serialize() . ".csv";
 
             $this->createFile($fileName);
@@ -82,5 +81,4 @@ final class ProductCsvExporter implements ProductExporterInterface
             'path' => Storage::url(path: $fileName)
         ]));
     }
-
 }

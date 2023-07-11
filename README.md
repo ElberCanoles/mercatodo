@@ -12,7 +12,6 @@ Merca Todo is a web application developed during the php Bootcamp, taught by [Ev
 
 ### Patterns:
 
-- Repository
 - SOLID
     * Single responsibility principle
     * Open/closed principle

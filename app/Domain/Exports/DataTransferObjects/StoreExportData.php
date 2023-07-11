@@ -14,10 +14,9 @@ class StoreExportData
 
     public static function fromArray(array $data): self
     {
-        return new static(
+        return new self(
             module: $data['module'],
             path: $data['path']
         );
     }
-
 }

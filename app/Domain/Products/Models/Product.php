@@ -30,6 +30,8 @@ use Illuminate\Database\Eloquent\Collection;
  * @property Carbon $updated_at
  *
  * @method static Product|null find($id, $columns = ['*'])
+ * @method static Product|null first()
+ * @method static Product create(array $attributes = [])
  */
 class Product extends Model
 {
@@ -40,11 +42,6 @@ class Product extends Model
         'images',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'slug',
@@ -69,7 +66,7 @@ class Product extends Model
         return $this->morphedByMany(related: Order::class, name: 'productable')->withPivot(columns: 'quantity');
     }
 
-    public function images(): MorphMany
+    public function images(): MorphMany|Builder
     {
         return $this->morphMany(related: Image::class, name: 'imageable');
     }

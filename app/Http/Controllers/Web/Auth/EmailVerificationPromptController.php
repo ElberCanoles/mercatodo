@@ -8,7 +8,7 @@ use App\Domain\Users\Services\EntryPoint;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 final class EmailVerificationPromptController extends Controller
 {

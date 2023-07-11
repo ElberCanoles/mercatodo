@@ -18,7 +18,7 @@ class SlugeableService
     {
         $safeSlug = $this->getSafeSlug($input);
 
-        while ($model::where($columName, $safeSlug)->exists()) {
+        while ($model::query()->where($columName, $safeSlug)->exists()) {
             $safeSlug = $this->getSafeSlug($input);
         }
 

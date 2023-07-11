@@ -18,7 +18,7 @@ class PaymentFactory implements PaymentFactoryInterface
     public function buildPaymentGateway(string $provider): PaymentGatewayInterface
     {
         return match ($provider) {
-            Provider::PLACE_TO_PAY => new PlaceToPayService(),
+            Provider::PLACE_TO_PAY->value => new PlaceToPayService(),
             default => throw new Exception(message: trans(key: 'validation.custom.payment.gateway_not_yet_supported'))
         };
     }

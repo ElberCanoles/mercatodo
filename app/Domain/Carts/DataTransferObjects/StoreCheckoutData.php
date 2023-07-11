@@ -25,7 +25,7 @@ class StoreCheckoutData
 
     public static function fromRequest(FormRequest $request): self
     {
-        return new static(
+        return new self(
             name: $request->input(key: 'name'),
             lastName: $request->input(key: 'last_name'),
             documentType: $request->input(key: 'document_type'),

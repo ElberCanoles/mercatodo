@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace App\Domain\Payments\Enums;
 
-use BenSampo\Enum\Enum;
-
-final class Provider extends Enum
+enum Provider: string
 {
-    public const PLACE_TO_PAY = 'Place To Pay';
+    case PLACE_TO_PAY = 'Place To Pay';
+
+    public static function toArray(): array
+    {
+        return array_column(array: self::cases(), column_key: 'value');
+    }
 }

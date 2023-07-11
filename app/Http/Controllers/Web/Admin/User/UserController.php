@@ -4,56 +4,68 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Admin\User;
 
-use App\Contracts\Repository\User\UserReadRepositoryInterface;
-use App\Contracts\Repository\User\UserWriteRepositoryInterface;
+use App\Domain\Shared\Enums\SystemParams;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
+use App\Domain\Users\Actions\UpdateUserAction;
+use App\Domain\Users\DataTransferObjects\UpdateUserData;
 use App\Domain\Users\Enums\Roles;
+use App\Domain\Users\Enums\UserStatus;
+use App\Domain\Users\Models\User;
+use App\Domain\Users\Resources\UserResource;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Contracts\View\View;
 
 final class UserController extends Controller
 {
     use MakeJsonResponse;
 
-    public function __construct(
-        private readonly UserWriteRepositoryInterface $writeRepository,
-        private readonly UserReadRepositoryInterface  $readRepository
-    ) {
-    }
-
-    public function index(Request $request): JsonResponse|View
+    public function index(Request $request): AnonymousResourceCollection|View
     {
         if (!$request->wantsJson()) {
             return view(view: 'admin.users.index');
         }
 
-        return $this->successResponse(
-            data: $this->readRepository->all(
-                queryParams: $request->all(),
-                role: Roles::BUYER->value
-            )
-        );
+        $users = User::query()
+            ->withoutEagerLoads()
+            ->whereHas(relation: 'roles', callback: function ($subQuery) {
+                $subQuery->where('name', Roles::BUYER);
+            })
+            ->select(columns: ['id', 'name', 'last_name', 'email', 'status', 'email_verified_at', 'created_at'])
+            ->when($request->input(key: 'name'), function ($q) use ($request) {
+                $q->where(column: 'name', operator: 'like', value: '%' . $request->input(key: 'name') . '%');
+            })
+            ->when($request->input(key: 'last_name'), function ($q) use ($request) {
+                $q->where(column: 'last_name', operator: 'like', value: '%' . $request->input(key: 'last_name') . '%');
+            })
+            ->when($request->input(key: 'email'), function ($q) use ($request) {
+                $q->where(column: 'email', operator: 'like', value: '%' . $request->input(key: 'email') . '%');
+            })->orderBy(column: 'created_at', direction: 'DESC')
+            ->orderBy(column: 'id', direction: 'DESC')
+            ->paginate(perPage: SystemParams::LENGTH_PER_PAGE);
+
+        return UserResource::collection($users);
     }
 
-    public function edit(int $id): View
+    public function edit(User $user): View
     {
+        $statuses = collect(UserStatus::asArray())->map(fn ($status) => [
+            'key' => $status,
+            'value' => trans($status),
+        ])->toArray();
+
         return view(view: 'admin.users.crud.edit', data: [
-            'user' => $this->readRepository->find(key: 'id', value: $id),
-            'statuses' => $this->readRepository->allStatuses(),
+            'user' => $user,
+            'statuses' => $statuses,
         ]);
     }
 
-    public function update(UpdateRequest $request, int $id): JsonResponse
+    public function update(UpdateRequest $request, User $user): JsonResponse
     {
-        if (!$this->writeRepository->update(data: $request->validated(), id: $id)) {
-            return $this->errorResponseWithBag(
-                collection: ['server' => [trans(key: 'server.internal_error')]]
-            );
-        }
-
+        (new UpdateUserAction())->execute(UpdateUserData::fromRequest($request), $user);
         return $this->showMessage(message: trans(key: 'server.record_updated'));
     }
 }

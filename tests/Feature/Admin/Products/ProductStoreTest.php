@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Admin\Products;
 
-use App\Contracts\Repository\Product\ProductWriteRepositoryInterface;
 use App\Domain\Products\Models\Product;
 use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
@@ -11,7 +10,6 @@ use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Mockery;
 use Tests\TestCase;
 
 class ProductStoreTest extends TestCase
@@ -56,30 +54,5 @@ class ProductStoreTest extends TestCase
             ->assertOk();
 
         $this->assertDatabaseCount(table: 'products', count: 1);
-    }
-
-    public function test_admin_can_not_store_products_when_internal_error(): void
-    {
-        $product = Product::factory()->make();
-
-        $this->mock(abstract: ProductWriteRepositoryInterface::class, mock: function ($mock) {
-            $mock->shouldReceive('store')->andReturn(null);
-        });
-
-        $data = [
-            'name' => $product->name,
-            'description' => $product->description,
-            'price' => $product->price,
-            'stock' => $product->stock,
-            'status' => $product->status,
-            'images' => [$this->image]
-        ];
-
-        $response = $this->actingAs($this->admin)
-            ->post(route(name: 'admin.products.store'), $data);
-
-        $response->assertStatus(status: 500);
-
-        Mockery::close();
     }
 }

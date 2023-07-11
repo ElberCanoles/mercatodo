@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Buyer\Order;
 
 use App\Domain\Orders\Models\Order;
+use App\Domain\Orders\Resources\OrderResource;
 use App\Domain\Shared\Enums\SystemParams;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Contracts\View\View;
 
 class OrderController extends Controller
 {
@@ -20,26 +21,19 @@ class OrderController extends Controller
         $this->authorizeResource(model: Order::class, parameter: 'order');
     }
 
-    public function index(): View|JsonResponse
+    public function index(): View|AnonymousResourceCollection
     {
         if (!request()->wantsJson()) {
             return view(view: 'buyer.order.index');
         }
 
         $orders = Order::query()
-            ->select(columns: ['id', 'user_id', 'amount', 'status', 'created_at'])
             ->whereUser(request()->user())
+            ->select(columns: ['id', 'user_id', 'amount', 'status', 'created_at'])
             ->orderBy(column: 'id', direction: 'DESC')
-            ->paginate(perPage: SystemParams::LENGTH_PER_PAGE)->through(fn ($order) => [
-                'id' => str_pad(string: (string)$order->id, length: 5, pad_string: '0', pad_type: STR_PAD_LEFT),
-                'amount' => number_format(num: $order->amount, decimal_separator: ',', thousands_separator: '.'),
-                'status_key' => $order->status,
-                'status_value' => trans($order->status),
-                'created_at' => $order->created_at->format('d-m-Y'),
-                'show_url' => route(name: 'buyer.orders.show', parameters: ['order' => $order->id]),
-            ]);
+            ->paginate(perPage: SystemParams::LENGTH_PER_PAGE);
 
-        return $this->successResponse(data: $orders);
+        return OrderResource::collection($orders);
     }
 
     public function show(Order $order): View

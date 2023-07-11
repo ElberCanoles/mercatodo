@@ -7,6 +7,7 @@ use App\Domain\Orders\Models\Order;
 use App\Domain\Payments\Models\Payment;
 use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
+use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
@@ -22,10 +23,21 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
+ * @property int $id
+ * @property string $name
+ * @property string $last_name
+ * @property string $email
+ * @property string $status
+ * @property ?Carbon $email_verified_at
+ * @property Carbon $created_at
+ * @property string $password
  * @property-read Collection|Builder|Role[]|null $roles
  * @property-read Collection|Builder|Permission[]|null $permissions
+ * @property-read Collection|Builder|Order[]|null $orders
+ * @property-read Collection|Builder|Cart $cart
  *
  * @method static User create(array $attributes = [])
+ * @method static User|null find($id, $columns = ['*'])
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -60,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return UserFactory::new();
     }
 
-    public function roles():BelongsToMany
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(related: Role::class);
     }
@@ -73,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function assignRole(Role|Roles $role): void
     {
         if (!$role instanceof Role) {
-            $role = Role::where('name', $role->value)->first(['id']);
+            $role = Role::query()->where(column: 'name', operator: '=', value: $role->value)->first(['id']);
         }
 
         $this->roles()->attach($role);
@@ -82,7 +94,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function givePermissionTo(Permission|Permissions $permission): void
     {
         if (!$permission instanceof Permission) {
-            $permission = Permission::where('name', $permission->value)->first(['id']);
+            $permission = Permission::query()->where(column: 'name', operator: '=', value: $permission->value)->first(['id']);
         }
 
         $this->permissions()->attach($permission);

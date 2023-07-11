@@ -49,7 +49,6 @@ class PlaceToPayBase
 
     protected function makeSession(StoreCheckoutData $data, Order $order): array
     {
-
         return [
             "auth" => $this->getAuth(),
             "buyer" => [

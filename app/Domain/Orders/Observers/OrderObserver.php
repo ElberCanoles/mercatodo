@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Domain\Orders\Observers;
 
 use App\Domain\Orders\Models\Order;
+use App\Domain\Users\Models\User;
 
 class OrderObserver
 {
     public function created(Order $order): void
     {
-        $cart = auth()->user()->cart;
+        $cart = User::find(auth()->user()->getAuthIdentifier())->cart;
 
         foreach ($cart->products as $product) {
             $order->products()->syncWithoutDetaching([

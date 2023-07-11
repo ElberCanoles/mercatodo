@@ -21,7 +21,7 @@ class ProductCartController extends Controller
     public function add(Product $product, AddItemAction $addItemAction): JsonResponse
     {
         try {
-            $addItemAction->execute(product: $product, cart: auth()->user()->cart);
+            $addItemAction->execute(product: $product, cart: request()->user()->cart);
 
             return response()->json(data: ['message' => trans(key: 'product.added_to_cart')]);
         } catch (ProductExceptions $exception) {
@@ -36,14 +36,14 @@ class ProductCartController extends Controller
 
     public function less(Product $product, LessItemAction $lessItemAction): JsonResponse
     {
-        $lessItemAction->execute(product: $product, cart: auth()->user()->cart);
+        $lessItemAction->execute(product: $product, cart: request()->user()->cart);
 
         return response()->json(data: ['message' => trans(key: 'product.removed_from_cart')]);
     }
 
     public function destroy(Product $product, DestroyItemAction $destroyItemAction): JsonResponse
     {
-        $destroyItemAction->execute(product: $product, cart: auth()->user()->cart);
+        $destroyItemAction->execute(product: $product, cart: request()->user()->cart);
 
         return response()->json(data: ['message' => trans(key: 'product.removed_from_cart')]);
     }

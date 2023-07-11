@@ -4,52 +4,40 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Auth;
 
-use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
+use App\Domain\Users\Actions\StoreUserAction;
+use App\Domain\Users\DataTransferObjects\StoreUserData;
 use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Services\EntryPoint;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 final class RegisteredUserController extends Controller
 {
     use MakeJsonResponse;
 
-    public function __construct(private readonly UserWriteRepositoryInterface $writeRepository)
-    {
-    }
-
-    /**
-     * Display the registration view.
-     */
     public function create(): View
     {
         return view(view: 'auth.register');
     }
 
-    /**
-     * Handle an incoming registration request.
-     */
-    public function store(StoreRequest $request): RedirectResponse|JsonResponse
+    public function store(StoreRequest $request, StoreUserAction $action): RedirectResponse
     {
-        if ($user = $this->writeRepository->store($request->validated())) {
-            $user->assignRole(Roles::BUYER);
-            $user->givePermissionTo(Permissions::ORDERS_INDEX);
-            $user->givePermissionTo(Permissions::ORDERS_SHOW);
+        $user = $action->execute(StoreUserData::fromRequest($request));
 
-            event(new Registered($user));
+        $user->assignRole(role: Roles::BUYER);
+        $user->givePermissionTo(permission: Permissions::ORDERS_INDEX);
+        $user->givePermissionTo(permission: Permissions::ORDERS_SHOW);
 
-            Auth::login($user);
+        event(new Registered($user));
 
-            return redirect(EntryPoint::resolveRedirectRoute());
-        } else {
-            return $this->errorResponseWithBag(collection: ['server' => [trans(key: 'server.internal_error')]]);
-        }
+        Auth::login($user);
+
+        return redirect(EntryPoint::resolveRedirectRoute());
     }
 }

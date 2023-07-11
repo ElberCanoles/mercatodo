@@ -2,11 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Contracts\Repository\User\UserWriteRepositoryInterface;
 use App\Domain\Users\Services\EntryPoint;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery;
 use Tests\TestCase;
 
 class RegisterStoreTest extends TestCase
@@ -39,25 +37,5 @@ class RegisterStoreTest extends TestCase
         $this->assertDatabaseHas('users', [
             'email' => $data['email'],
         ]);
-    }
-
-    public function test_guest_user_can_not_send_register_when_internal_error(): void
-    {
-        $data = [
-            'name' => 'Juan Pablo',
-            'last_name' => 'Gonzales Lopez',
-            'email' => 'juanpablo@mercatodo.com',
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ];
-
-        $this->mock(UserWriteRepositoryInterface::class, function ($mock) {
-            $mock->shouldReceive('store')->andReturn(null);
-        });
-
-        $response = $this->post('/register', $data);
-        $response->assertStatus(500);
-
-        Mockery::close();
     }
 }

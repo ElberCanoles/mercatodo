@@ -17,7 +17,7 @@ class FileService
         $this->diskName = config(key: 'filesystems.default');
     }
 
-    public function uploadSingleFile(UploadedFile $file, string $relativePath): ?string
+    public function uploadSingleFile(UploadedFile|string $file, string $relativePath): ?string
     {
         try {
             Storage::disk(name: $this->diskName)->put($relativePath, $file);

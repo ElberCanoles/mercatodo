@@ -3,9 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Domain\Users\Enums\UserStatus;
+use App\Domain\Users\Models\User;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class VerifyIfUserIsActive
@@ -19,7 +19,10 @@ class VerifyIfUserIsActive
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
+        /**
+         * @var User $user
+         */
+        $user = User::query()->withoutEagerLoads()->find(auth()->user()->getAuthIdentifier());
 
         if ($user->status === UserStatus::INACTIVE) {
             abort(code: Response::HTTP_FORBIDDEN);
