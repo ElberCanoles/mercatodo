@@ -6,5 +6,4 @@ namespace App\Contracts\Imports;
 
 interface ProductImporterInterface extends ImporterInterface
 {
-
 }

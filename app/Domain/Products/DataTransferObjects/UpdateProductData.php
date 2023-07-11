@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Products\DataTransferObjects;
 
@@ -15,8 +17,7 @@ class UpdateProductData
         public string $description,
         public ?array $preloaded_images,
         public ?array $images
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(FormRequest $request): self

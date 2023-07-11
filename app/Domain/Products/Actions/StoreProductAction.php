@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Products\Actions;
 
@@ -11,7 +13,8 @@ class StoreProductAction
 {
     public function __construct(
         private readonly SlugeableService          $slugService,
-        private readonly ProductStoreImagesFactory $storeImagesFactory)
+        private readonly ProductStoreImagesFactory $storeImagesFactory
+    )
     {
     }
 
@@ -30,6 +33,8 @@ class StoreProductAction
             'description' => $data->description,
         ]);
 
-        if (isset($data->images)) $this->storeImagesFactory->create($product, $data->images);
+        if (isset($data->images)) {
+            $this->storeImagesFactory->create($product, $data->images);
+        }
     }
 }

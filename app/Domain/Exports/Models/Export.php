@@ -22,5 +22,4 @@ class Export extends Model
         'module',
         'path'
     ];
-
 }

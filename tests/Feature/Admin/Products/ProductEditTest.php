@@ -31,7 +31,7 @@ class ProductEditTest extends TestCase
 
     public function test_admin_can_access_to_products_edit_screen(): void
     {
-        $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
+        $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

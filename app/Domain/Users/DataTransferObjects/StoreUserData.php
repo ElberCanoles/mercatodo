@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Users\DataTransferObjects;
 
@@ -13,8 +15,7 @@ class StoreUserData
         public string $lastName,
         public string $email,
         public string $password
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(FormRequest $request): self

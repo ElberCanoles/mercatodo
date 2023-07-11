@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Admin\User;
 
@@ -50,7 +52,7 @@ final class UserController extends Controller
 
     public function edit(User $user): View
     {
-        $statuses = collect(UserStatus::asArray())->map(fn($status) => [
+        $statuses = collect(UserStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

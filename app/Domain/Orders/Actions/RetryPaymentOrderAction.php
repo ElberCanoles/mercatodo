@@ -15,7 +15,6 @@ class RetryPaymentOrderAction
 {
     public function execute(Order $order): RedirectResponse
     {
-
         $lastPayment = Payment::query()->whereOrder(order: $order)
             ->whereProvider(provider: Provider::PLACE_TO_PAY)
             ->orderByDesc(column: 'created_at')

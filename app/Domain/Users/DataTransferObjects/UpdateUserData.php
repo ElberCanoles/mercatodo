@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Users\DataTransferObjects;
 
@@ -12,8 +14,7 @@ class UpdateUserData
         public string  $lastName,
         public string  $email,
         public ?string $status
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(FormRequest $request): self

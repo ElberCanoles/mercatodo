@@ -22,7 +22,6 @@ class CheckoutResultController extends Controller
                 ->orderByDesc(column: 'created_at')
                 ->first()
                 ->status;
-
         } catch (Throwable $throwable) {
             report($throwable);
         }

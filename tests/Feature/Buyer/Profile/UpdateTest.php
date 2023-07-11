@@ -3,7 +3,6 @@
 namespace Tests\Feature\Buyer\Profile;
 
 use App\Domain\Users\Enums\Roles;
-use App\Domain\Users\Enums\UserStatus;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;

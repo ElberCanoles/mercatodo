@@ -28,7 +28,7 @@ class UserEditTest extends TestCase
 
     public function test_admin_can_access_to_users_edit_screen(): void
     {
-        $statuses = collect(UserStatus::asArray())->map(fn($status) => [
+        $statuses = collect(UserStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

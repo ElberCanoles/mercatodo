@@ -32,7 +32,8 @@ class ProductCsvImporter implements ProductImporterInterface
     public function __construct(
         private readonly FileService         $fileService,
         private readonly StoreProductAction  $storeProductAction,
-        private readonly UpdateProductAction $updateProductAction)
+        private readonly UpdateProductAction $updateProductAction
+    )
     {
     }
 

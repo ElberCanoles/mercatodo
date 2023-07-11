@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Exceptions;
 
@@ -10,7 +12,6 @@ class ApiHandler
     public function handle(int $code): JsonResponse
     {
         return match ($code) {
-
             Response::HTTP_NOT_FOUND => $this->jsonFormatException(
                 message: 'server.not_found',
                 code: Response::HTTP_NOT_FOUND

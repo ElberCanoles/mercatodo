@@ -19,5 +19,4 @@ class StoreExportData
             path: $data['path']
         );
     }
-
 }

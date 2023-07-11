@@ -32,7 +32,7 @@ class ProductCreateTest extends TestCase
             ->actingAs($this->admin)
             ->get(route(name: 'admin.products.create'));
 
-        $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
+        $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

@@ -31,5 +31,4 @@ class Import extends Model
         'summary' => 'array',
         'errors' => 'array'
     ];
-
 }

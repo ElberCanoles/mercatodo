@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Products\Actions;
 
@@ -11,7 +13,8 @@ class UpdateProductAction
 {
     public function __construct(
         private readonly SlugeableService           $slugService,
-        private readonly ProductUpdateImagesFactory $updateImagesFactory)
+        private readonly ProductUpdateImagesFactory $updateImagesFactory
+    )
     {
     }
 
@@ -43,5 +46,4 @@ class UpdateProductAction
 
         $product->save();
     }
-
 }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Admin\Product;
 
@@ -32,8 +34,7 @@ final class ProductController extends Controller
     public function index(Request $request): AnonymousResourceCollection|View
     {
         if (!$request->wantsJson()) {
-
-            $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
+            $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
                 'key' => $status,
                 'value' => trans($status),
             ])->toArray();
@@ -66,7 +67,7 @@ final class ProductController extends Controller
 
     public function create(): View
     {
-        $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
+        $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();
@@ -84,7 +85,7 @@ final class ProductController extends Controller
 
     public function edit(Product $product): View
     {
-        $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
+        $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

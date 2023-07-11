@@ -16,7 +16,6 @@ use Throwable;
 
 class PlaceToPayController extends Controller
 {
-
     public function __construct(private readonly PlaceToPayService $placeToPayService)
     {
     }

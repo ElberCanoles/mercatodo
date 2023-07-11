@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Products\DataTransferObjects;
 
@@ -14,8 +16,7 @@ class StoreProductData
         public string $status,
         public string $description,
         public ?array $images
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(FormRequest $request): self

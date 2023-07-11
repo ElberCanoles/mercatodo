@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Web\Base;
 
@@ -19,7 +21,8 @@ abstract class BaseProfileController extends Controller
 
     public function __construct(
         private readonly UpdateUserAction         $updateUserAction,
-        private readonly UpdateUserPasswordAction $updateUserPasswordAction)
+        private readonly UpdateUserPasswordAction $updateUserPasswordAction
+    )
     {
     }
 
