@@ -42,11 +42,6 @@ class Product extends Model
         'images',
     ];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
         'name',
         'slug',

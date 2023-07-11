@@ -10,7 +10,7 @@ use App\Domain\Shared\Enums\SystemParams;
 use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class OrderController extends Controller
 {

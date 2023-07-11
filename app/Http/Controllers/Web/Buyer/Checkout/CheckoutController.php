@@ -13,7 +13,7 @@ use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\StoreRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Throwable;
 
 class CheckoutController extends Controller

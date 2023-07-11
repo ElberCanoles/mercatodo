@@ -15,7 +15,7 @@ use App\Http\Requests\User\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 final class UserController extends Controller
 {

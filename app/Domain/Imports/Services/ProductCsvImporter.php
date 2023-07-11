@@ -43,7 +43,7 @@ class ProductCsvImporter implements ProductImporterInterface
             'name' => Str::ucfirst(Str::lower(value: $row[1] ?? '')),
             'price' => (float)($row[2] ?? 0),
             'stock' => (int)($row[3] ?? 0),
-            'status' => $this->mapStatus($row[4]) ?? '',
+            'status' => $this->mapStatus(status: $row[4] ?? ''),
             'description' => Str::ucfirst(Str::lower(value: $row[5] ?? ''))
         ];
     }

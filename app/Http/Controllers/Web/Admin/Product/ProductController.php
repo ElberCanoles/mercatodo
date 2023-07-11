@@ -18,7 +18,7 @@ use App\Http\Requests\Product\UpdateRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 final class ProductController extends Controller
 {

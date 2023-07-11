@@ -13,7 +13,7 @@ use App\Http\Requests\User\StoreRequest;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 final class RegisteredUserController extends Controller
 {

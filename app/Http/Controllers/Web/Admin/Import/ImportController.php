@@ -11,7 +11,7 @@ use App\Domain\Shared\Traits\Responses\MakeJsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 class ImportController extends Controller
 {

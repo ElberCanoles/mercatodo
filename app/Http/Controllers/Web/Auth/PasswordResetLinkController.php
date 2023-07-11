@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
 final class PasswordResetLinkController extends Controller

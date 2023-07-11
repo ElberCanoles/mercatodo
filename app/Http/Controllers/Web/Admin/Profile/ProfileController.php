@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Web\Admin\Profile;
 
 use App\Http\Controllers\Web\Base\BaseProfileController;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 final class ProfileController extends BaseProfileController
 {

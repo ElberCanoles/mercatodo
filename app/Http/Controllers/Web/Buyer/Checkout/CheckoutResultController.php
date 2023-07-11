@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Web\Buyer\Checkout;
 use App\Domain\Orders\Models\Order;
 use App\Domain\Payments\Models\Payment;
 use App\Http\Controllers\Controller;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 use Throwable;
 
 class CheckoutResultController extends Controller

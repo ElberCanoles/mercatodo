@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdatePasswordRequest;
 use App\Http\Requests\Profile\UpdateRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
+use Illuminate\Contracts\View\View;
 
 abstract class BaseProfileController extends Controller
 {
