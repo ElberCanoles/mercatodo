@@ -7,6 +7,7 @@ namespace App\Http\Requests\Auth;
 use App\Domain\Users\Enums\UserStatus;
 use App\Domain\Users\Models\User;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -26,7 +27,7 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array<string, Rule|array|string>
      */
     public function rules(): array
     {
@@ -63,21 +64,21 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.failed'),
+                'email' => trans(key: 'auth.failed'),
             ]);
         }
 
         if (User::find(auth()->user()->getAuthIdentifier())->status === UserStatus::INACTIVE) {
             RateLimiter::hit($this->throttleKey());
 
-            Auth::guard('web')->logout();
+            Auth::logout();
 
             request()->session()->invalidate();
 
             request()->session()->regenerateToken();
 
             throw ValidationException::withMessages([
-                'email' => trans('auth.account_inactive'),
+                'email' => trans(key: 'auth.account_inactive'),
             ]);
         }
 
