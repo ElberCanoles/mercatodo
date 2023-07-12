@@ -15,7 +15,6 @@ use Tests\TestCase;
 
 class StoreProductControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $user;
@@ -85,6 +84,4 @@ class StoreProductControllerTest extends TestCase
 
         $this->assertDatabaseCount(table: 'products', count: 0);
     }
-
-
 }

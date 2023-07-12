@@ -99,5 +99,4 @@ class UpdateProductControllerTest extends TestCase
         $this->putJson(route(name: 'api.products.update', parameters: ['product' => $this->product->id]), $this->payload)
             ->assertForbidden();
     }
-
 }

@@ -78,5 +78,4 @@ class ShowProductControllerTest extends TestCase
         $this->getJson(route(name: 'api.products.show', parameters: ['product' => $this->product->id]))
             ->assertForbidden();
     }
-
 }

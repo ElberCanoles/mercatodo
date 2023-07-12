@@ -13,7 +13,6 @@ use Tests\TestCase;
 
 class DestroyProductControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $user;
@@ -65,5 +64,4 @@ class DestroyProductControllerTest extends TestCase
         $this->deleteJson(route(name: 'api.products.destroy', parameters: ['product' => $this->product->id]))
             ->assertForbidden();
     }
-
 }

@@ -54,7 +54,6 @@ class IndexProductControllerTest extends TestCase
                         ->has('delete_url');
                 })->etc();
             });
-
     }
 
     public function test_unauthorized_user_can_not_call_index(): void
@@ -66,5 +65,4 @@ class IndexProductControllerTest extends TestCase
         $this->getJson(route(name: 'api.products.index'))
             ->assertForbidden();
     }
-
 }
