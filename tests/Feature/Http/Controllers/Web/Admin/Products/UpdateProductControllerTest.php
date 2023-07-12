@@ -11,6 +11,7 @@ use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class UpdateProductControllerTest extends TestCase
@@ -24,17 +25,15 @@ class UpdateProductControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Storage::fake();
+
         $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create();
         $this->admin->assignRole(role: Roles::ADMINISTRATOR);
         $this->admin->givePermissionTo(permission: Permission::create(['name' => Permissions::PRODUCTS_UPDATE]));
         $this->product = Product::factory()->create(['price' => 10, 'stock' => 10, 'status' => ProductStatus::AVAILABLE]);
 
-        $imagePath = tempnam(sys_get_temp_dir(), prefix: 'images');
-        $imageContent = file_get_contents(filename: 'https://via.placeholder.com/150');
-        file_put_contents($imagePath, $imageContent);
-
-        $this->image = new UploadedFile($imagePath, originalName: 'image.jpg', mimeType: null, error: null, test: true);
+        $this->image = UploadedFile::fake()->image(name: 'image.png')->size(kilobytes: 100);
     }
 
     public function test_admin_can_update_products(): void

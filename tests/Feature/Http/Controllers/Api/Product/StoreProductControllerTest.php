@@ -8,6 +8,7 @@ use App\Domain\Users\Models\Permission;
 use App\Domain\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -24,6 +25,7 @@ class StoreProductControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Storage::fake();
         $this->user = User::factory()->create();
 
         /**
@@ -31,19 +33,13 @@ class StoreProductControllerTest extends TestCase
          */
         $product = Product::factory()->make();
 
-        $imagePath = tempnam(directory: sys_get_temp_dir(), prefix: 'images');
-        $imageContent = file_get_contents(filename: 'https://via.placeholder.com/150');
-        file_put_contents($imagePath, $imageContent);
-
-        $image = new UploadedFile($imagePath, originalName: 'image.jpg', mimeType: null, error: null, test: true);
-
         $this->payload = [
             'name' => $product->name,
             'description' => $product->description,
             'price' => $product->price,
             'stock' => $product->stock,
             'status' => $product->status,
-            'images' => [$image]
+            'images' => [UploadedFile::fake()->image(name: 'image.png')->size(kilobytes: 100)]
         ];
     }
 
@@ -61,7 +57,7 @@ class StoreProductControllerTest extends TestCase
 
         $this->postJson(route(name: 'api.products.store'), $this->payload)
             ->assertCreated()
-            ->assertJson(function (AssertableJson $json){
+            ->assertJson(function (AssertableJson $json) {
                 $json->where(key: 'message', expected: trans(key: 'server.record_created'));
             });
 
@@ -89,7 +85,6 @@ class StoreProductControllerTest extends TestCase
 
         $this->assertDatabaseCount(table: 'products', count: 0);
     }
-
 
 
 }
