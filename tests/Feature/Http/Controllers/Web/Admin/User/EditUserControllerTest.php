@@ -9,7 +9,7 @@ use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserUpdateTest extends TestCase
+class EditUserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,30 +19,27 @@ class UserUpdateTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->seed(RoleSeeder::class);
+        $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create();
         $this->admin->assignRole(role: Roles::ADMINISTRATOR);
         $this->buyer = User::factory()->create();
         $this->buyer->assignRole(role: Roles::BUYER);
     }
 
-    public function test_admin_can_update_users(): void
+    public function test_admin_can_access_to_users_edit_screen(): void
     {
+        $statuses = collect(UserStatus::asArray())->map(fn ($status) => [
+            'key' => $status,
+            'value' => trans($status),
+        ])->toArray();
+
         $response = $this
             ->actingAs($this->admin)
-            ->put(route('admin.users.update', ['user' => $this->buyer->id]), [
-                'name' => 'New name',
-                'last_name' => 'New last name',
-                'status' => UserStatus::INACTIVE,
-            ]);
+            ->get(route(name: 'admin.users.edit', parameters: ['user' => $this->buyer->id]));
 
         $response->assertOk()
-            ->assertSessionDoesntHaveErrors();
-
-        $this->buyer->refresh();
-
-        $this->assertSame(expected: 'New name', actual: $this->buyer->name);
-        $this->assertSame(expected: 'New last name', actual: $this->buyer->last_name);
-        $this->assertSame(expected: UserStatus::INACTIVE, actual: $this->buyer->status);
+            ->assertViewIs(value: 'admin.users.crud.edit')
+            ->assertViewHas('user', $this->buyer)
+            ->assertViewHas('statuses', $statuses);
     }
 }

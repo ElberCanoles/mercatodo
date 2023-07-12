@@ -8,7 +8,7 @@ use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserIndexTest extends TestCase
+class IndexUserControllerTest extends TestCase
 {
     use RefreshDatabase;
 
