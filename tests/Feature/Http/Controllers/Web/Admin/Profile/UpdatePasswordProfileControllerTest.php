@@ -8,7 +8,7 @@ use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpdatePasswordTest extends TestCase
+class UpdatePasswordProfileControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,6 +20,9 @@ class UpdatePasswordTest extends TestCase
 
     public function test_admin_password_can_be_updated(): void
     {
+        /**
+         * @var User $user
+         */
         $user = User::factory()->create();
         $user->assignRole(role: Roles::ADMINISTRATOR);
 

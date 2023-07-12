@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Web\Buyer\Profile;
+namespace Tests\Feature\Http\Controllers\Web\Admin\Profile;
 
 use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
@@ -8,7 +8,7 @@ use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpdateTest extends TestCase
+class UpdateProfileControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,30 +18,34 @@ class UpdateTest extends TestCase
         $this->seed(class: RoleSeeder::class);
     }
 
-    public function test_buyer_profile_page_is_displayed(): void
+    public function test_admin_profile_page_is_displayed(): void
     {
-        $user = User::factory()
-            ->create();
+        /**
+         * @var User $user
+         */
+        $user = User::factory()->create();
 
-        $user->assignRole(role: Roles::BUYER);
+        $user->assignRole(role: Roles::ADMINISTRATOR);
 
         $response = $this
             ->actingAs($user)
-            ->get(uri: '/buyer/profile');
+            ->get(uri: '/admin/profile');
 
         $response->assertOk();
     }
 
-    public function test_buyer_profile_information_can_be_updated(): void
+    public function test_admin_profile_information_can_be_updated(): void
     {
-        $user = User::factory()
-            ->create();
+        /**
+         * @var User $user
+         */
+        $user = User::factory()->create();
 
-        $user->assignRole(role: Roles::BUYER);
+        $user->assignRole(role: Roles::ADMINISTRATOR);
 
         $response = $this
             ->actingAs($user)
-            ->patch('/buyer/profile', [
+            ->patch(uri: '/admin/profile', data: [
                 'name' => 'Test user',
                 'last_name' => 'User test',
                 'email' => 'test@example.com'
@@ -58,16 +62,18 @@ class UpdateTest extends TestCase
         $this->assertNull($user->email_verified_at);
     }
 
-    public function test_buyer_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
+    public function test_admin_email_verification_status_is_unchanged_when_the_email_address_is_unchanged(): void
     {
-        $user = User::factory()
-            ->create();
+        /**
+         * @var User $user
+         */
+        $user = User::factory()->create();
 
-        $user->assignRole(role: Roles::BUYER);
+        $user->assignRole(role: Roles::ADMINISTRATOR);
 
         $response = $this
             ->actingAs($user)
-            ->patch(uri: '/buyer/profile', data: [
+            ->patch(uri: '/admin/profile', data: [
                 'name' => 'Test User',
                 'last_name' => 'User Test',
                 'email' => $user->email

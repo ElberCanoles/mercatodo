@@ -8,7 +8,7 @@ use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpdatePasswordTest extends TestCase
+class UpdatePasswordProfileControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -20,12 +20,15 @@ class UpdatePasswordTest extends TestCase
 
     public function test_buyer_password_can_be_updated(): void
     {
+        /**
+         * @var User $user
+         */
         $user = User::factory()->create();
         $user->assignRole(role: Roles::BUYER);
 
         $response = $this
             ->actingAs($user)
-            ->patch('/buyer/profile/password', [
+            ->patch(uri: '/buyer/profile/password', data: [
                 'current_password' => 'password',
                 'password' => 'new_password',
                 'password_confirmation' => 'new_password',

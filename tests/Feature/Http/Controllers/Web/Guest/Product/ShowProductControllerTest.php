@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Web\Guest\Products;
+namespace Tests\Feature\Http\Controllers\Web\Guest\Product;
 
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Products\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ProductShowTest extends TestCase
+class ShowProductControllerTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Web\Guest\Products;
+namespace Tests\Feature\Http\Controllers\Web\Guest\Product;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ProductIndexTest extends TestCase
+class IndexProductControllerTest extends TestCase
 {
     use RefreshDatabase;
 
