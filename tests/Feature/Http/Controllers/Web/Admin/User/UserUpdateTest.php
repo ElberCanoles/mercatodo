@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Web\Admin\Users;
+namespace Tests\Feature\Http\Controllers\Web\Admin\User;
 
 use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Enums\UserStatus;
