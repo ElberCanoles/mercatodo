@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Web\Admin\Products;
+namespace Tests\Feature\Http\Controllers\Web\Admin\Product;
 
 use App\Domain\Products\Enums\ProductStatus;
 use App\Domain\Users\Enums\Permissions;
