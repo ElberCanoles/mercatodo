@@ -55,7 +55,7 @@ class ProductCsvImporter implements ProductImporterInterface
 
         $file = $this->openFile($relativePath);
 
-        fgets($file);
+        fgetcsv($file);
 
         $rowPosition = $this::DATA_START_POSITION;
 

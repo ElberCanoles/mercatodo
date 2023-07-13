@@ -23,6 +23,8 @@ class ProductExportJobTest extends TestCase
     {
         parent::setUp();
         $this->diskName = config(key: 'filesystems.default');
+        Storage::fake($this->diskName);
+        Product::factory(count: 10)->create();
         $this->headings = [
             trans(key: 'product.export_id_head'),
             trans(key: 'product.export_name_head'),
@@ -35,9 +37,6 @@ class ProductExportJobTest extends TestCase
 
     public function test_it_generate_export_csv_file_successfully(): void
     {
-
-        Storage::fake($this->diskName);
-        Product::factory(count: 10)->create();
 
         (new ProductExportJob())->handle(new ProductCsvExporter());
 

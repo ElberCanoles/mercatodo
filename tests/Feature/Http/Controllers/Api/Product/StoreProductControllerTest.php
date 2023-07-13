@@ -24,7 +24,7 @@ class StoreProductControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Storage::fake();
+        Storage::fake(config(key: 'filesystems.default'));
         $this->user = User::factory()->create();
 
         /**

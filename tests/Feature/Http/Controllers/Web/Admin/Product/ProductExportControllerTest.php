@@ -1,6 +1,6 @@
 <?php
 
-namespace Http\Controllers\Web\Admin\Product;
+namespace Tests\Feature\Http\Controllers\Web\Admin\Product;
 
 use App\Domain\Products\Jobs\ProductExportJob;
 use App\Domain\Users\Enums\Roles;
@@ -8,6 +8,7 @@ use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class ProductExportControllerTest extends TestCase
@@ -19,6 +20,7 @@ class ProductExportControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        Storage::fake(config(key: 'filesystems.default'));
         $this->seed(class: RoleSeeder::class);
         $this->user = User::factory()->create();
     }

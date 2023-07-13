@@ -25,7 +25,7 @@ class UpdateProductControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Storage::fake();
+        Storage::fake(config(key: 'filesystems.default'));
 
         $this->seed(class: RoleSeeder::class);
         $this->admin = User::factory()->create();
