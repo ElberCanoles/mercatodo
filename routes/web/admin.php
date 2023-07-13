@@ -23,9 +23,9 @@ Route::group(['middleware' => ['auth', 'verified', 'active', 'role:' . Roles::AD
 
             Route::resource('users', UserController::class)->only(['index', 'edit', 'update']);
 
-            Route::get('products/export', ProductExportController::class);
+            Route::get('products/export', ProductExportController::class)->name('products.export');
 
-            Route::post('products/import', ProductImportController::class);
+            Route::post('products/import', ProductImportController::class)->name('products.import');
 
             Route::resource('products', ProductController::class);
 
