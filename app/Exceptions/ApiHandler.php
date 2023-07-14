@@ -33,8 +33,8 @@ class ApiHandler
             ),
 
             default => $this->jsonFormatException(
-                message: 'server.internal_error',
-                code: Response::HTTP_INTERNAL_SERVER_ERROR
+                message: 'server.unavailable_service',
+                code: $code
             ),
         };
     }
