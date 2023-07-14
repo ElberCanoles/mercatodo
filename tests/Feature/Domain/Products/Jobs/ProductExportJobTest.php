@@ -1,9 +1,9 @@
 <?php
 
-namespace Domain\Products\Jobs;
+namespace Tests\Feature\Domain\Products\Jobs;
 
+use App\Contracts\Exports\ProductExporterInterface;
 use App\Domain\Products\Models\Product;
-use App\Domain\Exports\Services\ProductCsvExporter;
 use App\Domain\Products\Jobs\ProductExportJob;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +38,7 @@ class ProductExportJobTest extends TestCase
     public function test_it_generate_export_csv_file_successfully(): void
     {
 
-        (new ProductExportJob())->handle(new ProductCsvExporter());
+        (new ProductExportJob())->handle(resolve(name: ProductExporterInterface::class));
 
         $files = Storage::disk($this->diskName)->files(directory: $this::PRODUCTS_EXPORT_PATH);
 
