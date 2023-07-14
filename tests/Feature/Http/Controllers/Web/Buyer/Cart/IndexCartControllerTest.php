@@ -7,7 +7,6 @@ use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
 use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class IndexCartControllerTest extends TestCase
@@ -22,20 +21,6 @@ class IndexCartControllerTest extends TestCase
         parent::setUp();
         $this->seed(class: RoleSeeder::class);
         $this->user = User::factory()->create();
-        Product::factory(count: 10)->create();
-
-        /**
-         * @var Product $product
-         */
-        foreach (Product::limit(5)->get() as $product) {
-            $this->user->cart->products()->syncWithoutDetaching([
-                $product->id => [
-                    'quantity' => rand(1, 5),
-                    'name' => $product->name,
-                    'price' => $product->price
-                ]
-            ]);
-        }
     }
 
     public function test_guest_user_is_redirected_to_login(): void
@@ -57,6 +42,21 @@ class IndexCartControllerTest extends TestCase
 
     public function test_authorized_user_can_get_products_list_in_cart(): void
     {
+        Product::factory(count: 10)->create();
+
+        /**
+         * @var Product $product
+         */
+        foreach (Product::query()->limit(value: 5)->get() as $product) {
+            $this->user->cart->products()->syncWithoutDetaching([
+                $product->id => [
+                    'quantity' => rand(1, 5),
+                    'name' => $product->name,
+                    'price' => $product->price
+                ]
+            ]);
+        }
+
         $this->user->assignRole(role: Roles::BUYER);
 
         $this->actingAs($this->user)
