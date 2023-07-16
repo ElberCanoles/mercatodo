@@ -3,6 +3,8 @@
 namespace App\Domain\Exports\Models;
 
 use Carbon\Carbon;
+use Database\Factories\ExportFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,4 +24,9 @@ class Export extends Model
         'module',
         'path'
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return ExportFactory::new();
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Domain\Imports\Action;
+namespace Domain\Imports\Actions;
 
 use App\Domain\Imports\Actions\StoreImportAction;
 use App\Domain\Imports\DataTransferObjects\StoreImportData;
