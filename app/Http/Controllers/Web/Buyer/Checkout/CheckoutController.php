@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Checkout\StoreRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
-use Throwable;
+use Exception;
 
 class CheckoutController extends Controller
 {
@@ -68,8 +68,15 @@ class CheckoutController extends Controller
             return $this->successResponse(
                 data: ['process_url' => $paymentProcessor->decodeProcessUrl($response)]
             );
-        } catch (Throwable $exception) {
-            report($exception);
+        } catch (Exception $exception) {
+            logger()->error(message: 'error storing checkout', context: [
+                'module' => 'CheckoutController.store',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
 
             return $this->errorResponseWithBag(
                 collection: ['server' => [trans(key: 'server.unavailable_service')]]

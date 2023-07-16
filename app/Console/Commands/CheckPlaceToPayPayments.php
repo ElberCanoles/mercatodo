@@ -8,7 +8,7 @@ use App\Domain\Payments\Factories\PlaceToPay\PlaceToPayPaymentActionsFactory;
 use App\Domain\Payments\Models\Payment;
 use App\Domain\Payments\Services\PlaceToPay\PlaceToPayService;
 use Illuminate\Console\Command;
-use Throwable;
+use Exception;
 
 class CheckPlaceToPayPayments extends Command
 {
@@ -31,16 +31,17 @@ class CheckPlaceToPayPayments extends Command
      */
     public function handle(): void
     {
-        $placeToPayService = resolve(name: PlaceToPayService::class);
-
-        $payments = Payment::query()
-            ->with(relations: ['order'])
-            ->whereProvider(provider: Provider::PLACE_TO_PAY)
-            ->whereStatus(status: PaymentStatus::PENDING)
-            ->select(columns: ['id', 'order_id', 'provider', 'data_provider', 'status'])
-            ->get();
-
         try {
+
+            $placeToPayService = resolve(name: PlaceToPayService::class);
+
+            $payments = Payment::query()
+                ->with(relations: ['order'])
+                ->whereProvider(provider: Provider::PLACE_TO_PAY)
+                ->whereStatus(status: PaymentStatus::PENDING)
+                ->select(columns: ['id', 'order_id', 'provider', 'data_provider', 'status'])
+                ->get();
+
             $checkPaymentActions = (new PlaceToPayPaymentActionsFactory($placeToPayService))->make();
 
             foreach ($payments as $payment) {
@@ -52,8 +53,17 @@ class CheckPlaceToPayPayments extends Command
             }
 
             $this->info(string: 'Scheduled task to check PlaceToPay payments statuses executed successfully');
-        } catch (Throwable $throwable) {
-            report($throwable);
+        } catch (Exception $exception) {
+            logger()->error(message: 'error during review pending payments of place to pay', context: [
+                'module' => 'CheckPlaceToPayPayments.handle',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
+
+            $this->error(string: 'Scheduled task to check PlaceToPay payments failed');
         }
     }
 }

@@ -6,7 +6,7 @@ namespace App\Domain\Products\Factories;
 
 use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Services\FileService;
-use Throwable;
+use Exception;
 
 class ProductUpdateImagesFactory
 {
@@ -52,8 +52,15 @@ class ProductUpdateImagesFactory
                     'path' => $imagePath
                 ]);
             }
-        } catch (Throwable $throwable) {
-            report(exception: $throwable);
+        } catch (Exception $exception) {
+            logger()->error(message: 'error updating product images', context: [
+                'module' => 'ProductUpdateImagesFactory.create',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
         }
     }
 }

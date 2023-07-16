@@ -25,7 +25,14 @@ class ProductCartController extends Controller
 
             return response()->json(data: ['message' => trans(key: 'product.added_to_cart')]);
         } catch (ProductExceptions $exception) {
-            report($exception);
+            logger()->error(message: 'error to add product to cart', context: [
+                'module' => 'ProductCartController.add',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
 
             return $this->errorResponse(
                 message: $exception->getMessage(),

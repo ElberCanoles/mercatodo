@@ -12,7 +12,7 @@ use App\Domain\Products\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Throwable;
+use Exception;
 
 final class ProductCsvExporter implements ProductExporterInterface
 {
@@ -64,8 +64,15 @@ final class ProductCsvExporter implements ProductExporterInterface
             $this->storeExport(fileName: $fileName);
 
             fclose(stream: $file);
-        } catch (Throwable $throwable) {
-            report($throwable);
+        } catch (Exception $exception) {
+            logger()->error(message: 'error during product export', context: [
+                'module' => 'ProductCsvExporter.export',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
         }
     }
 
