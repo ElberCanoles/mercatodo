@@ -23,7 +23,7 @@ class ImportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'file', 'mimes:csv']
+            'file' => ['required', 'file', 'mimes:csv', 'max:10000']
         ];
     }
 
@@ -32,7 +32,8 @@ class ImportRequest extends FormRequest
         return [
             'file.required' => 'El archivo es requerido',
             'file.file' => 'Debe adjuntar un archivo',
-            'file.mimes' => 'El archivo tiene que ser de tipo csv'
+            'file.mimes' => 'El archivo tiene que ser de tipo csv',
+            'file.max' => 'El archivo no debe pesar mas de 10 MB'
         ];
     }
 }

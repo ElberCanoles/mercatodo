@@ -3,6 +3,8 @@
 namespace App\Domain\Imports\Models;
 
 use Carbon\Carbon;
+use Database\Factories\ImportFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,4 +33,10 @@ class Import extends Model
         'summary' => 'array',
         'errors' => 'array'
     ];
+
+    protected static function newFactory(): Factory
+    {
+        return ImportFactory::new();
+    }
+
 }
