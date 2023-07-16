@@ -7,6 +7,7 @@ use App\Domain\Orders\Models\Order;
 use App\Domain\Payments\Models\Payment;
 use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
+use App\Domain\Users\QueryBuilders\UserQueryBuilder;
 use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -36,8 +37,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property-read Collection|Builder|Order[]|null $orders
  * @property-read Collection|Builder|Cart $cart
  *
- * @method static User create(array $attributes = [])
- * @method static User|null find($id, $columns = ['*'])
+ * @method static UserQueryBuilder query()
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -70,6 +70,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected static function newFactory(): Factory
     {
         return UserFactory::new();
+    }
+
+    public function newEloquentBuilder($query): UserQueryBuilder
+    {
+        return new UserQueryBuilder($query);
     }
 
     public function roles(): BelongsToMany

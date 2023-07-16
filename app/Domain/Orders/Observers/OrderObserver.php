@@ -11,7 +11,7 @@ class OrderObserver
 {
     public function created(Order $order): void
     {
-        $cart = User::find(auth()->user()->getAuthIdentifier())->cart;
+        $cart = User::query()->find(auth()->user()->getAuthIdentifier())->cart;
 
         foreach ($cart->products as $product) {
             $order->products()->syncWithoutDetaching([

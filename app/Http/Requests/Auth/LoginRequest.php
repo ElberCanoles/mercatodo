@@ -68,7 +68,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        if (User::find(auth()->user()->getAuthIdentifier())->status === UserStatus::INACTIVE) {
+        if (User::query()->find(auth()->user()->getAuthIdentifier())->status === UserStatus::INACTIVE) {
             RateLimiter::hit($this->throttleKey());
 
             Auth::logout();
