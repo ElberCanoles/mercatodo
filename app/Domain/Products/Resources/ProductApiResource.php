@@ -18,16 +18,16 @@ class ProductApiResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => number_format(num: $this->price, decimal_separator: ',', thousands_separator: '.'),
-            'stock' => number_format(num: $this->stock, decimal_separator: ',', thousands_separator: '.'),
+            'price' => $this->present()->price(),
+            'stock' => $this->present()->stock(),
             'status_key' => $this->status,
-            'status_value' => trans($this->status),
+            'status_value' => $this->present()->statusTranslated(),
             'description' => $this->description,
             'images' => $this->images,
-            'created_at' => $this->created_at->format(format: 'd-m-Y'),
-            'show_url' => route(name: 'api.products.show', parameters: ['product' => $this->id]),
-            'update_url' => route(name: 'api.products.update', parameters: ['product' => $this->id]),
-            'delete_url' => route(name: 'api.products.destroy', parameters: ['product' => $this->id])
+            'created_at' => $this->present()->createdAt(),
+            'show_url' => $this->present()->apiShowUrl(),
+            'update_url' => $this->present()->apiUpdateUrl(),
+            'delete_url' => $this->present()->apiDestroyUrl()
         ];
     }
 }

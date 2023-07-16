@@ -5,6 +5,7 @@ namespace App\Domain\Products\Models;
 use App\Domain\Carts\Models\Cart;
 use App\Domain\Images\Models\Image;
 use App\Domain\Orders\Models\Order;
+use App\Domain\Products\Presenters\ProductPresenter;
 use App\Domain\Products\UserQueryBuilder\ProductQueryBuilder;
 use Carbon\Carbon;
 use Database\Factories\ProductFactory;
@@ -58,6 +59,13 @@ class Product extends Model
     public function newEloquentBuilder($query): ProductQueryBuilder
     {
         return new ProductQueryBuilder($query);
+    }
+
+    public function present(): ProductPresenter
+    {
+        $presenter = ProductPresenter::getInstance();
+        $presenter->setProduct($this);
+        return $presenter;
     }
 
     public function carts(): MorphToMany
