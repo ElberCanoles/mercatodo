@@ -3,10 +3,12 @@
 namespace Tests\Feature\Domain\Products\Jobs;
 
 use App\Contracts\Exports\ProductExporterInterface;
+use App\Domain\Exports\Mails\ExportSuccess;
 use App\Domain\Products\Models\Product;
 use App\Domain\Products\Jobs\ProductExportJob;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class ProductExportJobTest extends TestCase
@@ -24,6 +26,7 @@ class ProductExportJobTest extends TestCase
         parent::setUp();
         $this->diskName = config(key: 'filesystems.default');
         Storage::fake($this->diskName);
+        Mail::fake();
         Product::factory(count: 10)->create();
         $this->headings = [
             trans(key: 'product.export_id_head'),
@@ -71,6 +74,8 @@ class ProductExportJobTest extends TestCase
             $this->assertStringContainsString(needle: trans(key: $product->status), haystack: $csvFileGenerated);
             $this->assertStringContainsString(needle: $product->description, haystack: $csvFileGenerated);
         }
+
+        Mail::assertSent(mailable: ExportSuccess::class);
     }
 
 }

@@ -3,12 +3,14 @@
 namespace Tests\Feature\Domain\Products\Jobs;
 
 use App\Contracts\Imports\ProductImporterInterface;
+use App\Domain\Imports\Mails\ImportSuccess;
 use App\Domain\Imports\Models\Import;
 use App\Domain\Products\Jobs\ProductImportJob;
 use App\Domain\Products\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class ProductImportJobTest extends TestCase
@@ -24,6 +26,7 @@ class ProductImportJobTest extends TestCase
         parent::setUp();
         $this->diskName = config(key: 'filesystems.default');
         Storage::fake($this->diskName);
+        Mail::fake();
     }
 
     public function test_it_import_products_csv_file_successfully(): void
@@ -92,5 +95,7 @@ class ProductImportJobTest extends TestCase
             'stock' => 20,
             'status' => 'product.unavailable'
         ]);
+
+        Mail::assertSent(mailable: ImportSuccess::class);
     }
 }
