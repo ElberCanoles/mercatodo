@@ -17,11 +17,11 @@ class ImportResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'module' => trans(key: $this->module),
-            'date' => $this->created_at->format(format: 'd-m-Y'),
-            'hour' => $this->created_at->isoFormat(format: 'H:mm:ss A'),
+            'module' => $this->present()->moduleTranslated(),
+            'date' => $this->present()->date(),
+            'hour' => $this->present()->hour(),
             'path' => $this->path,
-            'show_url' => route(name: 'admin.imports.show', parameters: ['import' => $this->id])
+            'show_url' => $this->present()->adminShowUrl()
         ];
     }
 }

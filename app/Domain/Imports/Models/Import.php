@@ -2,6 +2,7 @@
 
 namespace App\Domain\Imports\Models;
 
+use App\Domain\Imports\Presenters\ImportPresenter;
 use Carbon\Carbon;
 use Database\Factories\ImportFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -37,6 +38,13 @@ class Import extends Model
     protected static function newFactory(): Factory
     {
         return ImportFactory::new();
+    }
+
+    public function present(): ImportPresenter
+    {
+        $presenter = ImportPresenter::getInstance();
+        $presenter->setImport($this);
+        return $presenter;
     }
 
 }
