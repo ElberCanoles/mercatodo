@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-27af8750.css",
+    "file": "assets/app-6ef578c5.css",
     "isEntry": true,
     "src": "resources/css/app.css"
   },
@@ -30,9 +30,14 @@
     "src": "resources/fonts/fontawesome-webfont.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-43aae789.js",
+    "file": "assets/app-a6e8a9c9.js",
     "isEntry": true,
     "src": "resources/js/app.js"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-4e3c3de0.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
   },
   "resources/sass/gallery.scss": {
     "file": "assets/gallery-07eca355.css",

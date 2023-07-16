@@ -1,5 +1,4 @@
 import '@/bootstrap';
-import '@/plugins/toastr';
 
 import { createApp } from 'vue/dist/vue.esm-bundler';
 

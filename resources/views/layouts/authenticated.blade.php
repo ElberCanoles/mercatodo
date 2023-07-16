@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
 
-    @vite(['resources/css/app.css', 'resources/sass/gallery.scss', 'resources/css/template/dashboard.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/sass/gallery.scss', 'resources/css/template/dashboard.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 <body>
