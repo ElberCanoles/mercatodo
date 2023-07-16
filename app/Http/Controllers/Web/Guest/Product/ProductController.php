@@ -25,17 +25,11 @@ class ProductController extends Controller
         }
 
         $products = Product::query()
+            ->whereStatus(status: ProductStatus::AVAILABLE)
+            ->whereColumContains(column: 'name', value: $request->input(key: 'name'))
+            ->wherePriceGreaterThanOrEqualsTo(value: $request->input(key: 'minimum_price'))
+            ->wherePriceLessThanOrEqualsTo(value: $request->input(key: 'maximum_price'))
             ->select(columns: ['id', 'name', 'slug', 'price', 'stock'])
-            ->where(column: 'status', operator: '=', value: ProductStatus::AVAILABLE)
-            ->when($request->input(key: 'name'), function ($q) use ($request) {
-                $q->where(column: 'name', operator: 'like', value: '%' . $request->input(key: 'name') . '%');
-            })
-            ->when($request->input(key: 'minimum_price'), function ($q) use ($request) {
-                $q->where(column: 'price', operator: '>=', value: $request->input(key: 'minimum_price'));
-            })
-            ->when($request->input(key: 'maximum_price'), function ($q) use ($request) {
-                $q->where(column: 'price', operator: '<=', value: $request->input(key: 'maximum_price'));
-            })
             ->orderBy(column: 'products.created_at', direction: 'DESC')
             ->orderBy(column: 'products.id', direction: 'DESC')
             ->paginate(perPage: SystemParams::LENGTH_PER_PAGE);
@@ -47,7 +41,7 @@ class ProductController extends Controller
     {
         $product = Product::query()
             ->where(column: 'slug', operator: '=', value: $slug)
-            ->where(column: 'status', operator: '=', value: ProductStatus::AVAILABLE)
+            ->whereStatus(status: ProductStatus::AVAILABLE)
             ->firstOrFail();
 
         return view(view: 'guest.products.show', data: [

@@ -34,7 +34,7 @@ final class ProductController extends Controller
     public function index(Request $request): AnonymousResourceCollection|View
     {
         if (!$request->wantsJson()) {
-            $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
+            $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
                 'key' => $status,
                 'value' => trans($status),
             ])->toArray();
@@ -45,19 +45,11 @@ final class ProductController extends Controller
         }
 
         $products = Product::query()
+            ->whereColumContains(column: 'name', value: $request->input(key: 'name'))
+            ->whereColumContains(column: 'price', value: $request->input(key: 'price'))
+            ->whereColumContains(column: 'stock', value: $request->input(key: 'stock'))
+            ->whereStatus(status: $request->input(key: 'status'))
             ->select(columns: ['id', 'name', 'price', 'stock', 'status', 'created_at'])
-            ->when($request->input(key: 'name'), function ($q) use ($request) {
-                $q->where(column: 'name', operator: 'like', value: '%' . $request->input(key: 'name') . '%');
-            })
-            ->when($request->input(key: 'price'), function ($q) use ($request) {
-                $q->where(column: 'price', operator: 'like', value: '%' . $request->input(key: 'price') . '%');
-            })
-            ->when($request->input(key: 'stock'), function ($q) use ($request) {
-                $q->where(column: 'stock', operator: 'like', value: '%' . $request->input(key: 'stock') . '%');
-            })
-            ->when($request->input(key: 'status'), function ($q) use ($request) {
-                $q->where(column: 'status', operator: '=', value: $request->input(key: 'status'));
-            })
             ->orderBy(column: 'created_at', direction: 'DESC')
             ->orderBy(column: 'id', direction: 'DESC')
             ->paginate(perPage: SystemParams::LENGTH_PER_PAGE);
@@ -67,7 +59,7 @@ final class ProductController extends Controller
 
     public function create(): View
     {
-        $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
+        $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();
@@ -85,7 +77,7 @@ final class ProductController extends Controller
 
     public function edit(Product $product): View
     {
-        $statuses = collect(ProductStatus::asArray())->map(fn ($status) => [
+        $statuses = collect(ProductStatus::asArray())->map(fn($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

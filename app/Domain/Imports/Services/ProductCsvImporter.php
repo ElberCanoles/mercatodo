@@ -106,7 +106,7 @@ class ProductCsvImporter implements ProductImporterInterface
 
     private function updateProduct(array $data): void
     {
-        $product = Product::find($data['id']);
+        $product = Product::query()->find($data['id']);
         $product->fill([
             'name' => $data['name'],
             'price' => $data['price'],

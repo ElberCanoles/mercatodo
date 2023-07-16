@@ -20,7 +20,7 @@ class StoreProductAction
 
     public function execute(StoreProductData $data): void
     {
-        $product = Product::create([
+        $product = Product::query()->create([
             'name' => $data->name,
             'slug' => $this->slugService->getUniqueSlugByEloquentModel(
                 input: $data->name,

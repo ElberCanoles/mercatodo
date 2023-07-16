@@ -5,6 +5,7 @@ namespace App\Domain\Products\Models;
 use App\Domain\Carts\Models\Cart;
 use App\Domain\Images\Models\Image;
 use App\Domain\Orders\Models\Order;
+use App\Domain\Products\UserQueryBuilder\ProductQueryBuilder;
 use Carbon\Carbon;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,9 +30,7 @@ use Illuminate\Database\Eloquent\Collection;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  *
- * @method static Product|null find($id, $columns = ['*'])
- * @method static Product|null first()
- * @method static Product create(array $attributes = [])
+ * @method static ProductQueryBuilder query()
  */
 class Product extends Model
 {
@@ -54,6 +53,11 @@ class Product extends Model
     protected static function newFactory(): Factory
     {
         return ProductFactory::new();
+    }
+
+    public function newEloquentBuilder($query): ProductQueryBuilder
+    {
+        return new ProductQueryBuilder($query);
     }
 
     public function carts(): MorphToMany
