@@ -8,7 +8,8 @@ use App\Contracts\Imports\ProductImporterInterface;
 use App\Domain\Imports\Actions\StoreImportAction;
 use App\Domain\Imports\DataTransferObjects\StoreImportData;
 use App\Domain\Imports\Enums\ImportModules;
-use App\Domain\Imports\Models\Import;
+use App\Domain\Imports\Mails\ImportFailure;
+use App\Domain\Imports\Mails\ImportSuccess;
 use App\Domain\Products\Actions\StoreProductAction;
 use App\Domain\Products\Actions\UpdateProductAction;
 use App\Domain\Products\DataTransferObjects\StoreProductData;
@@ -19,6 +20,8 @@ use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use Exception;
 
 class ProductCsvImporter implements ProductImporterInterface
 {
@@ -53,31 +56,46 @@ class ProductCsvImporter implements ProductImporterInterface
 
     public function import(string $filePath): void
     {
-        $relativePath = $this->getRelativeImportPath($filePath);
+        try {
+            $relativePath = $this->getRelativeImportPath($filePath);
 
-        $file = $this->openFile($relativePath);
+            $file = $this->openFile($relativePath);
 
-        fgetcsv($file);
+            fgetcsv($file);
 
-        $rowPosition = $this::DATA_START_POSITION;
+            $rowPosition = $this::DATA_START_POSITION;
 
-        while (($row = fgetcsv(stream: $file, length: 500))) {
-            $row = $this->mapRow($row);
+            while (($row = fgetcsv(stream: $file, length: 500))) {
+                $row = $this->mapRow($row);
 
-            if ($this->isValidRow($row, $rowPosition)) {
-                if (!$this->productExists($row['id'])) {
-                    $this->createProduct($row);
-                } else {
-                    $this->updateProduct($row);
+                if ($this->isValidRow($row, $rowPosition)) {
+                    if (!$this->productExists($row['id'])) {
+                        $this->createProduct($row);
+                    } else {
+                        $this->updateProduct($row);
+                    }
                 }
+
+                $rowPosition++;
             }
 
-            $rowPosition++;
+            $this->saveImportProcessSummary($filePath);
+
+            fclose($file);
+
+            Mail::to(config(key: 'admin.email'))->send(new ImportSuccess());
+        } catch (Exception $exception) {
+            logger()->error(message: 'error during product import', context: [
+                'module' => 'ProductCsvImporter.import',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
+
+            Mail::to(config(key: 'admin.email'))->send(new ImportFailure());
         }
-
-        $this->saveImportProcessSummary($filePath);
-
-        fclose($file);
     }
 
     private function getRelativeImportPath(string $filePath): string
@@ -106,7 +124,7 @@ class ProductCsvImporter implements ProductImporterInterface
 
     private function updateProduct(array $data): void
     {
-        $product = Product::find($data['id']);
+        $product = Product::query()->find($data['id']);
         $product->fill([
             'name' => $data['name'],
             'price' => $data['price'],

@@ -6,7 +6,7 @@ namespace App\Domain\Products\Factories;
 
 use App\Domain\Products\Models\Product;
 use App\Domain\Shared\Services\FileService;
-use Throwable;
+use Exception;
 
 class ProductStoreImagesFactory
 {
@@ -29,8 +29,15 @@ class ProductStoreImagesFactory
                     'path' => $imagePath
                 ]);
             }
-        } catch (Throwable $throwable) {
-            report(exception: $throwable);
+        } catch (Exception $exception) {
+            logger()->error(message: 'error storing product images', context: [
+                'module' => 'ProductStoreImagesFactory.create',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
         }
     }
 }

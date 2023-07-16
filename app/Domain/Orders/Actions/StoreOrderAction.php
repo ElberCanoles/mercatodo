@@ -11,7 +11,7 @@ class StoreOrderAction
 {
     public function execute(): Order
     {
-        $user = User::find(auth()->user()->getAuthIdentifier());
+        $user = User::query()->find(auth()->user()->getAuthIdentifier());
 
         return Order::query()->create([
             'user_id' => $user->id,

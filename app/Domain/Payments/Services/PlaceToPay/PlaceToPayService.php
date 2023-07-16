@@ -7,9 +7,8 @@ namespace App\Domain\Payments\Services\PlaceToPay;
 use App\Contracts\Payment\PaymentGatewayInterface;
 use App\Domain\Carts\DataTransferObjects\StoreCheckoutData;
 use App\Domain\Orders\Models\Order;
-use Exception;
 use Illuminate\Support\Facades\Http;
-use Throwable;
+use Exception;
 
 class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterface
 {
@@ -54,8 +53,15 @@ class PlaceToPayService extends PlaceToPayBase implements PaymentGatewayInterfac
             if ($response->ok()) {
                 return $response->json();
             }
-        } catch (Throwable $throwable) {
-            report($throwable);
+        } catch (Exception $exception) {
+            logger()->error(message: 'error when obtaining place to pay session', context: [
+                'module' => 'PlaceToPayService.getSession',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
         }
 
         throw new Exception(trans(key: 'server.unavailable_service'));

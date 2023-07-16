@@ -2,6 +2,7 @@
 
 namespace App\Domain\Exports\Models;
 
+use App\Domain\Exports\Presenters\ExportPresenter;
 use Carbon\Carbon;
 use Database\Factories\ExportFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,4 +30,12 @@ class Export extends Model
     {
         return ExportFactory::new();
     }
+
+    public function present(): ExportPresenter
+    {
+        $presenter = ExportPresenter::getInstance();
+        $presenter->setExport($this);
+        return $presenter;
+    }
+
 }

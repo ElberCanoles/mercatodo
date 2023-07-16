@@ -31,19 +31,14 @@ final class UserController extends Controller
 
         $users = User::query()
             ->withoutEagerLoads()
+            ->whereColumContains(column: 'name', value: $request->input(key: 'name'))
+            ->whereColumContains(column: 'last_name', value: $request->input(key: 'last_name'))
+            ->whereColumContains(column: 'email', value: $request->input(key: 'email'))
             ->whereHas(relation: 'roles', callback: function ($subQuery) {
                 $subQuery->where('name', Roles::BUYER);
             })
             ->select(columns: ['id', 'name', 'last_name', 'email', 'status', 'email_verified_at', 'created_at'])
-            ->when($request->input(key: 'name'), function ($q) use ($request) {
-                $q->where(column: 'name', operator: 'like', value: '%' . $request->input(key: 'name') . '%');
-            })
-            ->when($request->input(key: 'last_name'), function ($q) use ($request) {
-                $q->where(column: 'last_name', operator: 'like', value: '%' . $request->input(key: 'last_name') . '%');
-            })
-            ->when($request->input(key: 'email'), function ($q) use ($request) {
-                $q->where(column: 'email', operator: 'like', value: '%' . $request->input(key: 'email') . '%');
-            })->orderBy(column: 'created_at', direction: 'DESC')
+            ->orderBy(column: 'created_at', direction: 'DESC')
             ->orderBy(column: 'id', direction: 'DESC')
             ->paginate(perPage: SystemParams::LENGTH_PER_PAGE);
 
@@ -52,7 +47,7 @@ final class UserController extends Controller
 
     public function edit(User $user): View
     {
-        $statuses = collect(UserStatus::asArray())->map(fn ($status) => [
+        $statuses = collect(UserStatus::asArray())->map(fn($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

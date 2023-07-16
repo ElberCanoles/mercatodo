@@ -11,7 +11,7 @@ class StoreUserAction
 {
     public function execute(StoreUserData $data): User
     {
-        return User::create([
+        return User::query()->create([
             'name' => $data->name,
             'last_name' => $data->lastName,
             'email' => $data->email,

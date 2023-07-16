@@ -24,6 +24,7 @@ class ProductImportControllerTest extends TestCase
     {
         parent::setUp();
         Storage::fake(config(key: 'filesystems.default'));
+        Queue::fake();
         $this->seed(class: RoleSeeder::class);
         $this->user = User::factory()->create();
         $this->file = UploadedFile::fake()->create(name: 'products.csv')->size(kilobytes: 500);
@@ -46,8 +47,6 @@ class ProductImportControllerTest extends TestCase
 
     public function test_it_should_enqueue_product_import_job(): void
     {
-        Queue::fake();
-
         $this->user->assignRole(role: Roles::ADMINISTRATOR);
 
         $this->actingAs($this->user)

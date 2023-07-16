@@ -12,7 +12,7 @@ use App\Domain\Payments\Services\PlaceToPay\PlaceToPayService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\URL;
-use Throwable;
+use Exception;
 
 class PlaceToPayController extends Controller
 {
@@ -37,8 +37,15 @@ class PlaceToPayController extends Controller
             foreach ($checkPaymentActions as $checkPaymentAction) {
                 $checkPaymentAction($status, $order);
             }
-        } catch (Throwable $exception) {
-            report($exception);
+        } catch (Exception $exception) {
+            logger()->error(message: 'error processing place to pay payment response', context: [
+                'module' => 'PlaceToPayController.processResponse',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
         }
 
         return redirect()->to(path: URL::signedRoute(name: 'buyer.checkout.result', parameters: ['order' => $order->id]));

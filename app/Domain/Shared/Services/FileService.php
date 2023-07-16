@@ -6,7 +6,7 @@ namespace App\Domain\Shared\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Throwable;
+use Exception;
 
 class FileService
 {
@@ -23,8 +23,17 @@ class FileService
             Storage::disk(name: $this->diskName)->put($relativePath, $file);
 
             return $this->getFullFilePath($file->hashName(path: $relativePath));
-        } catch (Throwable $throwable) {
-            report(exception: $throwable);
+        } catch (Exception $exception) {
+
+            logger()->error(message: 'error uploading single file', context: [
+                'module' => 'FileService.uploadSingleFile',
+                'message' => $exception->getMessage(),
+                'code' => $exception->getCode(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'trace' => $exception->getTrace()
+            ]);
+
             return null;
         }
     }
