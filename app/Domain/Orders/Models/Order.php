@@ -3,6 +3,7 @@
 namespace App\Domain\Orders\Models;
 
 use App\Domain\Orders\Enums\OrderStatus;
+use App\Domain\Orders\Presenters\OrderPresenter;
 use App\Domain\Orders\QueryBuilders\OrderQueryBuilder;
 use App\Domain\Payments\Models\Payment;
 use App\Domain\Products\Models\Product;
@@ -42,6 +43,14 @@ class Order extends Model
     {
         return new OrderQueryBuilder($query);
     }
+
+    public function present(): OrderPresenter
+    {
+        $presenter = OrderPresenter::getInstance();
+        $presenter->setOrder($this);
+        return $presenter;
+    }
+
 
     public function payments(): HasMany
     {
