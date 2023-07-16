@@ -17,9 +17,9 @@ class ExportResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'module' => trans(key: $this->module),
-            'date' => $this->created_at->format(format: 'd-m-Y'),
-            'hour' => $this->created_at->isoFormat(format: 'H:mm:ss A'),
+            'module' => $this->present()->moduleTranslated(),
+            'date' => $this->present()->date(),
+            'hour' => $this->present()->hour(),
             'path' => $this->path
         ];
     }
