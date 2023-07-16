@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Imports\Services;
 
 use App\Contracts\Imports\ProductImporterInterface;
+use App\Domain\Imports\Actions\StoreImportAction;
+use App\Domain\Imports\DataTransferObjects\StoreImportData;
 use App\Domain\Imports\Enums\ImportModules;
 use App\Domain\Imports\Models\Import;
 use App\Domain\Products\Actions\StoreProductAction;
@@ -148,7 +150,7 @@ class ProductCsvImporter implements ProductImporterInterface
 
     private function saveImportProcessSummary(string $filePath): void
     {
-        Import::create([
+        (new StoreImportAction())->execute(data: StoreImportData::fromArray(data: [
             'module' => ImportModules::PRODUCTS,
             'path' => $filePath,
             'summary' => [
@@ -157,6 +159,6 @@ class ProductCsvImporter implements ProductImporterInterface
                 'failed_records' => $this->failedRecords
             ],
             'errors' => !empty($this->errors) ? $this->errors : null
-        ]);
+        ]));
     }
 }
