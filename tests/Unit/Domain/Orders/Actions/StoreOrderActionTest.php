@@ -2,7 +2,6 @@
 
 namespace Tests\Unit\Domain\Orders\Actions;
 
-use App\Domain\Carts\Models\Cart;
 use App\Domain\Orders\Actions\StoreOrderAction;
 use App\Domain\Orders\Models\Order;
 use App\Domain\Users\Models\User;
