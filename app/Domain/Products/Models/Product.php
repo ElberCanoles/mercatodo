@@ -6,7 +6,7 @@ use App\Domain\Carts\Models\Cart;
 use App\Domain\Images\Models\Image;
 use App\Domain\Orders\Models\Order;
 use App\Domain\Products\Presenters\ProductPresenter;
-use App\Domain\Products\UserQueryBuilder\ProductQueryBuilder;
+use App\Domain\Products\QueryBuilders\ProductQueryBuilder;
 use Carbon\Carbon;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;

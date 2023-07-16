@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Products\UserQueryBuilder;
+namespace App\Domain\Products\QueryBuilders;
 
 use App\Domain\Products\Models\Product;
 use Illuminate\Database\Eloquent\Builder;
