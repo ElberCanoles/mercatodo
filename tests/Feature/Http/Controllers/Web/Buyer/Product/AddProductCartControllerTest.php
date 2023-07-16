@@ -79,5 +79,4 @@ class AddProductCartControllerTest extends TestCase
             ->postJson(route(name: 'buyer.products.add.to.cart', parameters: ['product' => $this->product->id]))
             ->assertForbidden();
     }
-
 }

@@ -89,5 +89,4 @@ class LessProductCartControllerTest extends TestCase
             ->postJson(route(name: 'buyer.products.less.to.cart', parameters: ['product' => $this->product->id]))
             ->assertForbidden();
     }
-
 }

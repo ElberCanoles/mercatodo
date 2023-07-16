@@ -16,30 +16,37 @@ class ProductQueryBuilder extends Builder
 {
     public function whereColumContains(string $column, ?string $value): self
     {
-        if ($value == null) return $this;
+        if ($value == null) {
+            return $this;
+        }
 
         return $this->where(column: $column, operator: 'like', value: '%' . $value . '%');
     }
 
     public function whereStatus(?string $status): self
     {
-        if ($status == null) return $this;
+        if ($status == null) {
+            return $this;
+        }
 
         return $this->where(column: 'status', operator: '=', value: $status);
     }
 
     public function wherePriceGreaterThanOrEqualsTo(float|string|null $value): self
     {
-        if ($value == null) return $this;
+        if ($value == null) {
+            return $this;
+        }
 
         return $this->where(column: 'price', operator: '>=', value: $value);
     }
 
     public function wherePriceLessThanOrEqualsTo(float|string|null $value): self
     {
-        if ($value == null) return $this;
+        if ($value == null) {
+            return $this;
+        }
 
         return $this->where(column: 'price', operator: '<=', value: $value);
     }
-
 }

@@ -40,7 +40,6 @@ class ProductExportJobTest extends TestCase
 
     public function test_it_generate_export_csv_file_successfully(): void
     {
-
         (new ProductExportJob())->handle(resolve(name: ProductExporterInterface::class));
 
         $files = Storage::disk($this->diskName)->files(directory: $this::PRODUCTS_EXPORT_PATH);
@@ -77,5 +76,4 @@ class ProductExportJobTest extends TestCase
 
         Mail::assertSent(mailable: ExportSuccess::class);
     }
-
 }

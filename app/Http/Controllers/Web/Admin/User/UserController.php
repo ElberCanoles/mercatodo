@@ -47,7 +47,7 @@ final class UserController extends Controller
 
     public function edit(User $user): View
     {
-        $statuses = collect(UserStatus::asArray())->map(fn($status) => [
+        $statuses = collect(UserStatus::asArray())->map(fn ($status) => [
             'key' => $status,
             'value' => trans($status),
         ])->toArray();

@@ -9,7 +9,6 @@ use App\Domain\Imports\Models\Import;
 
 class StoreImportAction
 {
-
     public function execute(StoreImportData $data): void
     {
         Import::create([
@@ -19,5 +18,4 @@ class StoreImportAction
             'errors' => $data->errors
         ]);
     }
-
 }

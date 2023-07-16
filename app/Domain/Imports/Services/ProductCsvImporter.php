@@ -38,8 +38,7 @@ class ProductCsvImporter implements ProductImporterInterface
         private readonly FileService         $fileService,
         private readonly StoreProductAction  $storeProductAction,
         private readonly UpdateProductAction $updateProductAction
-    )
-    {
+    ) {
     }
 
     public function mapRow(array $row): array

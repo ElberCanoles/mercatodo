@@ -10,7 +10,6 @@ use Tests\TestCase;
 
 class IndexExportControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $user;
@@ -75,5 +74,4 @@ class IndexExportControllerTest extends TestCase
             ->getJson(route(name: 'admin.exports.index'))
             ->assertForbidden();
     }
-
 }

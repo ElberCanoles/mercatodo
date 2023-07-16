@@ -58,5 +58,4 @@ class ProductExportControllerTest extends TestCase
             ->get(route(name: 'admin.products.export'))
             ->assertForbidden();
     }
-
 }

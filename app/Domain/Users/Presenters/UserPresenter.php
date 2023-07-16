@@ -9,7 +9,6 @@ use App\Domain\Users\Models\User;
 
 class UserPresenter
 {
-
     private static ?UserPresenter $instance = null;
 
     private User $user;
@@ -56,5 +55,4 @@ class UserPresenter
     {
         return route(name: 'admin.users.edit', parameters: ['user' => $this->user->id]);
     }
-
 }

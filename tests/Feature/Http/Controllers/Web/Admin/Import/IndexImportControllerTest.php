@@ -74,5 +74,4 @@ class IndexImportControllerTest extends TestCase
             ->getJson(route(name: 'admin.imports.index'))
             ->assertForbidden();
     }
-
 }

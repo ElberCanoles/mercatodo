@@ -8,7 +8,6 @@ use App\Domain\Orders\Models\Order;
 
 class OrderPresenter
 {
-
     private static ?OrderPresenter $instance = null;
 
     private Order $order;
@@ -55,5 +54,4 @@ class OrderPresenter
     {
         return route(name: 'buyer.orders.show', parameters: ['order' => $this->order->id]);
     }
-
 }

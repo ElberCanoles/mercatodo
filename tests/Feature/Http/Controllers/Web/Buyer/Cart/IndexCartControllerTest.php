@@ -11,7 +11,6 @@ use Tests\TestCase;
 
 class IndexCartControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $user;
@@ -37,7 +36,6 @@ class IndexCartControllerTest extends TestCase
             ->get(route(name: 'buyer.cart.index'))
             ->assertOk()
             ->assertViewIs(value: 'buyer.cart.index');
-
     }
 
     public function test_authorized_user_can_get_products_list_in_cart(): void
@@ -67,7 +65,6 @@ class IndexCartControllerTest extends TestCase
                 'products',
                 'total'
             ]);
-
     }
 
     public function test_unauthorized_user_can_not_access_to_cart_screen(): void
@@ -83,5 +80,4 @@ class IndexCartControllerTest extends TestCase
             ->getJson(route(name: 'buyer.cart.index'))
             ->assertForbidden();
     }
-
 }

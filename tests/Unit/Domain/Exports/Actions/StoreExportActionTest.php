@@ -30,5 +30,4 @@ class StoreExportActionTest extends TestCase
             'path' => $exportData->path
         ]);
     }
-
 }

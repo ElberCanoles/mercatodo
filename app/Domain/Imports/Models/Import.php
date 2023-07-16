@@ -46,5 +46,4 @@ class Import extends Model
         $presenter->setImport($this);
         return $presenter;
     }
-
 }

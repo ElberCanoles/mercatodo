@@ -33,5 +33,4 @@ class StoreImportActionTest extends TestCase
             'errors' => $importData->errors
         ]);
     }
-
 }

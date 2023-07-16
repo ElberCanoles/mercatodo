@@ -84,5 +84,4 @@ class ProductPresenter
     {
         return route(name: 'api.products.destroy', parameters: ['product' => $this->product->id]);
     }
-
 }

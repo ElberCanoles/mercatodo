@@ -24,7 +24,6 @@ class FileService
 
             return $this->getFullFilePath($file->hashName(path: $relativePath));
         } catch (Exception $exception) {
-
             logger()->error(message: 'error uploading single file', context: [
                 'module' => 'FileService.uploadSingleFile',
                 'message' => $exception->getMessage(),

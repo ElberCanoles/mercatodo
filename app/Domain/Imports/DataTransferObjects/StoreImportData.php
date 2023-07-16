@@ -11,8 +11,7 @@ class StoreImportData
         public string $path,
         public array  $summary,
         public ?array $errors
-    )
-    {
+    ) {
     }
 
     public static function fromArray(array $data): self

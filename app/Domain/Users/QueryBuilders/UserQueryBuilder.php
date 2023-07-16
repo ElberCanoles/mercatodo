@@ -15,9 +15,10 @@ class UserQueryBuilder extends Builder
 {
     public function whereColumContains(string $column, ?string $value): self
     {
-        if ($value == null) return $this;
+        if ($value == null) {
+            return $this;
+        }
 
         return $this->where(column: $column, operator: 'like', value: '%' . $value . '%');
     }
-
 }

@@ -14,7 +14,6 @@ use Tests\TestCase;
 
 class IndexOrderControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $user;
@@ -87,5 +86,4 @@ class IndexOrderControllerTest extends TestCase
             ->getJson(route(name: 'buyer.orders.index'))
             ->assertForbidden();
     }
-
 }

@@ -37,5 +37,4 @@ class Export extends Model
         $presenter->setExport($this);
         return $presenter;
     }
-
 }

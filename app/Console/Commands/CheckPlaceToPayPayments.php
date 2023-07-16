@@ -32,7 +32,6 @@ class CheckPlaceToPayPayments extends Command
     public function handle(): void
     {
         try {
-
             $placeToPayService = resolve(name: PlaceToPayService::class);
 
             $payments = Payment::query()

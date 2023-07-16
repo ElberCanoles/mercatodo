@@ -8,7 +8,6 @@ use App\Domain\Exports\Models\Export;
 
 class ExportPresenter
 {
-
     private static ?ExportPresenter $instance = null;
 
     private Export $export;
@@ -45,5 +44,4 @@ class ExportPresenter
     {
         return $this->export->created_at->isoFormat(format: 'H:mm:ss A');
     }
-
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Http\Controllers\Web\Buyer\Product;
 
-use App\Domain\Carts\Models\Cart;
 use App\Domain\Products\Models\Product;
 use App\Domain\Users\Enums\Roles;
 use App\Domain\Users\Models\User;
@@ -60,5 +59,4 @@ class DestroyProductCartControllerTest extends TestCase
             ->deleteJson(route(name: 'buyer.products.carts.destroy', parameters: ['product' => $this->product->id]))
             ->assertForbidden();
     }
-
 }

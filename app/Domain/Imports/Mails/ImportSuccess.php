@@ -13,7 +13,8 @@ use Illuminate\Queue\SerializesModels;
 
 class ImportSuccess extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public string $showImportsUrl;
 

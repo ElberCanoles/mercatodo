@@ -14,7 +14,6 @@ use Tests\TestCase;
 
 class ShowOrderControllerTest extends TestCase
 {
-
     use RefreshDatabase;
 
     private User $firstUser;
@@ -41,7 +40,6 @@ class ShowOrderControllerTest extends TestCase
             'created_at' => now(),
             'updated_at' => now()
         ]);
-
     }
 
     public function test_guest_user_is_redirected_to_login(): void
@@ -99,6 +97,4 @@ class ShowOrderControllerTest extends TestCase
             ->get(route(name: 'buyer.orders.show', parameters: ['order' => $order->id]))
             ->assertForbidden();
     }
-
-
 }

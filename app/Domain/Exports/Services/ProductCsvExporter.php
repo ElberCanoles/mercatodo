@@ -69,7 +69,6 @@ final class ProductCsvExporter implements ProductExporterInterface
             fclose(stream: $file);
 
             Mail::to(config(key: 'admin.email'))->send(new ExportSuccess());
-
         } catch (Exception $exception) {
             logger()->error(message: 'error during product export', context: [
                 'module' => 'ProductCsvExporter.export',

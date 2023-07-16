@@ -33,5 +33,4 @@ class StoreOrderActionTest extends TestCase
             'amount' => $order->amount
         ]);
     }
-
 }

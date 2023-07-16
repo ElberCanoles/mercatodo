@@ -82,5 +82,4 @@ class ProductImportControllerTest extends TestCase
             ->postJson(route(name: 'admin.products.import'), data: ['file' => $this->file])
             ->assertForbidden();
     }
-
 }

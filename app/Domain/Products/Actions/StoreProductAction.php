@@ -14,8 +14,7 @@ class StoreProductAction
     public function __construct(
         private readonly SlugeableService          $slugService,
         private readonly ProductStoreImagesFactory $storeImagesFactory
-    )
-    {
+    ) {
     }
 
     public function execute(StoreProductData $data): void
