@@ -8,10 +8,13 @@ use App\Contracts\Exports\ProductExporterInterface;
 use App\Domain\Exports\Actions\StoreExportAction;
 use App\Domain\Exports\DataTransferObjects\StoreExportData;
 use App\Domain\Exports\Enums\ExportModules;
+use App\Domain\Exports\Mails\ExportFailure;
+use App\Domain\Exports\Mails\ExportSuccess;
 use App\Domain\Products\Models\Product;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 use Exception;
 
 final class ProductCsvExporter implements ProductExporterInterface
@@ -64,6 +67,9 @@ final class ProductCsvExporter implements ProductExporterInterface
             $this->storeExport(fileName: $fileName);
 
             fclose(stream: $file);
+
+            Mail::to(config(key: 'admin.email'))->send(new ExportSuccess());
+
         } catch (Exception $exception) {
             logger()->error(message: 'error during product export', context: [
                 'module' => 'ProductCsvExporter.export',
@@ -73,6 +79,8 @@ final class ProductCsvExporter implements ProductExporterInterface
                 'line' => $exception->getLine(),
                 'trace' => $exception->getTrace()
             ]);
+
+            Mail::to(config(key: 'admin.email'))->send(new ExportFailure());
         }
     }
 
