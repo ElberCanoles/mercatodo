@@ -7,6 +7,7 @@ use App\Domain\Orders\Models\Order;
 use App\Domain\Payments\Models\Payment;
 use App\Domain\Users\Enums\Permissions;
 use App\Domain\Users\Enums\Roles;
+use App\Domain\Users\Presenters\UserPresenter;
 use App\Domain\Users\QueryBuilders\UserQueryBuilder;
 use Carbon\Carbon;
 use Database\Factories\UserFactory;
@@ -75,6 +76,13 @@ class User extends Authenticatable implements MustVerifyEmail
     public function newEloquentBuilder($query): UserQueryBuilder
     {
         return new UserQueryBuilder($query);
+    }
+
+    public function present(): UserPresenter
+    {
+        $presenter = UserPresenter::getInstance();
+        $presenter->setUser($this);
+        return $presenter;
     }
 
     public function roles(): BelongsToMany
