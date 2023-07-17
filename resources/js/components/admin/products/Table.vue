@@ -2,6 +2,7 @@
 
 import { ref } from 'vue'
 import Swal from 'sweetalert2'
+import ImportModal from "./ImportModal.vue";
 
 const props = defineProps({
     statuses: {},
@@ -43,7 +44,7 @@ const getData = async (url) => {
         const { data } = await axios.get(`${url}&name=${search.value.name}&price=${search.value.price}&stock=${search.value.stock}&status=${search.value.status}`)
 
         products.value = data.data
-        links.value = data.links
+        links.value = data.meta.links
 
     } catch (error) {
 
@@ -52,6 +53,21 @@ const getData = async (url) => {
 
 const reloadTable = async () => {
     await getData(url.value)
+}
+
+const exportProducts = async () => {
+    try {
+        const response = await axios.get(`/admin/products/export`)
+
+        toastr.success(response.data.message, 'Operación exitosa', {
+            timeOut: 5000
+        })
+
+    } catch (error) {
+        toastr.error("Servicio no disponible", 'Error!', {
+            timeOut: 5000
+        })
+    }
 }
 
 const deleteProduct = async (url) => {
@@ -106,6 +122,18 @@ getData(url.value)
 </script>
 
 <template>
+    <div class="d-flex flex-row">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Gestionar
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/admin/products/create">Crear nuevo</a></li>
+                <li><a class="dropdown-item" href="javascript:" @click="exportProducts()">Exportar</a></li>
+                <li><a class="dropdown-item" href="javascript:" data-bs-toggle="modal" data-bs-target="#importModal">Importar</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
@@ -129,9 +157,8 @@ getData(url.value)
                             </option>
                         </select>
                     </th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
-                    <th scope="col"></th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 <tr>
                     <th scope="col">Nombre</th>
@@ -148,8 +175,7 @@ getData(url.value)
                     <td>{{ product?.price }}</td>
                     <td>{{ product?.stock }}</td>
                     <td>
-                        <span class="badge rounded-pill" :class="classStatus(product?.status_key)">{{ product?.status_value
-                        }}</span>
+                        <span class="badge rounded-pill" :class="classStatus(product?.status_key)">{{ product?.status_value }}</span>
                     </td>
                     <td>{{ product?.created_at }}</td>
                     <td>
@@ -171,4 +197,6 @@ getData(url.value)
             </ul>
         </nav>
     </div>
+
+    <ImportModal></ImportModal>
 </template>

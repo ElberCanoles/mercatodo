@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Enums\User\RoleType;
+use App\Domain\Users\Enums\Permissions;
+use App\Domain\Users\Models\Permission;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
-use Spatie\Permission\Models\Permission;
 
 class PermissionSeeder extends Seeder
 {
@@ -15,30 +13,18 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        //  registering admin role permissions
-        $routesAdminCollection = Route::getRoutes();
+        $permissions = [];
 
-        foreach ($routesAdminCollection as $key => $value) {
-            if (Str::startsWith(haystack: $value->action['as'] ?? '', needles: 'admin.')) {
-                try {
-                    Permission::create(['name' => $value->action['as']])->assignRole(RoleType::ADMINISTRATOR);
-                } catch (\Throwable $throwable) {
-                    report(exception: $throwable);
-                }
-            }
+        $now = now();
+
+        foreach (Permissions::toArray() as $permission) {
+            $permissions[] = [
+                'name' => $permission,
+                'created_at' => $now,
+                'updated_at' => $now
+            ];
         }
 
-        //  registering buyer role permissions
-        $routesBuyerCollection = Route::getRoutes();
-
-        foreach ($routesBuyerCollection as $key => $value) {
-            if (Str::startsWith(haystack: $value->action['as'] ?? '', needles: 'buyer.')) {
-                try {
-                    Permission::create(['name' => $value->action['as']])->assignRole(RoleType::BUYER);
-                } catch (\Throwable $throwable) {
-                    report(exception: $throwable);
-                }
-            }
-        }
+        Permission::insertOrIgnore($permissions);
     }
 }

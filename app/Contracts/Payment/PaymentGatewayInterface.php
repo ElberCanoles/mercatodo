@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Contracts\Payment;
 
-use App\DataTransferObjects\Checkout\StoreCheckoutData;
-use App\Models\Order;
+use App\Domain\Carts\DataTransferObjects\StoreCheckoutData;
+use App\Domain\Orders\Models\Order;
 
 interface PaymentGatewayInterface
 {
-    public function getPaymentProcessData(StoreCheckoutData $data, Order $order): array;
+    public function makePaymentProcessData(StoreCheckoutData $data, Order $order): array;
 
-    public function getProcessUrl(array $paymentProcessData): string;
+    public function decodeProcessUrl(array $paymentProcessData): string;
 }

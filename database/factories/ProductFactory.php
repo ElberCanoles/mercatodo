@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Enums\Product\ProductStatus;
-use App\Models\Product;
+use App\Domain\Products\Enums\ProductStatus;
+use App\Domain\Products\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -12,6 +12,8 @@ use Illuminate\Support\Str;
  */
 class ProductFactory extends Factory
 {
+    protected $model = Product::class;
+
     /**
      * Define the model's default state.
      *
@@ -19,14 +21,14 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->word();
+        $name = Str::random();
 
         $statuses = array_values(ProductStatus::asArray());
 
         return [
-            'name' => $name,
-            'slug' => Str::slug(Str::random(6).' '.$name.' '.Str::random(4)),
-            'description' => fake()->sentence(),
+            'name' => Str::ucfirst(Str::lower($name)),
+            'slug' => Str::slug(title: Str::random(length: 6).' '.$name.' '.Str::random(length: 4)),
+            'description' => Str::ucfirst(Str::lower(fake()->sentence())),
             'price' => rand(1000, 500000),
             'stock' => rand(10, 100),
             'status' => $statuses[rand(0, count($statuses) - 1)],

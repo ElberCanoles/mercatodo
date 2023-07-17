@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Checkout;
 
-use App\Enums\Payment\Provider;
-use Illuminate\Validation\Rule;
+use App\Domain\Payments\Enums\Provider;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
             'department' => ['required', 'string', 'max:40'],
             'city' => ['required', 'string', 'max:40'],
             'address' => ['required', 'string', 'max:100'],
-            'provider' => ['required', Rule::in(Provider::asArray())]
+            'provider' => ['required', Rule::in(Provider::toArray())]
         ];
     }
 

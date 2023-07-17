@@ -5,23 +5,23 @@
         <h1>Resultado de la transacción</h1>
 
         @switch($status)
-            @case(App\Enums\Payment\PaymentStatus::PAID)
+            @case(\App\Domain\Payments\Enums\PaymentStatus::PAID->value)
                 <div class="alert alert-success" role="alert">
                     Pago: <span class="alert-link">{{ trans($status) }}</span>
                 </div>
-            @break
+                @break
 
-            @case(App\Enums\Payment\PaymentStatus::PENDING)
+            @case(\App\Domain\Payments\Enums\PaymentStatus::PENDING->value)
                 <div class="alert alert-warning" role="alert">
                     Pago: <span class="alert-link">{{ trans($status) }}</span>
                 </div>
-            @break
+                @break
 
-            @case(App\Enums\Payment\PaymentStatus::REJECTED)
+            @case(\App\Domain\Payments\Enums\PaymentStatus::REJECTED->value)
                 <div class="alert alert-danger" role="alert">
                     Pago: <span class="alert-link">{{ trans($status) }}</span>
                 </div>
-            @break
+                @break
 
             @default
         @endswitch

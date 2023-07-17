@@ -22,6 +22,7 @@
         "@vitejs/plugin-vue": "^4.1.0",
         "feather-icons": "^4.29.0",
         "sweetalert2": "^11.7.5",
+        "toastr": "^2.1.4",
         "vue": "^3.2.36",
         "vue-loader": "^17.0.1"
     }
